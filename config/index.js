@@ -1,5 +1,8 @@
+// eslint-disable-next-line import/no-commonjs
+const path = require('path');
+
 const config = {
-  projectName: 'collBrain',
+  projectName: 'coolBrain',
   date: '2020-3-17',
   designWidth: 750,
   deviceRatio: {
@@ -21,16 +24,18 @@ const config = {
       'transform-class-properties',
       'transform-object-rest-spread',
       ['transform-runtime', {
-          helpers: false,
-          polyfill: false,
-          regenerator: true,
-          moduleName: 'babel-runtime'
-        }
-      ]
+        helpers: false,
+        polyfill: false,
+        regenerator: true,
+        moduleName: 'babel-runtime'
+      }]
     ]
   },
-  defineConstants: {
+  alias: {
+    '@/utils': path.resolve(__dirname, '../src/utils'),
+    '@/components': path.resolve(__dirname, '../src/components')
   },
+  defineConstants: {},
   mini: {
     postcss: {
       autoprefixer: {

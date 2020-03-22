@@ -1,58 +1,62 @@
-import Taro, { Component } from '@tarojs/taro'
-import { View, Button, Text } from '@tarojs/components'
-import { observer, inject } from '@tarojs/mobx'
+import Taro, { Component  } from "@tarojs/taro";
+import { View,Image } from "@tarojs/components";
+import { observer, inject } from "@tarojs/mobx";
+import  MDAY  from "@/components/Mday";
 
-import './index.less'
+import "./index.less";
 
 
-@inject('counterStore')
+@inject("counterStore")
 @observer
 class Index extends Component {
-
-  config = {
-    navigationBarTitleText: '首页'
+  state ={
+    avatarUrl: "",
+    name: ""
   }
 
-  componentWillMount () { }
-
-  componentWillReact () {
-    console.log('componentWillReact')
+  componentWillMount() {
+    const that = this;
+    Taro.loadFontFace({
+      family: 'Bitstream Vera Serif Bold',
+      source: 'url("https://sungd.github.io/Pacifico.ttf")',
+      success: console.log
+    })
+    Taro.getSetting({
+      success: function(res) {
+        if (res.authSetting["scope.userInfo"]) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          Taro.getUserInfo({
+            success: function(data) {
+              console.log('res: ', data);
+              that.setState({
+                avatarUrl: data.userInfo.avatarUrl,
+                name: data.userInfo.nickName
+              })
+            }
+          });
+        }
+      }.bind(this)
+    });
   }
 
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  increment = () => {
-    const { counterStore } = this.props
-    counterStore.increment()
+  componentWillReact() {
+    console.log("componentWillReact");
   }
 
-  decrement = () => {
-    const { counterStore } = this.props
-    counterStore.decrement()
+  componentDidMount() {
+
   }
 
-  incrementAsync = () => {
-    const { counterStore } = this.props
-    counterStore.incrementAsync()
-  }
-
-  render () {
-    const { counterStore: { counter } } = this.props
-    return (
-      <View className='index'>
-        <Button onClick={this.increment}>+</Button>
-        <Button onClick={this.decrement}>-</Button>
-        <Button onClick={this.incrementAsync}>Add Async</Button>
-        <Text>{counter}</Text>
-      </View>
-    )
+  render() {
+    const {avatarUrl, name} = this.state;
+    return <View className='home'>
+          <Image
+            className='img'
+            src={avatarUrl}
+          />
+      <MDAY name={name} time={new Date()}></MDAY>
+    </View>;
   }
 }
 
-export default Index 
+export default Index;

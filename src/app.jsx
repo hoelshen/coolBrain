@@ -1,7 +1,9 @@
+/* eslint-disable import/first */
 import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 
+import dayjs from '@/utils/day';
 import counterStore from './store/counter'
 
 import './app.less'
@@ -29,7 +31,9 @@ class App extends Component {
       navigationBarTextStyle: 'black'
     }
   }
-
+  componentWillMount () {
+    Taro.$dayjs = dayjs
+  }
   componentDidMount () {}
 
   componentDidShow () {}
