@@ -19,7 +19,9 @@ const store = {
 }
 
 class App extends Component {
-
+  static options = {
+    addGlobalClass: true
+  }
   config = {
     pages: [
       'pages/index/index',
@@ -63,7 +65,7 @@ class App extends Component {
   render () {
     return (
       <Provider store={store}>
-        <Index />
+        <Index className='page' />
       </Provider>
     )
   }

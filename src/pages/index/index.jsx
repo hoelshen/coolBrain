@@ -10,6 +10,8 @@ import "./index.less";
 @inject("counterStore")
 @observer
 class Index extends Component {
+
+
   state ={
     avatarUrl: "",
     name: ""
@@ -43,11 +45,11 @@ class Index extends Component {
       data:1,
       user:1
     }
- /*    getResultData_servers(params).then(res => {
+    getResultData_servers(params).then(res => {
       console.log(res)
     }).catch(err => {
       console.log(err)
-    }) */
+    })
     console.log(5)
 
   }
@@ -67,14 +69,14 @@ class Index extends Component {
   componentWillReact() {
     console.log("componentWillReact");
   }
-
-  componentDidMount() {
-
+  scroll(e) {
+    console.log(e)
   }
 
   toInfo(){
+    const id = '123'
     Taro.navigateTo({
-      url: '/pages/info/index'
+      url: `/pages/info/index?id=${id}&type=${1}`
     })
     console.log('22')
   }
@@ -86,6 +88,25 @@ class Index extends Component {
             src={avatarUrl}
           />
       <MDAY name={name} time={new Date()}></MDAY>
+      <view className='page-section-spacing'>
+        <scroll-view className='scroll-view_H' scroll-x onScroll={this.scroll} style='width: 100%'>
+          <view  className='scroll-view-item demo-text-1'></view>
+          <view  className='scroll-view-item demo-text-2'></view>
+          <view  className='scroll-view-item demo-text-3'></view>
+        </scroll-view>
+      </view>
+
+      <View />
+
+      <View></View>
+
+      <View>{false}</View>
+
+      <View>{null}</View>
+
+      <View>{undefined}</View>
+
+      <View>{true}</View>
     </View>;
   }
 }

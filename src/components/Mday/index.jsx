@@ -1,5 +1,7 @@
 import Taro from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
+import PropTypes from 'prop-types';
+
 
 function formatName() {
   const val = Taro.$dayjs().hour();
@@ -39,5 +41,10 @@ const MDAY = props => {
     </View>
   )
 }
+
+MDAY.propTypes = {
+  name: PropTypes.string
+};
+
 
 export default MDAY
