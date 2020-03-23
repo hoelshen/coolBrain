@@ -2,6 +2,7 @@ import Taro, { Component  } from "@tarojs/taro";
 import { View,Image } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import  MDAY  from "@/components/Mday";
+import { getResultData_servers } from '@/servers/servers'
 
 import "./index.less";
 
@@ -37,8 +38,32 @@ class Index extends Component {
         }
       }.bind(this)
     });
+
+    const params = {
+      data:1,
+      user:1
+    }
+ /*    getResultData_servers(params).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    }) */
+    console.log(5)
+
   }
 
+  componentDidMount () {
+    console.log(6,this.$router.params)
+  }
+
+  componentDidShow () {
+    console.log(7)
+
+  }
+
+  componentDidHide () {
+    console.log(8)
+  }
   componentWillReact() {
     console.log("componentWillReact");
   }
@@ -47,9 +72,13 @@ class Index extends Component {
 
   }
 
+  toInfo(){
+    //Taro.
+    console.log('22')
+  }
   render() {
     const {avatarUrl, name} = this.state;
-    return <View className='home'>
+    return <View className='home' onClick={this.toInfo}>
           <Image
             className='img'
             src={avatarUrl}

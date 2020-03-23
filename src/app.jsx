@@ -29,16 +29,30 @@ class App extends Component {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    requiredBackgroundModes: ['audio'],
+    permission: {
+      'scope.userLocation': {
+        desc: '你的位置信息将用于小程序位置接口的效果展示'
+      }
     }
   }
   componentWillMount () {
+    console.log(1)
     Taro.$dayjs = dayjs
   }
-  componentDidMount () {}
+  componentDidMount () {
+    console.log(2,this.$router.params)
+  }
 
-  componentDidShow () {}
+  componentDidShow () {
+    console.log(3)
 
-  componentDidHide () {}
+  }
+
+  componentDidHide () {
+    console.log(4)
+  }
 
   componentDidCatchError () {}
 

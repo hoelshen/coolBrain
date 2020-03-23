@@ -33,7 +33,8 @@ const config = {
   },
   alias: {
     '@/utils': path.resolve(__dirname, '../src/utils'),
-    '@/components': path.resolve(__dirname, '../src/components')
+    '@/components': path.resolve(__dirname, '../src/components'),
+    '@/servers': path.resolve(__dirname, '../src/servers')
   },
   defineConstants: {},
   mini: {
