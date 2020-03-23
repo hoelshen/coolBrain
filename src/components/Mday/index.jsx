@@ -25,6 +25,8 @@ function formatName() {
   }
   return value;
 }
+//defaultProps
+
 
 
 const MDAY = props => {

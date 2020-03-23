@@ -73,7 +73,9 @@ class Index extends Component {
   }
 
   toInfo(){
-    //Taro.
+    Taro.navigateTo({
+      url: '/pages/info/index'
+    })
     console.log('22')
   }
   render() {
