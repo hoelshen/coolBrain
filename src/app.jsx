@@ -17,6 +17,9 @@ import './app.less'
 const store = {
   counterStore
 }
+/* 
+const MyContext = Taro.createContext(defaultValue)
+<MyContext.Provider va/> */
 
 class App extends Component {
   static options = {

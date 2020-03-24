@@ -29,11 +29,18 @@ function formatName() {
 }
 //defaultProps
 
-
+function tell (){
+  console.log('tell')
+}
 
 const MDAY = props => {
   const {name, time} = props
   console.log('name, time: ', name, time);
+
+  function tell(){
+    console.log('tell')
+    console.log('tell')
+  }
   return (
     <View>
       <Text>{formatName()}</Text>

@@ -1,7 +1,10 @@
 import Taro, { Component  } from "@tarojs/taro";
 import { View,Image } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
-import  MDAY  from "@/components/Mday";
+import  MDay from "@/components/Mday";
+import  MList  from "@/components/MList";
+import Dialog  from '@/components/MDialog';
+
 import { getResultData_servers } from '@/servers/servers'
 
 import "./index.less";
@@ -11,11 +14,13 @@ import "./index.less";
 @observer
 class Index extends Component {
 
-
   state ={
     avatarUrl: "",
     name: ""
   }
+
+  refDay = (node) => this.MDay = node //  `this.MDay` 会变成 `MDay` 组件实例的引用
+  refDialog = (node) => this.MDialog  = node //  `this.MDialog` 会变成 `MDialog` 组件实例的引用
 
   componentWillMount() {
     const that = this;
@@ -51,16 +56,21 @@ class Index extends Component {
       console.log(err)
     })
     console.log(5)
-
   }
 
   componentDidMount () {
     console.log(6,this.$router.params)
+    // 如果 ref 的是小程序原生组件，那只有在 didMount 生命周期之后才能通过
+    // this.refs.input 访问到小程序原生组件
+    if (process.env.TARO_ENV === 'weapp') {
+      // 这里 this.refs.input 访问的时候通过 `wx.createSeletorQuery` 取到的小程序原生组件
+    } else if (process.env.TARO_ENV === 'h5') {
+      // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
+    }
   }
 
   componentDidShow () {
     console.log(7)
-
   }
 
   componentDidHide () {
@@ -75,6 +85,10 @@ class Index extends Component {
 
   toInfo(){
     const id = '123'
+    console.log('this.MDay', this.MDay)
+    this.MDialog.open()
+    this.MDay.tell()
+    return 
     Taro.navigateTo({
       url: `/pages/info/index?id=${id}&type=${1}`
     })
@@ -87,7 +101,21 @@ class Index extends Component {
             className='img'
             src={avatarUrl}
           />
-      <MDAY name={name} time={new Date()}></MDAY>
+      <MDay ref={this.refDay} name={name} time={new Date()}></MDay>
+      <MList/>
+      <Dialog
+          renderHeader={
+            <View className='welcome-message'>Welcome!</View>
+          }
+          renderFooter={
+            <Button className='close'>Close</Button>
+          }
+          ref={this.refDialog}
+        >
+          <View className="dialog-message">
+            Thank you for using Taro.
+          </View>
+        </Dialog>
       <view className='page-section-spacing'>
         <scroll-view className='scroll-view_H' scroll-x onScroll={this.scroll} style='width: 100%'>
           <view  className='scroll-view-item demo-text-1'></view>
