@@ -2,6 +2,7 @@ import Taro from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import PropTypes from 'prop-types';
 
+import './index.less'
 
 function formatName() {
   const val = Taro.$dayjs().hour();
@@ -29,22 +30,15 @@ function formatName() {
 }
 //defaultProps
 
-function tell (){
-  console.log('tell')
-}
 
 const MDAY = props => {
   const {name, time} = props
   console.log('name, time: ', name, time);
 
-  function tell(){
-    console.log('tell')
-    console.log('tell')
-  }
   return (
-    <View>
-      <Text>{formatName()}</Text>
-      <Text>{name}</Text>
+    <View className='greeting'>
+      <Text className='format'>{formatName()}, </Text>
+      <Text className='name'>{name}!</Text>
     </View>
   )
 }

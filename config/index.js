@@ -4,8 +4,9 @@ const path = require('path');
 const config = {
   projectName: 'coolBrain',
   date: '2020-3-17',
-  designWidth: 750,
+  designWidth: 375,
   deviceRatio: {
+    '375': 1 / 2,
     '640': 2.34 / 2,
     '750': 1,
     '828': 1.81 / 2
@@ -34,7 +35,8 @@ const config = {
   alias: {
     '@/utils': path.resolve(__dirname, '../src/utils'),
     '@/components': path.resolve(__dirname, '../src/components'),
-    '@/servers': path.resolve(__dirname, '../src/servers')
+    '@/servers': path.resolve(__dirname, '../src/servers'),
+    '@/assets': path.resolve(__dirname, '../src/assets')
   },
   defineConstants: {},
   mini: {
@@ -58,7 +60,7 @@ const config = {
       url: {
         enable: true,
         config: {
-          limit: 10240 // 设定转换尺寸上限
+          limit: 102400 // 设定转换尺寸上限
         }
       },
       cssModules: {

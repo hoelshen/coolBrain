@@ -2,6 +2,11 @@ import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import './index.less'
 
+
+import head from '@/assets/head.png';
+import share from '@/assets/share.png';
+import btn from '@/assets/btn.png';
+
 export default class Index extends Component {
   config = {
     navigationBarTitleText: '个人页面'
@@ -39,9 +44,18 @@ export default class Index extends Component {
   }
   
   render () {
+
     return (
-      <View className='head'>
-        <Text>1</Text>
+      <View className='body'>
+        <View className='head'>
+          <Text>我的冥想</Text>
+        </View>
+        <View>
+       {/*    <Image
+            className='img'
+            src={avatarUrl}
+          /> */}
+        </View>
       </View>
     )
   }

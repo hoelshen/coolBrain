@@ -1,5 +1,5 @@
 import Taro, { Component  } from "@tarojs/taro";
-import { View,Image } from "@tarojs/components";
+import { View,Image,Button, ScrollView } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import  MDay from "@/components/Mday";
 import  MList  from "@/components/MList";
@@ -8,7 +8,9 @@ import Dialog  from '@/components/MDialog';
 import { getResultData_servers } from '@/servers/servers'
 
 import "./index.less";
-
+import home1 from '@/assets/home1.png';
+import home2 from '@/assets/home2.png';
+import home3 from '@/assets/home3.png';
 
 @inject("counterStore")
 @observer
@@ -79,62 +81,77 @@ class Index extends Component {
   componentWillReact() {
     console.log("componentWillReact");
   }
-  scroll(e) {
+  onScroll(e) {
     console.log(e)
   }
+  scrollTop(e){
+    console.log('e: ', e);
 
+  }
+  onScrollToUpper(){
+
+  }
   toInfo(){
     const id = '123'
-    console.log('this.MDay', this.MDay)
-    this.MDialog.open()
-    this.MDay.tell()
-    return 
     Taro.navigateTo({
       url: `/pages/info/index?id=${id}&type=${1}`
     })
     console.log('22')
   }
   render() {
+    const scrollStyle = {
+      width: '375px',
+      'white-space': 'nowrap'
+    }
+    const scrollTop = 0
+    const Threshold = 20
+    const vStyleA = {
+      width: '286px',
+      height: '483px',
+      'background-image': home1,
+      'margin-right': '20px',
+      display: 'inline-block',
+    }
+    const vStyleB = {
+      width: '286px',
+      height: '483px',
+      display: 'inline-block',
+      'margin-right': '20px',
+      'background-image': home2,
+    }
+    const vStyleC = {
+      width: '286px',
+      height: '483px',
+      'margin-right': '20px',
+      display: 'inline-block',
+      'background-image': home3,
+    }
+
     const {avatarUrl, name} = this.state;
     return <View className='home' onClick={this.toInfo}>
           <Image
             className='img'
             src={avatarUrl}
           />
-      <MDay ref={this.refDay} name={name} time={new Date()}></MDay>
-      <MList/>
-      <Dialog
-          renderHeader={
-            <View className='welcome-message'>Welcome!</View>
-          }
-          renderFooter={
-            <Button className='close'>Close</Button>
-          }
-          ref={this.refDialog}
-        >
-          <View className="dialog-message">
-            Thank you for using Taro.
+          <MDay ref={this.refDay} name={name} time={new Date()} className='MDay'></MDay>
+          <View className='pageSectionSpacing'>
+              <ScrollView
+                className='scrollview'
+                scrollX
+                scrollWithAnimation
+                scrollTop={scrollTop}
+                style={scrollStyle}
+                lowerThreshold={Threshold}
+                upperThreshold={Threshold}
+                onScrollToUpper={this.onScrollToUpper.bind(this)}
+                onScroll={this.onScroll}
+              >
+                <Image style={vStyleA} src={home1}>A</Image>
+                <Image style={vStyleB} src={home2}>B</Image>
+                <Image style={vStyleC} src={home3}>C</Image>
+              </ScrollView>
           </View>
-        </Dialog>
-      <view className='page-section-spacing'>
-        <scroll-view className='scroll-view_H' scroll-x onScroll={this.scroll} style='width: 100%'>
-          <view  className='scroll-view-item demo-text-1'></view>
-          <view  className='scroll-view-item demo-text-2'></view>
-          <view  className='scroll-view-item demo-text-3'></view>
-        </scroll-view>
-      </view>
-
       <View />
-
-      <View></View>
-
-      <View>{false}</View>
-
-      <View>{null}</View>
-
-      <View>{undefined}</View>
-
-      <View>{true}</View>
     </View>;
   }
 }
