@@ -1,38 +1,48 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Image, Text, Button } from "@tarojs/components";
+import { observer, inject } from "@tarojs/mobx";
+import share from '@/assets/share.png';
+
+
 import './index.less'
 
 
-import head from '@/assets/head.png';
-import share from '@/assets/share.png';
-import btn from '@/assets/btn.png';
 
+@inject('userStore')
+@observer
 export default class Index extends Component {
-  config = {
-    navigationBarTitleText: '个人页面'
-  }
 
-  componentWillMount () { 
+
+  componentWillMount() {
     console.log(22)
     console.log(this.$router.params) //
   }
 
-  componentDidMount () { 
+
+  componentDidMount() {
     console.log('66')
 
   }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { 
+  static options = {
+    addGlobalClass: true
+  }
+
+  config = {
+    navigationBarTitleText: '个人页面'
+  }
+
+  componentDidShow() {
     console.log('88')
 
   }
 
-  componentDidHide () { }
+  componentDidHide() { }
 
 
-  onShareAppMessage (res) {
+  onShareAppMessage(res) {
     if (res.from === 'button') {
       // 来自页面内转发按钮
       console.log(res.target)
@@ -42,19 +52,38 @@ export default class Index extends Component {
       path: '/page/user?id=123'
     }
   }
-  
-  render () {
+  toHome() {
+    Taro.navigateTo({ url: `/pages/home/index` })
+  }
+  static externalClasses = ['flex']
+  render() {
+    const { userStore: { avatarUrl, name, useTime, useDay } } = this.props
 
     return (
-      <View className='body'>
+      <View className='body flex column j-around'>
         <View className='head'>
-          <Text>我的冥想</Text>
+          <View className='shareDiv'>
+            <Text className='mind'>我的冥想</Text>
+            <Image className='share' src={share}></Image>
+          </View>
+          <View className='boder column'>
+            <Image
+              className='avatarImg'
+              src={avatarUrl}
+            />
+            <Text className='name'>{name}</Text>
+          </View>
         </View>
-        <View>
-       {/*    <Image
-            className='img'
-            src={avatarUrl}
-          /> */}
+        <View className='contain flex column a-center'>
+          <Text className='min'>累计冥想分钟</Text>
+          <Text className='minNum'>{useTime}</Text>
+          <Text className='minText'>MIN</Text>
+          <Text className='day'>累计冥想天数</Text>
+          <Text className='dayNum'>{useDay}</Text>
+          <Text className='dayText'>DAY</Text>
+        </View>
+        <View className='foot'>
+          <Button className='btn' onClick={this.toHome}>继续冥想</Button>
         </View>
       </View>
     )

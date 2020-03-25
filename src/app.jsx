@@ -5,6 +5,7 @@ import Index from './pages/index'
 
 import dayjs from '@/utils/day';
 import counterStore from './store/counter'
+import userStore from './store/user'
 
 import './app.less'
 
@@ -15,7 +16,8 @@ import './app.less'
 // }
 
 const store = {
-  counterStore
+  counterStore,
+  userStore
 }
 /* 
 const MyContext = Taro.createContext(defaultValue)
