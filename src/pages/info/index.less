@@ -1,12 +1,16 @@
 .body{
   height: 100vh;
   .head{
-    width: 375px;
-    height:230px;
-    background-size: cover;
-    background: url('../../assets/head.png') no-repeat;
     .shareDiv{
+      position: relative;
+      width: 375px;
+      height:150px;
+      background-size: cover;
+      background: url('../../assets/head.png') no-repeat;
       .mind{
+        position: absolute;
+        top: 43px;
+        left: 33px;
         width:114px;
         height:28px;
         font-size:28px;
@@ -18,74 +22,66 @@
       .share{
         width:39px;
         height:39px;
+        position: absolute;
+        top: 34px;
+        right: 11px; 
         border-radius: 50%;;
         background:rgba(255,255,255,1);
         opacity:0.5;
       }
     }
-    .avatarImg{
-      border-radius: 50%;
-      width: 55px;
-      height: 55px;
-    }
-    .name{
-      width:81px;
-      height:20px;
-      font-size:20px;
-      font-family:SourceHanSansCN-Regular,SourceHanSansCN;
-      font-weight:400;
-      color:rgba(74,74,74,1);
-      line-height:30px;
+    .boder{
+      text-align: center;
+      .avatarImg{
+        border-radius: 50%;
+        width: 55px;
+        height: 55px;
+      }
+      .name{
+        margin-top: 34px;
+        font-size:20px;
+        font-family:SourceHanSansCN-Regular,SourceHanSansCN;
+        font-weight:400;
+        color:rgba(74,74,74,1);
+        line-height:30px;
+        display: block;
+      }
     }
   }
+
   .contain{
     text-align: center;
-
+    padding-top: 33px;
     .day .min{
-      width:92px;
-      height:15px;
       font-size:15px;
       font-family:SourceHanSansCN-Light,SourceHanSansCN;
       font-weight:300;
       color:rgba(74,74,74,1);
-      line-height:23px;
     }
     .minNum{
-      width:111px;
-      height:92px;
       font-size:92px;
       font-family:SourceHanSansCN-Bold,SourceHanSansCN;
       font-weight:bold;
       color:rgba(74,74,74,1);
-      line-height:138px;
       letter-spacing:1px;
     }
     .minText{
-      width:48px;
-      height:24px;
       font-size:24px;
       font-family:SourceHanSansCN-Bold,SourceHanSansCN;
       font-weight:bold;
       color:rgba(74,74,74,1);
-      line-height:36px;
     }
     .dayNum{
-      width:39px;
-      height:64px;
       font-size:64px;
       font-family:SourceHanSansCN-Bold,SourceHanSansCN;
       font-weight:bold;
       color:rgba(74,74,74,1);
-      line-height:96px;
     }
     .dayText{
-      width:35px;
-      height:18px;
       font-size:18px;
       font-family:SourceHanSansCN-Bold,SourceHanSansCN;
       font-weight:bold;
       color:rgba(74,74,74,1);
-      line-height:27px;
     }
   }
   .foot{
@@ -94,6 +90,8 @@
       height:61px;
       background:rgba(140,201,189,1);
       border-radius:30px;
+      line-height: 122rpx;
+      margin-bottom: 27px;
     }
   }
 }

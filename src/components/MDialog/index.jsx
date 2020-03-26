@@ -1,8 +1,7 @@
 
 /* eslint-disable import/first */
 import Taro, { Component } from '@tarojs/taro'
-import { Provider } from '@tarojs/mobx'
-import Index from './pages/index'
+import { View,  } from '@tarojs/components'
 
 import './index.less'
 

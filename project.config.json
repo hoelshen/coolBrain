@@ -46,7 +46,14 @@
 					"id": 1,
 					"name": "播放",
 					"pathName": "pages/playVideo/index",
-					"query": "isPlay=1",
+					"query": "type=0&id=A",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "首页",
+					"pathName": "pages/index/index",
+					"query": "",
 					"scene": null
 				}
 			]

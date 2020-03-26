@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
-import { useLocalStore,  observer } from '@tarojs/mobx'
+import { observer } from '@tarojs/mobx'
 
 import './index.scss'
 

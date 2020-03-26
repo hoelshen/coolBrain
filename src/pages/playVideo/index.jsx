@@ -1,35 +1,51 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Image, Button } from '@tarojs/components'
+import classNames from 'classnames';
+import { View, Text, Image, Picker } from '@tarojs/components'
+import topSign from '@/assets/topSign.png';
 
+import play from '@/assets/play.png';
+import stop from '@/assets/stop.png';
 
 import bottomSign from '@/assets/bottomSign.png';
-import mind from '@/assets/btn-wc .png';
-
-
-
+import mindImg from '@/assets/btn-wc.png';
 import share from '@/assets/fx.png';
+
+
+
+import * as types from '@/constants/PlayTypes.js';
 
 import './index.less'
 
-export default class Index extends Component {
-  config = {
-    navigationBarTitleText: '播放'
-  }
+console.log('types: ', types);
 
+
+export default class Index extends Component {
   state = {
-    isPlay: true
+    type: 0,
+    id: 'A',
+    seMin: [10, 15, 30],
+    cheMin: 10,
+    seVoice: [{ name: '男声', id: 0 }, { name: '女声', id: 1 }],
+    cheVoice: '男声',
+    playState: types.PLAY_START,
+    Triangle: true
   }
   componentWillMount() {
   }
 
   componentDidMount() {
     console.log(this.$router.params)
-    const { isPlay } = this.$router.params;
-    console.log('isPlay: ', isPlay);
-    this.setState({ isPlay: isPlay })
+    const { type, id } = this.$router.params;
+    console.log('type: ', type, id);
+    this.setState({ type: type, id: id })
+
   }
 
   componentWillUnmount() { }
+
+  config = {
+    navigationBarTitleText: '播放'
+  }
 
   componentDidShow() { }
 
@@ -46,31 +62,87 @@ export default class Index extends Component {
       path: '/page/user?id=123'
     }
   }
-  mind() {
-    Taro.navigateTo({ url: `/pages/home/index` })
-  }
+  choiceMin() {
 
+  }
+  choiceVideo() {
+
+  }
+  onChangeVoice(e) {
+    console.log('e222222: ', e.detail.value);
+    this.setState({
+      cheVoice: this.state.seVoice[e.detail.value]['name']
+    })
+  }
+  onChangeMin(e) {
+    this.setState({
+      cheMin: this.state.seMin[e.detail.value]
+    })
+  }
+  clickPlay() {
+    const { playState } = this.state;
+    if (playState === 'PLAY_START') {
+      this.setState({ playState: 'PLAY_LOAD', Triangle: false })
+    } else if (playState === 'PLAY_LOAD') {
+      this.setState({ playState: 'PLAY_STOP', Triangle: true })
+    } else {
+      this.setState({ playState: 'PLAY_START', Triangle: false })
+    }
+  }
+  mind() {
+    Taro.reLaunch({ url: `/pages/index/index` })
+  }
+  toHome() {
+    Taro.reLaunch({ url: `/pages/index/index` })
+  }
   render() {
-    const { isPlay } = this.state;
-    console.log('isPlay: ', isPlay);
+    const { type, id, playState, Triangle } = this.state;
+    const vStyle = classNames({
+      playing: true,
+      'vStyle-a': id === 'A',
+      'vStyle-b': id === 'B',
+      'vStyle-c': id === 'C'
+    });
+    const pStyle = classNames(
+      'circle',
+      { 'whiteCircle': playState === 'PLAY_START' },
+      { 'loadCircle': playState === 'PLAY_LOAD' },
+      { 'blueCircle': playState === 'PLAY_STOP' }
+    )
+
     return (
       <View className='contain'>
-        {isPlay === 1
-          ? <View className='playing'>
-            已登录
+        {type == 0
+          ? <View className={vStyle}>
+            <View className={`${pStyle}`} onClick={this.clickPlay}>
+              {Triangle
+                ? <Image className='Triangle' src={play}></Image>
+                :
+                <Image className='Triangle' src={stop}></Image>
+              }
+            </View>
+            <View class='min'>
+              <Picker mode='selector' range={this.state.seMin} onChange={this.onChangeMin}>
+                <View className='num'>
+                  {this.state.cheMin} min
+                  </View>
+              </Picker>
+            </View>
+            <View class='voice'>
+              <Picker mode='selector' range={this.state.seVoice}  rangeKey="{{'name'}}" onChange={this.onChangeVoice}>
+                <View className='num'>
+                  {this.state.cheVoice}
+                </View>
+              </Picker>
+            </View>
           </View>
           : <View className='played'>
-
-            <View
-              className='head'
-
-            >
-              <Button class='mind' onClick={this.mind}>
-                <Image
-                  className='mindImg'
-                  src={mind}
-                ></Image>
-              </Button>
+            <View className='head'>
+              <Image
+                onClick={this.toHome}
+                className='mindImg'
+                src={mindImg}
+              ></Image>
             </View>
             <Image
               className='iconImg topSign'

@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/sjh/.nvm/versions/node/v12.13.1/bin/node /Users/sjh/.npm-global/bin/yarn
+  /Users/sjh/.nvm/versions/node/v12.13.1/bin/node /Users/sjh/.npm-global/bin/yarn add classnames
 
 PATH: 
-  /Users/sjh/.npm-global/bin:/bin:/usr/bin:/usr/local/bin:/Users/sjh/.nvm/versions/node/v12.13.1/bin:/Users/sjh/.npm-global/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/sjh/flutter/bin:/Library/Frameworks/Mono.framework/Versions/6.0.0/bin:/Users/sjh/.android-sdk-macosx/platform-tools/:/usr/local/bin
+  /Users/sjh/.npm-global/bin:/bin:/usr/bin:/usr/local/bin:/Users/sjh/.npm-global/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/sjh/.npm-global/bin:/Users/sjh/.nvm/versions/node/v12.13.1/bin:/Library/Frameworks/Python.framework/Versions/3.7/bin:/Users/sjh/flutter/bin:/Library/Frameworks/Mono.framework/Versions/6.0.0/bin:/Users/sjh/.android-sdk-macosx/platform-tools/:/Users/sjh/flutter/bin:/Library/Frameworks/Mono.framework/Versions/6.0.0/bin:/Users/sjh/.android-sdk-macosx/platform-tools/:/usr/local/bin
 
 Yarn version: 
   1.17.3
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: EINVAL: invalid argument, unlink '/Users/sjh/Documents/coolBrain/node_modules/content-disposition/node_modules/safe-buffer'
+  Error: EINVAL: invalid argument, unlink '/Users/sjh/Documents/coolBrain/node_modules/dom-serializer/node_modules/domelementtype'
 
 npm manifest: 
   {

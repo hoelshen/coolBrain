@@ -21,7 +21,6 @@ export default class Index extends Component {
 
   componentDidMount() {
     console.log('66')
-
   }
 
   componentWillUnmount() { }
@@ -53,11 +52,11 @@ export default class Index extends Component {
     }
   }
   toHome() {
-    Taro.navigateTo({ url: `/pages/home/index` })
+    Taro.navigateTo({ url: `/pages/index/index` })
   }
   static externalClasses = ['flex']
   render() {
-    const { userStore: { avatarUrl, name, useTime, useDay } } = this.props
+    const { userStore: {  name, useTime, useDay } } = this.props
 
     return (
       <View className='body flex column j-around'>
@@ -67,10 +66,10 @@ export default class Index extends Component {
             <Image className='share' src={share}></Image>
           </View>
           <View className='boder column'>
-            <Image
+     {/*        <Image
               className='avatarImg'
               src={avatarUrl}
-            />
+            /> */}
             <Text className='name'>{name}</Text>
           </View>
         </View>

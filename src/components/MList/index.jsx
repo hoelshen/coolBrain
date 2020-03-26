@@ -17,18 +17,19 @@ class MList extends Component {
     inputText: ''
   }
 
-  onNewTodo() {
-    this.setState({
-      todos: [...this.state.todos, createNewTodo(this.state.inputText)]
-    })
-  }
+
 
   componentWillMount(){
     console.log(111111111111)
     
    /*  this.onNewTodo() */
   }
-
+  onNewTodo() {
+    this.setState({
+      todos: [...this.state.todos, createNewTodo(this.state.inputText)]
+    })
+  }
+  
   renderHeader(header){
     return <View>{header}</View>
   }

@@ -2,9 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, ScrollView } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import MDay from "@/components/Mday";
-import home1 from '@/assets/home1.png';
-import home2 from '@/assets/home2.png';
-import home3 from '@/assets/home3.png';
+
 
 import '../../app.less';
 import "./index.less";
@@ -13,8 +11,6 @@ import "./index.less";
 @inject('userStore')
 @observer
 class Index extends Component {
-  refDay = (node) => this.MDay = node //  `this.MDay` 会变成 `MDay` 组件实例的引用
-  refDialog = (node) => this.MDialog = node //  `this.MDialog` 会变成 `MDialog` 组件实例的引用
 
   componentWillMount() {
     const { userStore } = this.props;
@@ -35,17 +31,19 @@ class Index extends Component {
         }
       }.bind(this)
     });
-
-/*     const params = {
-      data: 1,
-      user: 1
-    }
-    getResultData_servers(params).then(res => {
-      console.log(res)
-    }).catch(err => {
-      console.log(err)
-    })
-    console.log(5) */
+    const refDay = (node) => this.MDay = node //  `this.MDay` 会变成 `MDay` 组件实例的引用
+    const refDialog = (node) => this.MDialog = node //  `this.MDialog` 会变成 `MDialog` 组件实例的引用
+  
+    /*     const params = {
+          data: 1,
+          user: 1
+        }
+        getResultData_servers(params).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
+        console.log(5) */
   }
 
 
@@ -78,9 +76,13 @@ class Index extends Component {
 
   }
   toInfo() {
-    const id = '123'
     Taro.navigateTo({
-      url: `/pages/info/index?id=${id}&type=${1}`
+      url: `/pages/info/index`
+    })
+  }
+  toPlay(id) { 
+    Taro.navigateTo({
+      url: `/pages/playVideo/index?id=${id}&type=${0}`
     })
   }
   render() {
@@ -90,32 +92,11 @@ class Index extends Component {
     }
     const scrollTop = 0
     const Threshold = 20
-    const vStyleA = {
-      width: '286px',
-      height: '483px',
-      'background-image': home1,
-      'margin-right': '20px',
-      display: 'inline-block',
-    }
-    const vStyleB = {
-      width: '286px',
-      height: '483px',
-      display: 'inline-block',
-      'margin-right': '20px',
-      'background-image': home2,
-    }
-    const vStyleC = {
-      width: '286px',
-      height: '483px',
-      'margin-right': '20px',
-      display: 'inline-block',
-      'background-image': home3,
-    }
-
     const { userStore: { avatarUrl, name } } = this.props
 
-    return <View className='home' onClick={this.toInfo}>
+    return <View className='home'>
       <Image
+        onClick={this.toInfo}
         className='img'
         src={avatarUrl}
       />
@@ -132,9 +113,9 @@ class Index extends Component {
           onScrollToUpper={this.onScrollToUpper.bind(this)}
           onScroll={this.onScroll}
         >
-          <Image style={vStyleA} src={home1}>A</Image>
-          <Image style={vStyleB} src={home2}>B</Image>
-          <Image style={vStyleC} src={home3}>C</Image>
+          <View className='vStyleA' onClick={this.toPlay.bind(this, 'A')}>A</View>
+          <View className='vStyleB' onClick={this.toPlay.bind(this, 'B')}>B</View>
+          <View className='vStyleC' onClick={this.toPlay.bind(this, 'C')}>C</View>
         </ScrollView>
       </View>
       <View />

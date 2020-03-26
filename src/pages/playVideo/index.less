@@ -1,12 +1,17 @@
+@images: "../../assets";
 .contain{
   height: 100vh;
   .played{
     .head{
-      background: url('assets/top-bg.png');
-      background-size: cover;
       width: 375px;
-      .mind{
-
+      height: 295px;
+      background: url('@{images}/top-bg.png') no-repeat;
+      margin-right: 20px;
+      display: inline-block;
+      .mindImg{
+        width: 195px;
+        height: 61px;
+        margin: 77px 90px;
       }
     }
     .topSign{
@@ -39,7 +44,103 @@
     }
   }
   .playing{
-    
+    height:  100%;
+    display: inline-block;
+    width: 375px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    .voice,
+    .min{
+      width:141px;
+      height:61px;
+      background:rgba(140,201,189,1);
+      border-radius:12px;
+      border:2px solid rgba(255,255,255,1);
+      text-align: center;
+      line-height: 61px;
+      .num{
+        height:61px;
+        font-size:20px;
+        font-family:SourceHanSansCN-Medium,SourceHanSansCN;
+        font-weight:500;
+        color:rgba(191,233,225,1);
+        line-height:61px;
+        position: relative;
+        padding-right: 15px;
+        &::before {
+          content: "";
+          width: 0px;
+          height: 0px;
+          border-top: 7px solid rgba(255,255,255,1);
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          position: absolute;
+          top: 26px;
+          left: 105px;
+        }
+      }
+      .text{
+        height:61px;
+        font-size:20px;
+        font-family:SourceHanSansCN-Medium,SourceHanSansCN;
+        font-weight:500;
+        padding-right: 15px;
+        color:rgba(255,255,255,1);
+        line-height:61px;
+        position: relative;
+        display: block;
+        &::before {
+          content: "";
+          width: 0px;
+          height: 0px;
+          border-top: 7px solid rgba(255,255,255,1);
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          position: absolute;
+          top: 26px;
+          left: 105px;
+        }
+      }
+    }
+    .circle{
+      width: 184px;
+      height: 179px;
+      text-align: center;
+      line-height: 179px;
+    }
+    .blueCircle{
+      background: url('@{images}/blueCircle.png') no-repeat;
+      width: 184px;
+      height: 179px;
+      text-align: center;
+      line-height: 179px;
+    }
+    .loadCircle{
+      background: url('@{images}/load.png') no-repeat;
+      width: 184px;
+      height: 179px;
+      text-align: center;
+      line-height: 179px;
+    }
+    .whiteCircle{
+      background: url('@{images}/whiteCircle.png') no-repeat;
+
+    }
+    .Triangle{
+      width: 30px;
+      height: 30px;
+    }
+  }
+  .vStyle-a{
+    background: url('@{images}/green-bg.png') no-repeat;
+  }
+  .vStyle-b{
+    background: url('@{images}/blue-bg.png') no-repeat;
+  }
+  .vStyle-c{
+    background: url('@{images}/red-bg.png') no-repeat;
   }
 }
 
