@@ -14,11 +14,6 @@ class Index extends Component {
 
   componentWillMount() {
     const { userStore } = this.props;
-    Taro.loadFontFace({
-      family: 'Bitstream Vera Serif Bold',
-      source: 'url("https://sungd.github.io/Pacifico.ttf")',
-      success: console.log
-    })
     Taro.getSetting({
       success: function (res) {
         if (res.authSetting["scope.userInfo"]) {
@@ -56,6 +51,7 @@ class Index extends Component {
     } else if (process.env.TARO_ENV === 'h5') {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
+
   }
 
   componentDidShow() {
@@ -76,8 +72,21 @@ class Index extends Component {
 
   }
   toInfo() {
-    Taro.navigateTo({
+/*     Taro.navigateTo({
       url: `/pages/info/index`
+    }) */
+ 
+    Taro.chooseMessageFile({
+      count: 10,
+      type: 'file',
+      success (res) {
+        // tempFilePath可以作为img标签的src属性显示图片
+        const tempFilePaths = res.tempFiles[0].path
+        const name = Math.random() * 1000000;
+        const cloudPath = name + tempFilePaths.match(/\.[^.]+?$/)[0]
+        Taro.$upload(cloudPath,tempFilePaths);
+        console.log('tempFilePaths: ', cloudPath, tempFilePaths);
+      }
     })
   }
   toPlay(id) { 

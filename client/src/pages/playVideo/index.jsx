@@ -30,15 +30,18 @@ export default class Index extends Component {
     playState: types.PLAY_START,
     Triangle: true
   }
+  
   componentWillMount() {
+    Taro.cloud.init();
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log(this.$router.params)
     const { type, id } = this.$router.params;
     console.log('type: ', type, id);
     this.setState({ type: type, id: id })
-
+    let res = await Taro.cloud.callFunction();
+    console.log('res.result.data', res.result.data);
   }
 
   componentWillUnmount() { }
@@ -95,6 +98,7 @@ export default class Index extends Component {
   toHome() {
     Taro.reLaunch({ url: `/pages/index/index` })
   }
+
   render() {
     const { type, id, playState, Triangle } = this.state;
     const vStyle = classNames({

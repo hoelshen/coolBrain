@@ -3,6 +3,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
 import Index from './pages/index'
 
+import upload from '@/utils/upload';
 import dayjs from '@/utils/day';
 import counterStore from './store/counter'
 import userStore from './store/user'
@@ -48,7 +49,8 @@ class App extends Component {
   }
   componentWillMount () {
     console.log(1)
-    Taro.$dayjs = dayjs
+    Taro.$dayjs = dayjs;
+    Taro.$upload = upload;
   }
   componentDidMount () {
     console.log(2,this.$router.params)

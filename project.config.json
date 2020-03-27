@@ -1,8 +1,9 @@
 {
-	"miniprogramRoot": "dist/",
+	"miniprogramRoot": "client/dist/",
+	"cloudfunctionRoot": "cloud/",
 	"projectname": "coolBrain",
 	"description": "酷炫脑",
-	"appid": "wx70677f7a3878565b",
+	"appid": "wxe89ec88bccf719ac",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,
@@ -12,6 +13,7 @@
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,
