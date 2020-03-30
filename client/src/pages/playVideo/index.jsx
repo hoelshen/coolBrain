@@ -40,7 +40,7 @@ export default class Index extends Component {
     const { type, id } = this.$router.params;
     console.log('type: ', type, id);
     this.setState({ type: type, id: id })
-    let res = await Taro.cloud.callFunction();
+    let res = await Taro.cloud.callFunction({});
     console.log('res.result.data', res.result.data);
   }
 

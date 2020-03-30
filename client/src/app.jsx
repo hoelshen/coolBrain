@@ -25,14 +25,23 @@ const MyContext = Taro.createContext(defaultValue)
 <MyContext.Provider va/> */
 
 class App extends Component {
-  static options = {
-    addGlobalClass: true
+
+
+  componentWillMount () {
+    console.log(1)
+    Taro.$dayjs = dayjs;
+    Taro.$upload = upload;
+  }
+
+  componentDidMount () {
+    console.log(2,this.$router.params)
   }
   config = {
     pages: [
       'pages/index/index',
       'pages/info/index',
-      'pages/playVideo/index'
+      'pages/playVideo/index',
+      'pages/test/index',
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -47,15 +56,9 @@ class App extends Component {
       }
     }
   }
-  componentWillMount () {
-    console.log(1)
-    Taro.$dayjs = dayjs;
-    Taro.$upload = upload;
+  static options = {
+    addGlobalClass: true
   }
-  componentDidMount () {
-    console.log(2,this.$router.params)
-  }
-
   componentDidShow () {
     console.log(3)
 
