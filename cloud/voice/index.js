@@ -1,4 +1,5 @@
 const cloud = require("wx-server-sdk");
+
 const config = {
   env: "pro-dcxrw",
   doc: "voice-list",
@@ -9,7 +10,13 @@ const config = {
 cloud.init();
 exports.main = async (event, context) => {
   console.log('event: ', event);
-  const { env, doc, rule, limit,field } = event;
+  const {
+    env,
+    doc,
+    rule,
+    limit,
+    field
+  } = event;
   const db = cloud.database({
     env: env || config.env
   });

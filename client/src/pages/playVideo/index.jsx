@@ -16,10 +16,7 @@ import * as types from '@/constants/PlayTypes.js';
 
 import './index.less'
 
-console.log('types: ', types);
-
-
-export default class Index extends Component {
+class Index extends Component {
   state = {
     type: 0,
     id: 'A',
@@ -27,29 +24,66 @@ export default class Index extends Component {
     cheMin: 10,
     seVoice: [{ name: '男声', id: 0 }, { name: '女声', id: 1 }],
     cheVoice: '男声',
+    videoUrl: '',
     playState: types.PLAY_START,
     Triangle: true
   }
-  
   componentWillMount() {
     Taro.cloud.init();
   }
 
   async componentDidMount() {
-    console.log(this.$router.params)
+    const that = this;
+    console.log(this.$router.params);
     const { type, id } = this.$router.params;
-    console.log('type: ', type, id);
     this.setState({ type: type, id: id })
-    let res = await Taro.cloud.callFunction();
-    console.log('res.result.data', res.result.data);
+    await Taro.cloud.callFunction({
+      // 云函数名称
+      name: 'voice',
+      // 传给云函数的参数
+    })
+    .then(res => {
+      const data = res.result.data;
+      if(data.length > 0){
+        that.fileID = data[0].voicelist;
+      }
+    })
+    .catch(console.error)
+    Taro.cloud.getTempFileURL({
+      fileList: [this.fileID],
+      success: res => {
+        console.log('res: ', res);
+        if(res.fileList.length >0){
+          const { tempFileURL }= res.fileList[0];
+          that.setState({videoUrl: tempFileURL})
+        } else {
+          Taro.showToast({title: '获取音频失败',icon:'none'})
+        }
+      },
+      fail: err => {
+        console.log('err: ', err);
+        // handle error
+      }
+    })
+
   }
 
+
+  //TODO
+  //1.完成背景图片与样式的同步更新
+  //2.将背景音乐配合
+  //3.登陆的形式（待确认）
+  //4.配合调男女、调时间
+  //5.本地存储相关时间状态
   componentWillUnmount() { }
+  fileID = '';
 
   config = {
-    navigationBarTitleText: '播放'
+    navigationBarBackgroundColor: '#8cc9bd',
+    navigationBarTextStyle: 'white',
+    backgroundColor: '#8cc9bd',
+    backgroundTextStyle: 'light'
   }
-
   componentDidShow() { }
 
   componentDidHide() { }
@@ -83,11 +117,17 @@ export default class Index extends Component {
     })
   }
   clickPlay() {
-    const { playState } = this.state;
+    const { playState, videoUrl } = this.state;
     if (playState === 'PLAY_START') {
       this.setState({ playState: 'PLAY_LOAD', Triangle: false })
+      Taro.playBackgroundAudio({
+        dataUrl: videoUrl,
+        title: 'bg1',
+        coverImgUrl: ''
+      })
     } else if (playState === 'PLAY_LOAD') {
       this.setState({ playState: 'PLAY_STOP', Triangle: true })
+      Taro.stopBackgroundAudio()
     } else {
       this.setState({ playState: 'PLAY_START', Triangle: false })
     }
@@ -168,3 +208,6 @@ export default class Index extends Component {
     )
   }
 }
+
+
+export default Index

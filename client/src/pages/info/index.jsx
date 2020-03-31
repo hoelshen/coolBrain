@@ -1,76 +1,72 @@
-import Taro, { Component } from '@tarojs/taro'
+import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text, Button } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
-import share from '@/assets/share.png';
+import share from "@/assets/share.png";
 
+import "./index.less";
 
-import './index.less'
-
-
-
-@inject('userStore')
+@inject("userStore")
 @observer
-export default class Index extends Component {
-
-
+class Index extends Component {
   componentWillMount() {
-    console.log(22)
-    console.log(this.$router.params) //
+    console.log(22);
+    console.log(this.$router.params);
   }
-
 
   componentDidMount() {
-    console.log('66')
+    console.log("66");
   }
 
-  componentWillUnmount() { }
+  componentWillUnmount() {}
 
   static options = {
     addGlobalClass: true
-  }
+  };
 
   config = {
-    navigationBarTitleText: '个人页面'
-  }
+    navigationBarTitleText: "个人页面",
+    navigationBarBackgroundColor: "#8cc9bd",
+    navigationBarTextStyle: "white"
+  };
 
   componentDidShow() {
-    console.log('88')
-
+    console.log("88");
   }
 
-  componentDidHide() { }
-
+  componentDidHide() {}
 
   onShareAppMessage(res) {
-    if (res.from === 'button') {
+    console.log("res11111111: ", res);
+    if (res.from === "button") {
       // 来自页面内转发按钮
-      console.log(res.target)
+      console.log(res.target);
     }
     return {
-      title: '自定义转发标题',
-      path: '/page/user?id=123'
-    }
+      title: "冥想小程序",
+      path: "/pages/index/index"
+      /* imageUrl: '/common/images/xxx.png' //分享图片 宽高比 5:4 */
+    };
   }
+  
   toHome() {
-    Taro.navigateTo({ url: `/pages/index/index` })
+    Taro.navigateTo({ url: `/pages/index/index` });
   }
-  static externalClasses = ['flex']
   render() {
-    const { userStore: {  name, useTime, useDay } } = this.props
+    const {
+      userStore: { nickName, useTime, useDay }
+    } = this.props;
 
     return (
-      <View className='body flex column j-around'>
+      <View className='body flex column j-between'>
         <View className='head'>
           <View className='shareDiv'>
             <Text className='mind'>我的冥想</Text>
-            <Image className='share' src={share}></Image>
+            <Button className='btn' open-type='share'>
+              <Image className='share' src={share}></Image>
+            </Button>
           </View>
           <View className='boder column'>
-     {/*        <Image
-              className='avatarImg'
-              src={avatarUrl}
-            /> */}
-            <Text className='name'>{name}</Text>
+            <Text className='name'>{nickName}</Text>
           </View>
         </View>
         <View className='contain flex column a-center'>
@@ -82,9 +78,12 @@ export default class Index extends Component {
           <Text className='dayText'>DAY</Text>
         </View>
         <View className='foot'>
-          <Button className='btn' onClick={this.toHome}>继续冥想</Button>
+          <Button className='btn' onClick={this.toHome}>
+            继续冥想
+          </Button>
         </View>
       </View>
-    )
+    );
   }
 }
+export default Index;

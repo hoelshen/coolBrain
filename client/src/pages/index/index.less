@@ -1,30 +1,65 @@
 .home {
   height: 200px;
-  margin: 10px 30px;
 }
-
+.head{
+  margin: 10px 33px;
+}
+.aliasImg::after{
+  border:none;
+}
+.aliasImg{
+  background-color: #fff;
+  border-radius:0;
+  display: inline-block;
+  padding: 0;
+  font-size: 0px;
+}
 .img {
   border-radius: 50%;
   width: 55px;
   height: 55px;
 }
 
-.MDay {
-  margin-top: 10px;
-
-}
-
 .pageSectionSpacing {
   margin-top: 60rpx;
-
+  .scrollview{
+    margin: 0 45px;
+    width: 285px;
+  }
   .vStyleA {
     width: 286px;
     height: 483px;
     background: url('../../assets/home1.png') no-repeat;
     margin-right: 20px;
     display: inline-block;
+    position: relative;
   }
 
+  .mindName{
+    margin: 34px 23px;
+    position: absolute;
+    height:32px;
+    font-size:32px;
+    font-family: 'SourceHanSansCN-Bold,SourceHanSansCN';
+    font-weight:bold;
+    color:rgba(255,255,255,1);
+    line-height:48px;
+    letter-spacing:1px;
+  }
+  .mindInfo{
+    top: 82px;
+    margin: 12px 23px;
+    width: 240px;
+    position: absolute;
+    height:46px;
+    font-size:18px;
+    font-family:SourceHanSansCN-Regular,SourceHanSansCN;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    line-height:23px;
+/*     word-break: break-all;  */
+    white-space: pre-wrap;
+  }
   .vStyleB {
     width: 286px;
     height: 483px;
@@ -55,4 +90,16 @@
   width: 100%;
   height: 300rpx;
   margin-left: 44px;
+}
+
+.greeting{
+  width:227px;
+  height:28px;
+  font-size:28px;
+  font-family:SourceHanSansCN-Medium,SourceHanSansCN;
+  font-weight:500;
+  color:rgba(0,0,0,1);
+  line-height:42px;
+  margin-left: 33px;
+
 }

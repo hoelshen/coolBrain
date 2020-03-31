@@ -6,9 +6,8 @@ import './index.less'
 
 function formatName() {
   const val = Taro.$dayjs().hour();
-  console.log(' jin')
   let value
-  if (7 < val && val <= 11) {
+  if (6 <= val && val <= 11) {
       value = "早上好"
   }
   if (11 < val && val <= 13) {
@@ -23,28 +22,27 @@ function formatName() {
   if (19 <= val && val <= 23) {
       value = "晚上好"
   }
-  if (0 < val && val <= 5) {
+  if (0 <= val && val <= 5) {
       value = "深夜好"
   }
   return value;
 }
-//defaultProps
 
 
 const MDAY = props => {
-  const {name, time} = props
-  console.log('name, time: ', name, time);
+  const {nickName, time} = props
+  console.log('nickName, time: ', nickName, time);
 
   return (
     <View className='greeting'>
       <Text className='format'>{formatName()}, </Text>
-      <Text className='name'>{name}!</Text>
+      <Text className='name'>{nickName}!</Text>
     </View>
   )
 }
 
 MDAY.propTypes = {
-  name: PropTypes.string
+  nickName: PropTypes.string
 };
 
 
