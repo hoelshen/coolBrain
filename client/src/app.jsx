@@ -25,9 +25,16 @@ const MyContext = Taro.createContext(defaultValue)
 <MyContext.Provider va/> */
 
 class App extends Component {
-  componentWillMount() {
+
+
+  componentWillMount () {
+    console.log(1)
     Taro.$dayjs = dayjs;
     Taro.$upload = upload;
+  }
+
+  componentDidMount () {
+    console.log(2,this.$router.params)
   }
 
   componentDidMount() {
@@ -35,7 +42,12 @@ class App extends Component {
   }
   
   config = {
-    pages: ["pages/index/index", "pages/info/index", "pages/playVideo/index"],
+    pages: [
+      'pages/index/index',
+      'pages/info/index',
+      'pages/playVideo/index',
+      'pages/test/index',
+    ],
     window: {
       backgroundTextStyle: "light",
       navigationBarBackgroundColor: "#fff",
@@ -48,8 +60,12 @@ class App extends Component {
         desc: "你的位置信息将用于小程序位置接口的效果展示"
       }
     }
-  };
-  componentDidShow() {}
+  }
+  static options = {
+    addGlobalClass: true
+  }
+  componentDidShow () {
+    console.log(3)
 
   componentDidHide() {
     console.log(4);
