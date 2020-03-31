@@ -40,6 +40,7 @@ class userStore {
 
   @action.bound
   updateInfo(avatarUrl, nickName){
+    console.log('avatarUrl, nickName: ', avatarUrl, nickName);
     this.avatarUrl = avatarUrl
     this.nickName = nickName
   }

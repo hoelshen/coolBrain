@@ -2,6 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text, Button } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import share from "@/assets/share.png";
+import NavBar from "@/components/Navbar/index";
 
 import "./index.less";
 
@@ -57,7 +58,9 @@ class Index extends Component {
     } = this.props;
 
     return (
-      <View className='body flex column j-between'>
+      <View>
+        <NavBar  text='冥想小程序' color='#8CC9BD' />
+        <View className='body flex column j-between'>
         <View className='head'>
           <View className='shareDiv'>
             <Text className='mind'>我的冥想</Text>
@@ -83,6 +86,8 @@ class Index extends Component {
           </Button>
         </View>
       </View>
+      </View>
+
     );
   }
 }

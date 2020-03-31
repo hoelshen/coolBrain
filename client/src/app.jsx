@@ -27,32 +27,24 @@ const MyContext = Taro.createContext(defaultValue)
 class App extends Component {
 
 
-  componentWillMount () {
-    console.log(1)
+  componentWillMount() {
     Taro.$dayjs = dayjs;
     Taro.$upload = upload;
   }
 
-  componentDidMount () {
-    console.log(2,this.$router.params)
-  }
-
   componentDidMount() {
     console.log(2, this.$router.params);
+    Taro.getSystemInfo({})
+    .then(res  => {
+      console.log('res: ', res.statusBarHeight);
+      Taro.$navBarMarginTop =  res.statusBarHeight || 0
+    })
   }
   
   config = {
-    pages: [
-      'pages/index/index',
-      'pages/info/index',
-      'pages/playVideo/index',
-      'pages/test/index',
-    ],
+    pages: ["pages/index/index", "pages/info/index", "pages/playVideo/index"],
     window: {
-      backgroundTextStyle: "light",
-      navigationBarBackgroundColor: "#fff",
-      navigationBarTitleText: "冥想小程序",
-      navigationBarTextStyle: "black"
+      navigationStyle: 'custom',
     },
     requiredBackgroundModes: ["audio"],
     permission: {
@@ -64,8 +56,7 @@ class App extends Component {
   static options = {
     addGlobalClass: true
   }
-  componentDidShow () {
-    console.log(3)
+  componentDidShow() {}
 
   componentDidHide() {
     console.log(4);

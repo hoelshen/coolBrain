@@ -2,6 +2,7 @@ import Taro, { Component } from '@tarojs/taro'
 import classNames from 'classnames';
 import { View, Text, Image, Picker } from '@tarojs/components'
 import topSign from '@/assets/topSign.png';
+import NavBar from "@/components/Navbar/index";
 
 import play from '@/assets/play.png';
 import stop from '@/assets/stop.png';
@@ -20,7 +21,7 @@ class Index extends Component {
   state = {
     type: 0,
     id: 'A',
-    seMin: [10, 15, 30],
+    seMin: [10, 15],
     cheMin: 10,
     seVoice: [{ name: '男声', id: 0 }, { name: '女声', id: 1 }],
     cheVoice: '男声',
@@ -106,7 +107,6 @@ class Index extends Component {
 
   }
   onChangeVoice(e) {
-    console.log('e222222: ', e.detail.value);
     this.setState({
       cheVoice: this.state.seVoice[e.detail.value]['name']
     })
@@ -154,8 +154,16 @@ class Index extends Component {
       { 'blueCircle': playState === 'PLAY_STOP' }
     )
 
+    const vColor = classNames({
+      '#8CC9BD': id === 'A',
+      '#578095': id === 'B',
+      '#DB9598': id === 'C'
+    });
+    
     return (
       <View className='contain'>
+        <NavBar  text='冥想小程序' color={vColor} />
+        
         {type == 0
           ? <View className={vStyle}>
             <View className={`${pStyle}`} onClick={this.clickPlay}>
@@ -165,19 +173,21 @@ class Index extends Component {
                 <Image className='Triangle' src={stop}></Image>
               }
             </View>
-            <View class='min'>
-              <Picker mode='selector' range={this.state.seMin} onChange={this.onChangeMin}>
-                <View className='num'>
-                  {this.state.cheMin} min
-                  </View>
-              </Picker>
-            </View>
-            <View class='voice'>
-              <Picker mode='selector' range={this.state.seVoice}  rangeKey="{{'name'}}" onChange={this.onChangeVoice}>
-                <View className='num'>
-                  {this.state.cheVoice}
+            <View className=''>
+                <View class='min'>
+                  <Picker mode='selector' range={this.state.seMin} onChange={this.onChangeMin}>
+                    <View className='num'>
+                      {this.state.cheMin} min
+                      </View>
+                  </Picker>
                 </View>
-              </Picker>
+                <View class='voice'>
+                  <Picker mode='selector' range={this.state.seVoice}  rangeKey="{{'name'}}" onChange={this.onChangeVoice}>
+                    <View className='num'>
+                      {this.state.cheVoice}
+                    </View>
+                  </Picker>
+                </View>
             </View>
           </View>
           : <View className='played'>

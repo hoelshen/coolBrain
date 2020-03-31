@@ -2,6 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, ScrollView, Button, Text } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import MDay from "@/components/Mday";
+import NavBar from "@/components/Navbar/index";
 
 import headImg from "@/assets/avatar.png";
 
@@ -83,6 +84,7 @@ class Index extends Component {
     console.log("avatarUrl: ", avatarUrl, nickName);
     return (
       <View className='home'>
+        <NavBar  text='冥想小程序' />
         <View className='head'>
           {!avatarUrl ? (
             <Button
@@ -98,11 +100,7 @@ class Index extends Component {
             <Image onClick={this.toInfo} className='img' src={avatarUrl} />
           )}
         </View>
-        <MDay
-          ref={this.refDay}
-          nickName={nickName}
-          time={new Date()}
-        ></MDay>
+        <MDay nickName={nickName} time={new Date()}></MDay>
         <View className='pageSectionSpacing'>
           <ScrollView
             className='scrollview'
