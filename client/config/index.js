@@ -104,3 +104,9 @@ module.exports = function (merge) {
   }
   return merge({}, config, require('./prod'))
 }
+
+export const SHAREINFO = {
+  'title': '分享标题',
+  'path': '路径',
+  'imageUrl': '图片'
+}

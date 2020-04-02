@@ -11,7 +11,7 @@
 		"minified": false
 	},
 	"compileType": "miniprogram",
-	"simulatorType": "冥想小程序",
+	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
@@ -56,12 +56,6 @@
 					"name": "首页",
 					"pathName": "pages/index/index",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "test",
-					"pathName": "pages/test/index",
 					"scene": null
 				}
 			]

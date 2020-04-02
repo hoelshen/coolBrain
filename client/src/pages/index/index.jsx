@@ -12,10 +12,21 @@ import "./index.less";
 @inject("userStore")
 @observer
 class Index extends Component {
+  state = {
+    fileList:[{
+      url: ''
+    },{
+      url: ''
+    },{
+      url: ''
+    }]
+  }
   componentWillMount() {
     const { userStore } = this.props;
+    Taro.cloud.init();
+
     Taro.getSetting({
-      success: function(res) {
+      success: function (res) {
         console.log(res);
         if (res.authSetting && res.authSetting["scope.userInfo"]) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
@@ -42,24 +53,42 @@ class Index extends Component {
     }
   }
 
-  componentDidShow() {}
+  async componentDidShow() {
+    const that = this;
 
-  componentDidHide() {}
+    await Taro.cloud.callFunction({
+      // 云函数名称
+      name: 'voice',
+      // 传给云函数的参数
+    })
+      .then(res => {
+        const data = res.result.data;
+        if (data.length > 0) {
+          that.setState({
+            fileList: data
+          })
+        }
+      })
+      .catch(console.error)
+  }
+
+  componentDidHide() { }
   componentWillReact() {
     console.log("componentWillReact");
   }
   onScroll(e) {
     console.log(e);
   }
-  onScrollToUpper() {}
+  onScrollToUpper() { }
   toInfo() {
     Taro.navigateTo({
       url: `/pages/info/index`
     });
   }
-  toPlay(id) {
+  toPlay(obj) {
+    console.log('obj: ', obj, obj.id, obj.url);
     Taro.navigateTo({
-      url: `/pages/playVideo/index?id=${id}&type=${0}`
+      url: `/pages/playVideo/index?id=${obj.id}&url=${obj.url}&type=${0}`
     });
   }
   onGotUserInfo(e) {
@@ -77,14 +106,16 @@ class Index extends Component {
     };
     const scrollTop = 0;
     const Threshold = 20;
+
     const {
       userStore: { avatarUrl, nickName }
     } = this.props;
-
-    console.log("avatarUrl: ", avatarUrl, nickName);
+    const {fileList} = this.state;
+/*     console.log("avatarUrl: ", avatarUrl, nickName); */
+    console.log(fileList);
     return (
       <View className='home'>
-        <NavBar  text='冥想小程序' />
+        <NavBar text='冥想小程序' color='white' />
         <View className='head'>
           {!avatarUrl ? (
             <Button
@@ -97,8 +128,8 @@ class Index extends Component {
               <Image className='img' src={headImg} />
             </Button>
           ) : (
-            <Image onClick={this.toInfo} className='img' src={avatarUrl} />
-          )}
+              <Image onClick={this.toInfo} className='img' src={avatarUrl} />
+            )}
         </View>
         <MDay nickName={nickName} time={new Date()}></MDay>
         <View className='pageSectionSpacing'>
@@ -113,19 +144,19 @@ class Index extends Component {
             onScrollToUpper={this.onScrollToUpper.bind(this)}
             onScroll={this.onScroll}
           >
-            <View className='vStyleA' onClick={this.toPlay.bind(this, "A")}>
+            <View className='vStyleA' onClick={this.toPlay.bind(this, {id:'A',url: fileList[0].url})}>
               <Text className='mindName'>冥想的名字</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            <View className='vStyleB' onClick={this.toPlay.bind(this, "B")}>
+            <View className='vStyleB' onClick={this.toPlay.bind(this, {id:'B',url: fileList[1].url})}>
               <Text className='mindName'>冥想的名字</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            <View className='vStyleC' onClick={this.toPlay.bind(this, "C")}>
+            <View className='vStyleC' onClick={this.toPlay.bind(this, {id:'C',url: fileList[2].url})}>
               <Text className='mindName'>冥想的名字</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。

@@ -24,12 +24,29 @@ const store = {
 const MyContext = Taro.createContext(defaultValue)
 <MyContext.Provider va/> */
 
-class App extends Component {
+// 挂载分享方法 Component
 
+const SHAREINFO = {
+  'title': '分享标题',
+  'path': '路径',
+  'imageUrl': '图片'
+}
+
+Component.prototype.onShareAppMessage = function () {
+  return SHAREINFO
+}
+class App extends Component {
 
   componentWillMount() {
     Taro.$dayjs = dayjs;
     Taro.$upload = upload;
+    const nav = Taro.navigateTo
+    Taro.navigateTo = (data) => {
+        if (Taro.getCurrentPages().length > 8) {
+            return Taro.redirectTo(data)
+        }
+        return nav(data)
+    }
   }
 
   componentDidMount() {
