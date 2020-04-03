@@ -1,31 +1,59 @@
-
-/* eslint-disable import/first */
 import Taro, { Component } from '@tarojs/taro'
-import { View,  } from '@tarojs/components'
+import { View, Button } from '@tarojs/components'
 
-import './index.less'
+import './modal.scss'
 
-class Dialog extends Component {
-
-  open(){
-    console.log('open')
+class Modal extends Component {
+  constructor() {
+    super(...arguments)
+    this.state = {}
   }
 
-  render () {
+  confirmClick = () => {
+    this.props.onConfirmCallback()
+  }
+
+  cancelClick = () => {
+    this.props.onCancelCallback()
+  }
+
+  authConfirmClick = (e) => {
+    this.props.onConfirmCallback(e.detail)
+    Taro.setStorageSync('isHomeLongHideAuthModal', true)
+
+  }
+
+  preventTouchMove = (e) => {
+    e.stopPropagation()
+  }
+
+  render() {
+    const { title, contentText, cancelText, confirmText} = this.props
     return (
-      <View className='dialog'>
-        <View className='header'>
-          {this.props.renderHeader}
-        </View>
-        <View className='body'>
-          {this.props.children}
-        </View>
-        <View className='footer'>
-          {this.props.renderFooter}
+      <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
+        <View class='toplife_modal_content'>
+          <View class='toplife_modal_title'>{title}</View>
+          <View class='toplife_modal_text'>{contentText}</View>
+          <View class='toplife_modal_btn'>
+            <Button class='toplife_modal_btn_cancel' onClick={this.cancelClick}>{cancelText}</Button>
+            {!isAuth ?
+              <Button class='toplife_modal_btn_confirm' onClick={this.confirmClick}>{confirmText}</Button> :
+            <Button class='toplife_modal_btn_confirm' openType='onGetUserInfo' onGetuserinfo={this.authConfirmClick} onClick={this.cancelClick}>授权</Button> }
+          </View>
         </View>
       </View>
     )
   }
 }
 
-export default Dialog
+Modal.defaultProps = {
+  title: '', //标题
+  contentText: '', //提示的描述
+  cancelText: '取消', //取消
+  confirmText: '确定', //确定
+  isAuth: false, //是否为授权按钮
+  cancelCallback: () => {},
+  confirmCallback: () => {},
+}
+
+export default Modal

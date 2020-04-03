@@ -51,6 +51,11 @@ class Index extends Component {
     } else if (process.env.TARO_ENV === "h5") {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
+    const flag =  Taro.getStorageSync({key: 'isHomeLongHideAuthModal'})
+    if(!flag) = {
+      
+    }
+    console.log('flag: ', flag);
   }
 
   async componentDidShow() {
