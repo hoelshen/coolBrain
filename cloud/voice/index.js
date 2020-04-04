@@ -9,7 +9,7 @@ const config = {
 };
 cloud.init();
 exports.main = async (event, context) => {
-  console.log('event: ', event);
+  console.log('event: ', event, context);
   const {
     env,
     doc,

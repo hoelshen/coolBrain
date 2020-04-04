@@ -27,7 +27,6 @@ class Index extends Component {
 
     Taro.getSetting({
       success: function (res) {
-        console.log(res);
         if (res.authSetting && res.authSetting["scope.userInfo"]) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
           Taro.getUserInfo({
@@ -43,7 +42,7 @@ class Index extends Component {
       }.bind(this)
     });
   }
-  componentDidMount() {
+   componentDidMount() {
     // 如果 ref 的是小程序原生组件，那只有在 didMount 生命周期之后才能通过
     // this.refs.input 访问到小程序原生组件
     if (process.env.TARO_ENV === "weapp") {
@@ -51,27 +50,30 @@ class Index extends Component {
     } else if (process.env.TARO_ENV === "h5") {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
-    const flag =  Taro.getStorageSync({key: 'isHomeLongHideAuthModal'})
-    console.log('flag: ', flag);
-
   }
 
-  async componentDidShow() {
-
-    await Taro.cloud.callFunction({
+  componentDidShow() {
+    const dayStart =  Taro.getStorageSync('createDay');
+    if(!dayStart){
+      Taro.setStorage({
+        key: "createDay",
+        data: new Date().getTime()
+      });
+      Taro.setStorage({
+        key: "useTime",
+        data: 0
+      });
+    }
+    Taro.cloud.callFunction({
       // 云函数名称
       name: 'voice',
       // 传给云函数的参数
-    })
-      .then(res => {
+    }).then(res => {
         const data = res.result.data;
-        console.log('data: ', data);
         if (data.length > 0) {
-
           Taro.cloud.getTempFileURL({
             fileList: [data[0].url,data[1].url,data[2].url],
             success: val => {
-              console.log("res:111111111111111111 ", val);
               if (val.fileList.length > 0) {
                 this.setState({ fileList: val.fileList });
               } else {
@@ -103,7 +105,6 @@ class Index extends Component {
     });
   }
   toPlay(obj) {
-    console.log('obj: ', obj, obj.id, obj.url);
     Taro.navigateTo({
       url: `/pages/playVideo/index?id=${obj.id}&url=${obj.url}&type=${0}`
     });
@@ -128,8 +129,6 @@ class Index extends Component {
       userStore: { avatarUrl, nickName }
     } = this.props;
     const {fileList} = this.state;
-    console.log("avatarUrl: ", avatarUrl, nickName);
-    console.log('fileList', fileList);
     return (
       <View className='home'>
         <NavBar text='冥想小程序' color='white' />

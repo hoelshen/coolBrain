@@ -36,7 +36,6 @@ class Index extends Component {
 
   componentDidMount() {
     let { type, id, url } = this.$router.params;
-    console.log(type, id, url)
     this.setState({
       videoUrl : url,
       id,
@@ -45,11 +44,8 @@ class Index extends Component {
   }
 
   //TODO
-  //1.完成背景图片与样式的同步更新
-  //2.将背景音乐配合
-  //3.登陆的形式（待确认）
-  //4.配合调男女、调时间
-  //5.本地存储相关时间状态
+  //1.本地存储相关时间状态
+  //2.分享
   componentWillUnmount() {}
 
   config = {
@@ -83,7 +79,6 @@ class Index extends Component {
     });
     
     const val = e.detail.value;
-    console.log("e", e.detail.value);
     Taro.$backgroundAudioManager.seek(val * 60);
   }
   clickPlay() {
@@ -91,22 +86,15 @@ class Index extends Component {
     if (!videoUrl) return false;
 
     if (playState === "PLAY_START") {
-      console.log('new Date()', new Date().getTime())
-/*       Taro.setStorage({
-        key: "useTime",
-        data: new Date().getTime()
-      });
+      const startTime  = new Date().getTime();
+      console.log('startTime: ', startTime);
       Taro.setStorage({
-        key: "useTime",
-        data: new Date().getTime()
+        key: "startTime",
+        data: startTime
       });
-      Taro.setStorage({
-        key: "useTime",
-        data: new Date().getTime()
-      }); */
       this.setState({ playState: "PLAY_LOAD", Triangle: false });
-      
-      console.log('videoUrl: ', videoUrl);
+
+
       Taro.playBackgroundAudio({
         dataUrl: videoUrl,
         title: "bg1",
@@ -115,13 +103,31 @@ class Index extends Component {
   
     } else if (playState === "PLAY_LOAD") {
       this.setState({ playState: "PLAY_STOP", Triangle: true });
-/*       Taro.pauseBackgroundAudio(); */
-      Taro.$backgroundAudioManager.stop()
-      console.log('Taro.$backgroundAudioManager: ', Taro.$backgroundAudioManager);
+      this.processTime();
+      Taro.pauseBackgroundAudio();
     } else {
       this.setState({ playState: "PLAY_START", Triangle: false });
       Taro.s
     }
+  }
+
+  
+   processTime(){
+
+    const countTime =  Taro.getStorageSync('useTime');
+    console.log('countTime: ', countTime);
+    const startTime =  Taro.getStorageSync('startTime');
+    console.log('startTime: ', startTime);
+
+    var dateEnd = parseInt(new Date().getTime()/1000);
+    const useTime = dateEnd - parseInt(startTime /1000);
+    console.log('useTime: ', useTime);
+    
+
+    Taro.setStorage({
+      key: "useTime",
+      data: countTime + useTime
+    });
   }
   mind() {
     Taro.reLaunch({ url: `/pages/index/index` });

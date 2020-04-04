@@ -9,13 +9,24 @@ import "./index.less";
 @inject("userStore")
 @observer
 class Index extends Component {
-  componentWillMount() {
-    console.log(22);
-    console.log(this.$router.params);
+  state ={
+    useDay: 0,
+    useTime: 0
   }
+  componentWillMount() {}
 
-  componentDidMount() {
-    console.log("66");
+   componentDidMount() {
+    const dayStart =  Taro.getStorageSync('createDay');
+    if(dayStart){
+      var dateEnd = new Date().getTime();
+      const filteDay = (dateEnd - dayStart) / (1000 * 60 * 60 * 24)
+      const useDay = Number(filteDay.toFixed(0) + 1)
+      this.setState({useDay});
+    }
+    const time =  Taro.getStorageSync('useTime');
+    if(time){
+      this.setState({useTime: Math.floor(time%3600/60)});
+    }
   }
 
   componentWillUnmount() {}
@@ -31,16 +42,13 @@ class Index extends Component {
   };
 
   componentDidShow() {
-    console.log("88");
   }
 
   componentDidHide() {}
 
   onShareAppMessage(res) {
-    console.log("res11111111: ", res);
     if (res.from === "button") {
       // 来自页面内转发按钮
-      console.log(res.target);
     }
     return {
       title: "冥想小程序",
@@ -48,46 +56,49 @@ class Index extends Component {
       /* imageUrl: '/common/images/xxx.png' //分享图片 宽高比 5:4 */
     };
   }
-  
+
   toHome() {
     Taro.navigateTo({ url: `/pages/index/index` });
   }
   render() {
     const {
-      userStore: { nickName, useTime, useDay }
+      userStore: { nickName }
     } = this.props;
-
+    const {useTime, useDay} = this.state;
     return (
       <View>
-        <NavBar  text='冥想小程序' color='#8CC9BD' type='2' />
+        <NavBar text='冥想小程序' color='#8CC9BD' type='2' />
         <View className='body flex column j-between'>
-        <View className='head'>
-          <View className='shareDiv'>
-            <Text className='mind'>我的冥想</Text>
-            <Button className='btn' open-type='share'>
-              <Image className='share' src={share}></Image>
+          <View className='head'>
+            <View className='shareDiv'>
+              <Text className='mind'>我的冥想</Text>
+              <Button className='btn' open-type='share'>
+                <Image className='share' src={share}></Image>
+              </Button>
+            </View>
+            <View className='boder column'>
+              <Text className='name'>{nickName}</Text>
+            </View>
+          </View>
+          <View className='contain flex column a-center'>
+            <View className='minBlock flex column'>
+              <Text className='min'>累计冥想分钟</Text>
+              <Text className='minNum'>{useTime}</Text>
+              <Text className='minText'>MIN</Text>
+            </View>
+            <View className='dayBlock flex column'>
+              <Text className='day'>累计冥想天数</Text>
+              <Text className='dayNum'>{useDay}</Text>
+              <Text className='dayText'>DAY</Text>
+            </View>
+          </View>
+          <View className='foot'>
+            <Button className='btn' onClick={this.toHome}>
+              继续冥想
             </Button>
           </View>
-          <View className='boder column'>
-            <Text className='name'>{nickName}</Text>
-          </View>
-        </View>
-        <View className='contain flex column a-center'>
-          <Text className='min'>累计冥想分钟</Text>
-          <Text className='minNum'>{useTime}</Text>
-          <Text className='minText'>MIN</Text>
-          <Text className='day'>累计冥想天数</Text>
-          <Text className='dayNum'>{useDay}</Text>
-          <Text className='dayText'>DAY</Text>
-        </View>
-        <View className='foot'>
-          <Button className='btn' onClick={this.toHome}>
-            继续冥想
-          </Button>
         </View>
       </View>
-      </View>
-
     );
   }
 }

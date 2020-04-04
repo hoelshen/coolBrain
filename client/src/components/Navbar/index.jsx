@@ -16,7 +16,6 @@ class Navbar extends Component {
   }
   render() {
     const { text, color, type } = this.props
-    console.log('color: ', text, color, type);
     const style = {
       paddingTop: Taro.$navBarMarginTop + "px",
       background: color

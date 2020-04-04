@@ -18,17 +18,11 @@ function sendUploadCloud(cloudPath, filePath) {
 
     // 成功回调
     success: res => {
-      console.log('data11111: ', res.fileID);
-
-
       const data = {
         url: res.fileID,
         createdAt: Date()
       };
-      console.log('data11111: ', data);
       db.collection("voice-list").add({ data });
-      console.log('上传成功', res)
-
     },
   })
 

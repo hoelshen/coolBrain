@@ -29,10 +29,8 @@ function formatName() {
 }
 
 const MDAY = props => {
-  const { nickName, time } = props;
-  console.log("nickName, time: ", nickName, time);
+  const { nickName } = props;
   let flag = nickName ? true : false;
-  console.log('flag: ', flag);
   return (
     <View className='greeting'>
       <Text className='format'>{formatName()}, </Text>

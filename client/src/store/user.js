@@ -21,9 +21,8 @@ class userStore {
 
   @computed get diffTime() {
     var dateStart = this.createTime;
-    console.log('dateStart: ', dateStart);
-    /* var dateEnd = new Date();
-    return this.useDay = (dateEnd - dateStart) / (1000 * 60 * 60 * 24) */
+    var dateEnd = new Date();
+    return this.useDay = (dateEnd - dateStart) / (1000 * 60 * 60 * 24)
   }
 
   //存储分钟数
@@ -40,7 +39,6 @@ class userStore {
 
   @action.bound
   updateInfo(avatarUrl, nickName){
-    console.log('avatarUrl, nickName: ', avatarUrl, nickName);
     this.avatarUrl = avatarUrl
     this.nickName = nickName
   }

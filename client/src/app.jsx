@@ -51,10 +51,8 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(2, this.$router.params);
     Taro.getSystemInfo({})
     .then(res  => {
-      console.log('res: ', res.statusBarHeight);
       Taro.$navBarMarginTop =  res.statusBarHeight || 0
     })
   }
@@ -77,7 +75,6 @@ class App extends Component {
   componentDidShow() {}
 
   componentDidHide() {
-    console.log(4);
   }
 
   componentDidCatchError() {}
