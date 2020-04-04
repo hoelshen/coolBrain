@@ -36,8 +36,9 @@ Component.prototype.onShareAppMessage = function () {
   return SHAREINFO
 }
 class App extends Component {
-
   componentWillMount() {
+    Taro.$backgroundAudioManager = Taro.getBackgroundAudioManager(); 
+
     Taro.$dayjs = dayjs;
     Taro.$upload = upload;
     const nav = Taro.navigateTo

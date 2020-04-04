@@ -52,14 +52,11 @@ class Index extends Component {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
     const flag =  Taro.getStorageSync({key: 'isHomeLongHideAuthModal'})
-    if(!flag) = {
-      
-    }
     console.log('flag: ', flag);
+
   }
 
   async componentDidShow() {
-    const that = this;
 
     await Taro.cloud.callFunction({
       // 云函数名称
@@ -68,11 +65,26 @@ class Index extends Component {
     })
       .then(res => {
         const data = res.result.data;
+        console.log('data: ', data);
         if (data.length > 0) {
-          that.setState({
-            fileList: data
-          })
+
+          Taro.cloud.getTempFileURL({
+            fileList: [data[0].url,data[1].url,data[2].url],
+            success: val => {
+              console.log("res:111111111111111111 ", val);
+              if (val.fileList.length > 0) {
+                this.setState({ fileList: val.fileList });
+              } else {
+                Taro.showToast({ title: "获取音频失败", icon: "none" });
+              }
+            },
+            fail: err => {
+              console.log("err: ", err);
+              // handle error
+            }
+          });
         }
+
       })
       .catch(console.error)
   }
@@ -116,8 +128,8 @@ class Index extends Component {
       userStore: { avatarUrl, nickName }
     } = this.props;
     const {fileList} = this.state;
-/*     console.log("avatarUrl: ", avatarUrl, nickName); */
-    console.log(fileList);
+    console.log("avatarUrl: ", avatarUrl, nickName);
+    console.log('fileList', fileList);
     return (
       <View className='home'>
         <NavBar text='冥想小程序' color='white' />
@@ -149,19 +161,19 @@ class Index extends Component {
             onScrollToUpper={this.onScrollToUpper.bind(this)}
             onScroll={this.onScroll}
           >
-            <View className='vStyleA' onClick={this.toPlay.bind(this, {id:'A',url: fileList[0].url})}>
+            <View className='vStyleA' onClick={this.toPlay.bind(this, {id:'A',url: fileList[0].tempFileURL})}>
               <Text className='mindName'>冥想的名字</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            <View className='vStyleB' onClick={this.toPlay.bind(this, {id:'B',url: fileList[1].url})}>
+            <View className='vStyleB' onClick={this.toPlay.bind(this, {id:'B',url: fileList[1].tempFileURL})}>
               <Text className='mindName'>冥想的名字</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            <View className='vStyleC' onClick={this.toPlay.bind(this, {id:'C',url: fileList[2].url})}>
+            <View className='vStyleC' onClick={this.toPlay.bind(this, {id:'C',url: fileList[2].tempFileURL})}>
               <Text className='mindName'>冥想的名字</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。

@@ -8,7 +8,7 @@ import "./index.less";
 class Navbar extends Component {
   toHome() {
     Taro.navigateTo({
-      url: `/pages/home/index`
+      url: `/pages/index/index`
     });
   }
   toPrevious() {
@@ -26,7 +26,7 @@ class Navbar extends Component {
       <View className='navbarWrap' style={style}>
         {type ?
           <View className='navbar'>
-            {type == 0
+            {type == 1
               ?
               <Text className='iconText' onClick={this.toHome}>x</Text>
               :
