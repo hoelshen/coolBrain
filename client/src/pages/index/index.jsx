@@ -116,6 +116,13 @@ class Index extends Component {
       e.detail.userInfo.nickName
     );
   }
+  static config = {
+    disableScroll: true
+  }
+  
+  config = {
+    disableScroll: true
+  }
 
   render() {
     const scrollStyle = {
@@ -131,7 +138,7 @@ class Index extends Component {
     const {fileList} = this.state;
     return (
       <View className='home'>
-        <NavBar text='冥想小程序' color='white' />
+        <NavBar text='冥想小程序' color='white' type='' />
         <View className='head'>
           {!avatarUrl ? (
             <Button

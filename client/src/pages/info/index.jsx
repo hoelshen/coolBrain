@@ -35,27 +35,10 @@ class Index extends Component {
     addGlobalClass: true
   };
 
-  config = {
-    navigationBarTitleText: "个人页面",
-    navigationBarBackgroundColor: "#8cc9bd",
-    navigationBarTextStyle: "white"
-  };
-
-  componentDidShow() {
-  }
+  componentDidShow() {}
 
   componentDidHide() {}
 
-  onShareAppMessage(res) {
-    if (res.from === "button") {
-      // 来自页面内转发按钮
-    }
-    return {
-      title: "冥想小程序",
-      path: "/pages/index/index"
-      /* imageUrl: '/common/images/xxx.png' //分享图片 宽高比 5:4 */
-    };
-  }
 
   toHome() {
     Taro.navigateTo({ url: `/pages/index/index` });
@@ -72,8 +55,8 @@ class Index extends Component {
           <View className='head'>
             <View className='shareDiv'>
               <Text className='mind'>我的冥想</Text>
-              <Button className='btn' open-type='share'>
-                <Image className='share' src={share}></Image>
+              <Button className='btn' openType='share'>
+                <Image className='share' src={share} />
               </Button>
             </View>
             <View className='boder column'>

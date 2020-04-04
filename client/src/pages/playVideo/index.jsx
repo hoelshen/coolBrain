@@ -43,17 +43,8 @@ class Index extends Component {
     });
   }
 
-  //TODO
-  //1.本地存储相关时间状态
-  //2.分享
   componentWillUnmount() {}
 
-  config = {
-    navigationBarBackgroundColor: "#8cc9bd",
-    navigationBarTextStyle: "white",
-    backgroundColor: "#8cc9bd",
-    backgroundTextStyle: "light"
-  };
   componentDidShow() {}
 
   componentDidHide() {}
@@ -83,11 +74,11 @@ class Index extends Component {
   }
   clickPlay() {
     const { playState, videoUrl } = this.state;
+    console.log('videoUrl: ', videoUrl);
     if (!videoUrl) return false;
 
     if (playState === "PLAY_START") {
       const startTime  = new Date().getTime();
-      console.log('startTime: ', startTime);
       Taro.setStorage({
         key: "startTime",
         data: startTime

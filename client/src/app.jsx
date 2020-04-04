@@ -27,9 +27,9 @@ const MyContext = Taro.createContext(defaultValue)
 // 挂载分享方法 Component
 
 const SHAREINFO = {
-  'title': '分享标题',
-  'path': '路径',
-  'imageUrl': '图片'
+  'title': '冥想小程序',
+  'path': 'pages/index/index',
+  'imageUrl': ''
 }
 
 Component.prototype.onShareAppMessage = function () {
@@ -78,7 +78,6 @@ class App extends Component {
   }
 
   componentDidCatchError() {}
-
 
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
