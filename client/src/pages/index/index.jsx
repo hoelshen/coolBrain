@@ -138,7 +138,7 @@ class Index extends Component {
     const {fileList} = this.state;
     return (
       <View className='home'>
-        <NavBar text='冥想小程序' color='white' type='' />
+        <NavBar text='' color='white' type='' />
         <View className='head'>
           {!avatarUrl ? (
             <Button
