@@ -148,12 +148,30 @@ class Index extends Component {
       "#DB9598": id === "C"
     });
 
+    const bColor = classNames(
+      "min",
+       {whiteBtn :id === 'A'},
+       {blueBtn:id === 'B'},
+       {redBtn:id === 'C'} 
+    )
     return (
       <View className='contain'>
         <NavBar text='冥想小程序' color={vColor} type='1' />
 
         {type == 0 ? (
           <View className={vStyle}>
+            <View className='circle_container'>
+              <View className='circle_wrapper'>
+                <View className='progress_wrapper circle_right'>
+                  <View className='circle_progress right_circle' style='transform: rotate({{rightDeg}});'></View>
+                </View>
+                <View className='progress_wrapper circle_left'>
+                  <View className='circle_progress left_circle' style='transform: rotate({{leftDeg}});'></View>
+                </View>
+                <Image src="/images/{{play?'template_play03':'template_play'}}.png" className='play_audio' catchtap='pause_audio'></Image>
+                <View style='visibility: {{visible}}' className='circle_markup'></View>
+              </View>
+            </View>
             <View className={`${pStyle}`} onClick={this.clickPlay}>
               {Triangle ? (
                 <Image className='Triangle' src={play}></Image>
@@ -162,7 +180,7 @@ class Index extends Component {
               )}
             </View>
             <View className=''>
-              <View class='min'>
+              <View class={`${bColor}`} >
                 <Picker
                   mode='selector'
                   range={this.state.seMin}
@@ -171,16 +189,17 @@ class Index extends Component {
                   <View className='num'>{this.state.cheMin} min</View>
                 </Picker>
               </View>
-              <View class='voice'>
-                <Picker
-                  mode='selector'
-                  range={this.state.seVoice}
-                  rangeKey="{{'name'}}"
-                  onChange={this.onChangeVoice}
-                >
-                  <View className='num'>{this.state.cheVoice}</View>
-                </Picker>
+              { id=='A' && <View class='voice'>
+                  <Picker
+                    mode='selector'
+                    range={this.state.seVoice}
+                    rangeKey="{{'name'}}"
+                    onChange={this.onChangeVoice}
+                  >
+                    <View className='num' >{this.state.cheVoice}</View>
+                  </Picker>
               </View>
+              }
             </View>
           </View>
         ) : (
