@@ -3,9 +3,8 @@ import classNames from "classnames";
 import { View, Text, Image, Picker } from "@tarojs/components";
 import topSign from "@/assets/topSign.png";
 import NavBar from "@/components/Navbar/index";
+import Player from "@/components/Player/index";
 
-import play from "@/assets/play.png";
-import stop from "@/assets/stop.png";
 
 import bottomSign from "@/assets/bottomSign.png";
 import mindImg from "@/assets/btn-wc.png";
@@ -160,24 +159,8 @@ class Index extends Component {
 
         {type == 0 ? (
           <View className={vStyle}>
-            <View className='circle_container'>
-              <View className='circle_wrapper'>
-                <View className='progress_wrapper circle_right'>
-                  <View className='circle_progress right_circle' style='transform: rotate({{rightDeg}});'></View>
-                </View>
-                <View className='progress_wrapper circle_left'>
-                  <View className='circle_progress left_circle' style='transform: rotate({{leftDeg}});'></View>
-                </View>
-                <Image src="/images/{{play?'template_play03':'template_play'}}.png" className='play_audio' catchtap='pause_audio'></Image>
-                <View style='visibility: {{visible}}' className='circle_markup'></View>
-              </View>
-            </View>
             <View className={`${pStyle}`} onClick={this.clickPlay}>
-              {Triangle ? (
-                <Image className='Triangle' src={play}></Image>
-              ) : (
-                <Image className='Triangle' src={stop}></Image>
-              )}
+              <Player Triangle={Triangle}></Player>
             </View>
             <View className=''>
               <View class={`${bColor}`} >
