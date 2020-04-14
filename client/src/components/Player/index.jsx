@@ -1,149 +1,111 @@
-import Taro from "@tarojs/taro";
+import Taro, {useState} from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
-
 import play from "@/assets/play.png";
 import stop from "@/assets/stop.png";
 import "./index.less";
-/* 
-import Img from ; */
 
-function formatNumber(){
-  console.log('1')
-}
-function play_audio_func() {
-  const audio = Taro.getBackgroundAudioManager();
-  audio.src = "http://audio.heardtech.com/endAudio.mp3";
-  audio.title = "今日片尾";
-}
-let leftDeg = "";
-let rightDeg = "";
-let visible = "";
-let currentTime = 0;
-let duration = 0;
-const audio = Taro.getBackgroundAudioManager();
-
-audio.onPlay(() => {
+function onPlay() {
+  console.log("111xxx");
   this.isPlay = true;
   this.isStop = false;
-});
-audio.onPause(() => {
+}
+function onPause() {
   this.isPlay = false;
   this.isStop = false;
-});
-audio.onStop(() => {
+}
+/* function onStop() {
   this.isPlay = false;
   this.isStop = true;
-});
-audio.onEnded(() => {
-  // audio.onTimeUpdate(() => {})
+} */
+function onEnded() {
   this.percent = 0;
   this.isPlay = false;
   this.isStop = true;
-});
-audio.onError(e => {
-  console.log("音频播放错误", e);
-});
-audio.onTimeUpdate(() => {
-  let audioData = computePercent(audio);
-  this.percent = audioData.percent;
-  this.time = audioData.time;
-  currentTime = audioData.currentTime;
-  duration = audioData.duration;
-  this.duration = audioData.dtime;
-  // 右侧半圆在进度超过一半之后要保持旋转225deg状态,未超过一半，左侧半圆保持原始角度45deg
-  if (currentTime / duration <= 0.5) {
-    leftDeg = "45deg";
-    rightDeg = (currentTime / duration) * 360 + 45 + "deg";
-    visible = "hidden";
-  } else {
-    leftDeg = (currentTime / duration) * 360 + 225 + "deg";
-    rightDeg = "225deg";
-    visible = "visible";
-  }
-
-  this.rightDeg = rightDeg;
-  this.leftDeg = leftDeg;
-  this.visible = visible;
-
-  this.$apply();
-});
+}
 function computePercent(audio) {
-  let currentTime = parseInt(audio.currentTime);
-  let duration = parseInt(audio.duration);
-  let min = parseInt(currentTime / 60);
-  let sec = parseInt(currentTime % 60);
-  let dmin = parseInt(duration / 60);
-  let dsec = parseInt(duration % 60);
-  let time = formatNumber(min) + ":" + formatNumber(sec);
-  let dtime = formatNumber(dmin) + ":" + formatNumber(dsec);
-  let percent = parseInt((currentTime / duration) * 100);
-  console.log(
-    "currentTime:",
-    currentTime,
+  let currentTimes = parseInt(audio.currentTime);
+  let durations = parseInt(audio.duration);
+  let percent = parseInt((currentTimes / durations) * 100);
+/*   console.log(
+    "currentTimes:",
+    currentTimes,
     "percent:",
     percent,
-    "duration:",
-    duration
-  );
-  return {
-    time,
-    dtime,
+    "durations:",
+    durations
+  ); */
+  while(percent == 100){
+    onEnded();
+    return 
+  }
+  const obj = {
     percent,
-    currentTime,
-    duration
-  };
+    currentTimes,
+    durations
+  }
+  return obj
 }
 const Play = props => {
-  const { Triangle } = props;
-  console.log("props: ", props);
+  const { Triangle, url } = props;
+  let currentTime = 0;
+  let duration = 0;
+  let [leftDeg, setLeftDeg] = useState("45deg")
+  let [rightDeg, setrightDeg] = useState("45deg")
+
+
+  const audio = Taro.$backgroundAudioManager;
+  
+  audio.src = url || "http://audio.heardtech.com/endAudio.mp3";
+  audio.title = "今日片尾";
+
+
+  audio.onError(e => {
+    console.log("音频播放错误", e);
+  });
+  audio.onTimeUpdate(() => {
+    let audioData = computePercent(audio);
+    console.log('obj: ', audioData);
+
+    currentTime = audioData.currentTimes;
+    duration = audioData.durations;
+    // 右侧半圆在进度超过一半之后要保持旋转225deg状态,未超过一半，左侧半圆保持原始角度45deg
+    if (currentTime / duration <= 0.5) {
+      leftDeg = "45deg";
+      rightDeg = (currentTime / duration) * 360 + 45 + "deg";
+    } else {
+      leftDeg = (currentTime / duration) * 360 + 225 + "deg";
+      rightDeg = "225deg";
+    }
+
+    (() => setLeftDeg(leftDeg));
+    (()=> setrightDeg(rightDeg));
+    console.log("props: ", props, audio);
+  });
+  
   const rightStyle = {
-    transform: `rotate(${leftDeg})`
+    transform: `rotate(${rightDeg})`
   };
+  
   const leftStyle = {
     transform: `rotate(${leftDeg}) `
   };
-  const visibleStyle = {
-    visibility: { visible }
-  };
-
+  console.log('leftStyle: ', rightStyle, leftStyle);
   return (
     <View className='circle_container'>
-      <View className='circle_wrapper'>
-        <View className='progress_wrapper circle_right'>
-          <View
-            className='circle_progress right_circle'
-            style={rightStyle}
-          ></View>
+      <View class='circleProgress_wrapper'>
+        <View class='wrapper right'>
+          <View class='circleProgress rightcircle' style={rightStyle}></View>
         </View>
-        <View className='progress_wrapper circle_left'>
-          <View
-            className='circle_progress left_circle'
-            style={leftStyle}
-          ></View>
+        <View class='wrapper left'>
+          <View class='circleProgress leftcircle' style={leftStyle}></View>
         </View>
         {Triangle ? (
-          <Image className='Triangle' src={play}></Image>
+          <Image className='Triangle' src={play} onClick={onPlay}></Image>
         ) : (
-          <Image className='Triangle' src={stop}></Image>
+          <Image className='Triangle' src={stop} onClick={onPause}></Image>
         )}
-        {/*        <Image src={Img} className='play_audio' tap='pause_audio'></Image> */}
-        <View style={visibleStyle} className='circle_markup'></View>
       </View>
     </View>
   );
 };
-
-Play.propTypes = {
-  nickName: "",
-  isStop: true,
-  duration: "",
-  percent: 0,
-  play: true,
-  title: "",
-  time: "",
-  rightDeg: "",
-  leftDeg: "",
-  visible: "hidden"
-};
-
 export default Play;

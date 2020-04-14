@@ -160,7 +160,7 @@ class Index extends Component {
         {type == 0 ? (
           <View className={vStyle}>
             <View className={`${pStyle}`} onClick={this.clickPlay}>
-              <Player Triangle={Triangle}></Player>
+              <Player Triangle={Triangle} url='http://audio.heardtech.com/endAudio.mp3'></Player>
             </View>
             <View className=''>
               <View class={`${bColor}`} >
