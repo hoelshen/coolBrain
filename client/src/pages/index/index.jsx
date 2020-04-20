@@ -3,7 +3,7 @@ import { View, Image, ScrollView, Button, Text } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import MDay from "@/components/Mday";
 import NavBar from "@/components/Navbar/index";
-
+import MDialog from '@/components/MDialog/index';
 import headImg from "@/assets/avatar.png";
 
 import "../../app.less";
@@ -188,6 +188,7 @@ class Index extends Component {
           </ScrollView>
         </View>
         <View />
+        <MDialog isShow />
       </View>
     );
   }

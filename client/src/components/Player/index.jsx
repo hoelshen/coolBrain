@@ -25,7 +25,7 @@ function onEnded() {
 const Play = props => {
   const { Triangle, url } = props;
   const audio = Taro.$backgroundAudioManager;
-  audio.src = url || "http://audio.heardtech.com/endAudio.mp3";;
+  // audio.src = url || "http://audio.heardtech.com/endAudio.mp3";;
   audio.title = "今日片尾";
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)

@@ -1,0 +1,67 @@
+@images: "../../assets";
+
+.toplife_modal{
+  position:fixed;
+  top: 0;right: 0;left: 0;bottom: 0;
+  background:rgba(0,0,0,0.8);
+}
+
+.toplife_modal_content{
+  width:330px;
+  height:483px;
+  background:rgba(255,255,255,1);
+  border-radius:36px;
+  position:absolute;
+  margin:auto;
+  z-index:1;
+  top: 0;right: 0;left: 0;bottom: 0;
+
+}
+
+
+.played{
+  .head{
+    height:219px;
+    background: url('@{images}/top-bg.png') no-repeat;
+    margin-right: 20px;
+    display: inline-block;
+    .mindImg{
+      width: 195px;
+      height: 61px;
+      margin: 77px 90px;
+    }
+  }
+  .topSign{
+    margin: 0 auto;
+    display: block;
+  }
+  .iconImg{
+    width: 36px;
+    height: 36px;
+  }
+  .endText{
+    margin: 0 auto;
+    margin-top: 38px;
+    display: block;
+    text-align: center;
+  }
+  .bottomSign{
+    padding-top: 38px;
+    margin: 0 auto;
+    display: block;
+  }
+  .shareImg{
+    display: block;
+    width: 61px;
+    height: 61px;
+  }
+}
+
+button{
+  background-color: #fff;
+  position: static;
+  padding: 0;
+}
+button::after {
+  border: none;
+}
