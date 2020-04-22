@@ -37,7 +37,8 @@ const config = {
     '@/components': path.resolve(__dirname, '../src/components'),
     '@/servers': path.resolve(__dirname, '../src/servers'),
     '@/assets': path.resolve(__dirname, '../src/assets'),
-    '@/constants': path.resolve(__dirname, '../src/constants')
+    '@/constants': path.resolve(__dirname, '../src/constants'),
+    '@/store': path.resolve(__dirname, '../src/store'),
   },
   defineConstants: {},
   mini: {

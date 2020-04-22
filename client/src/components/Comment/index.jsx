@@ -1,7 +1,14 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro, { useState, useContext,useDidShow } from "@tarojs/taro";
 import { View, Image, Text, Button } from "@tarojs/components";
+import userStore from '@/store/user'
 
 function Comment() {
+
+  const { avatarUrl, nickName } = useContext(userStore);
+
+  useDidShow(()=>{
+    console.log('111')
+  })
   return (
     <View className='body flex column j-between'>
       <View className='head'>

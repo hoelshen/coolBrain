@@ -58,7 +58,7 @@ class App extends Component {
   }
   
   config = {
-    pages: ["pages/index/index", "pages/info/index", "pages/playVideo/index"],
+    pages: ["pages/index/index", "pages/info/index", "pages/playVideo/index", 'pages/Mail/index',"pages/Diary/index"],
     window: {
       navigationStyle: 'custom',
     },
