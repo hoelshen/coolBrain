@@ -1,0 +1,115 @@
+.body{
+  margin: 20px;
+  float: left;
+  .left{
+    display: inline-block;
+    .time{
+      width:74px;
+      height:17px;
+      font-size:13px;
+      font-family:SourceHanSansCN-Regular,SourceHanSansCN;
+      font-weight:400;
+      color:rgba(140,201,189,1);
+      line-height:17px;
+      word-wrap: break-word;
+      word-break:break-all; 
+      overflow: hidden;/*这个参数根据需要来绝对要不要*/
+    }
+  }
+  .right{
+    margin-left: 37px;
+    display: inline-block;
+    width: 224px;
+    .text1{
+      height:60px;
+      font-size:15px;
+      font-family:SourceHanSansCN-Regular,SourceHanSansCN;
+      font-weight:400;
+      color:rgba(0,0,0,1);
+      line-height:20px;
+      letter-spacing:1px;
+    }
+  }
+  .btn{
+    width:78px;
+    height:20px;
+    line-height:20px;
+    background:rgba(140,201,189,1);
+    border-radius:8px;
+    text-align: center;
+    float: right;
+    margin: 20px;
+    text{
+      width:28px;
+      height:17px;
+      font-size:13px;
+      font-family:SourceHanSansCN-Medium,SourceHanSansCN;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      line-height:17px;
+      letter-spacing:1px;
+    }
+  }
+
+}
+
+.flex {
+  display: flex;
+
+  &.j-center {
+      justify-content: center;
+  }
+
+  &.j-between {
+      justify-content: space-between;
+  }
+
+  &.j-around {
+      justify-content: space-around;
+  }
+
+  &.j-start {
+      justify-content: flex-start;
+  }
+
+  &.j-end {
+      justify-content: flex-end;
+  }
+
+  &.a-start {
+      align-items: flex-start;
+  }
+
+  &.a-center {
+      align-items: center;
+  }
+
+  &.a-end {
+      align-items: flex-end;
+  }
+
+  &.center {
+      align-items: center;
+      justify-content: center;
+  }
+
+  &.s-around {
+      align-items: space-around;
+  }
+
+  &.s-between {
+      align-items: space-between;
+  }
+
+  &.column {
+      flex-direction: column;
+  }
+
+  &.row {
+      flex-direction: row;
+  }
+
+  &.wrap {
+      flex-wrap: wrap;
+  }
+}

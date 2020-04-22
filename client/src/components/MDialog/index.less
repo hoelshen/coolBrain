@@ -4,6 +4,7 @@
   position:fixed;
   top: 0;right: 0;left: 0;bottom: 0;
   background:rgba(0,0,0,0.8);
+  z-index: 1;
 }
 
 .toplife_modal_content{
@@ -22,9 +23,40 @@
 .played{
   .head{
     height:219px;
-    background: url('@{images}/top-bg.png') no-repeat;
-    margin-right: 20px;
+    width: 331px;
+    background: url('@{images}/ybg.png') no-repeat;
     display: inline-block;
+    .top{
+      width: 39px;
+      height: 39px;
+      margin-top: 19px;
+      margin-left: 23px;
+      .Group6Img{
+        width: 39px;
+        height: 39px;
+        background-size: 100%;
+      }
+    }
+    .body{
+      text-align: center;
+      margin-top: 6px;
+      height:107px;
+      font-size:15px;
+      font-family:SourceHanSansCN-Medium,SourceHanSansCN;
+      font-weight:500;
+      color:rgba(255,255,255,1);
+      line-height:23px;
+      letter-spacing:1px;
+      .velign{
+        margin-top: 25px;
+        view{
+          display: inline-block
+        }
+        .num{
+          font-size: 70px;
+        }
+      }
+    }
     .mindImg{
       width: 195px;
       height: 61px;
@@ -38,6 +70,7 @@
   .iconImg{
     width: 36px;
     height: 36px;
+    margin-top: 15px;
   }
   .endText{
     margin: 0 auto;
@@ -54,6 +87,9 @@
     display: block;
     width: 61px;
     height: 61px;
+    position: absolute;
+    bottom: 11px;
+    right: 27px;
   }
 }
 

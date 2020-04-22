@@ -86,7 +86,6 @@ class Index extends Component {
             }
           });
         }
-
       })
       .catch(console.error)
   }
@@ -188,7 +187,7 @@ class Index extends Component {
           </ScrollView>
         </View>
         <View />
-        <MDialog isShow />
+        <MDialog isShow={false} num={19} />
       </View>
     );
   }

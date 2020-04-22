@@ -40,7 +40,9 @@ class Index extends Component {
     return (
       <View>
         <NavBar text='' color='#8CC9BD' type='2' />
-
+        <View className='head'>
+          <Text className='name'>正念冥想评论区</Text>
+        </View>
       </View>
     );
   }

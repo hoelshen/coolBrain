@@ -1,34 +1,29 @@
-import Taro, { useState, useContext,useDidShow } from "@tarojs/taro";
-import { View, Image, Text, Button } from "@tarojs/components";
-import userStore from '@/store/user'
+import Taro, { useDidShow,  } from "@tarojs/taro";
+import { View, Text , Button} from "@tarojs/components";
 
-function Comment() {
+import './index.less'
 
-  const { avatarUrl, nickName } = useContext(userStore);
-
+const Comment = (props)=> {
   useDidShow(()=>{
-    console.log('111')
+    console.log('111', props)
   })
+  const onPush = ()=>{
+    console.log('111')
+  }
   return (
-    <View className='body flex column j-between'>
-      <View className='head'>
-        <View className='boder column'>
-          <Text className='name'>正念冥想评论区</Text>
-        </View>
-      </View>
-      <View className='contain flex column a-center'>
-        <View className='left flex column'>
-          <Image className='avartal' src={avatarUrl} />
-        </View>
-        <View className='right flex column'>
-          <Text className='day'>{nickName}</Text>
-          <Text className='dayNum'>
-            这是冥想的内容，这是冥想的内容这是冥想的内容这是冥想的内容这是冥想的内容这是冥想的内容
+    <View className='body'>
+      <View className='left'>
+          <Text className='time'>
+            2020.01.02
           </Text>
-          <Text className='dayText'>2020.01.02</Text>
-        </View>
       </View>
-    </View>
+      <View className='right'>
+        <Text className='text1'>
+          这是冥想的内容，这是冥想的内容这是冥想的内容这是冥想的内容这是冥想的内容这是冥想的内容
+        </Text>
+      </View> 
+      <View className='btn' onClick={onPush}><Text>发布</Text></View>
+  </View>
   );
 }
 
