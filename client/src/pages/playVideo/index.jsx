@@ -1,14 +1,11 @@
 import Taro, { Component } from "@tarojs/taro";
 import classNames from "classnames";
 import { View, Text, Image, Picker } from "@tarojs/components";
-import topSign from "@/assets/topSign.png";
 import NavBar from "@/components/Navbar/index";
 import Player from "@/components/Player/index";
 
 
-import bottomSign from "@/assets/bottomSign.png";
-import mindImg from "@/assets/btn-wc.png";
-import share from "@/assets/fx.png";
+import { getResultData_frequencies } from '@/servers/servers'
 
 import * as types from "@/constants/PlayTypes.js";
 
@@ -34,17 +31,19 @@ class Index extends Component {
   }
 
   componentDidMount() {
-    let { type, id, url } = this.$router.params;
+    let { id, url } = this.$router.params;
     this.setState({
       videoUrl : url,
       id,
-      type
+     
     });
   }
 
   componentWillUnmount() {}
 
-  componentDidShow() {}
+  componentDidShow() {
+    getResultData_frequencies()
+  }
 
   componentDidHide() {}
 
@@ -127,7 +126,7 @@ class Index extends Component {
   }
 
   render() {
-    const { type, id, playState, Triangle } = this.state;
+    const { id, playState, Triangle } = this.state;
     const vStyle = classNames({
       playing: true,
       "vStyle-a": id === "A",
@@ -156,8 +155,6 @@ class Index extends Component {
     return (
       <View className='contain'>
         <NavBar text='冥想小程序' color={vColor} type='1' />
-
-        {type == 0 ? (
           <View className={vStyle}>
             <View className={`${pStyle}`} onClick={this.clickPlay}>
               <Player Triangle={Triangle} url='http://audio.heardtech.com/endAudio.mp3'></Player>
@@ -185,22 +182,6 @@ class Index extends Component {
               }
             </View>
           </View>
-        ) : (
-          <View className='played'>
-            <View className='head'>
-              <Image
-                onClick={this.toHome}
-                className='mindImg'
-                src={mindImg}
-              ></Image>
-            </View>
-            <Image className='iconImg topSign' src={topSign} />
-            <Text class='endText'>冥想是一种认真生活的态度。</Text>
-            <Image className='iconImg bottomSign' src={bottomSign} />
-
-            <Image className='shareImg' src={share} />
-          </View>
-        )}
       </View>
     );
   }

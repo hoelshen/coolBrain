@@ -1,17 +1,22 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text, Button } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
-import share from "@/assets/share.png";
 import NavBar from "@/components/Navbar/index";
+import Comment from '@/components/Comment2/index';
+
+
+import { getResultData_getDiary } from '@/servers/servers'
 
 import "./index.less";
 
 @inject("userStore")
 @observer
 class Index extends Component {
-  state ={
-    useDay: 0,
-    useTime: 0
+  constructor(){
+    super();
+    this.state = {
+      commentList:[]
+    }
   }
   componentWillMount() {}
 
@@ -25,7 +30,10 @@ class Index extends Component {
     addGlobalClass: true
   };
 
-  componentDidShow() {}
+  async componentDidShow() {
+    const comment = await getResultData_getDiary()
+    this.setState({commentList: comment.data.objects})
+  }
 
   componentDidHide() {}
 
@@ -34,14 +42,23 @@ class Index extends Component {
     Taro.navigateTo({ url: `/pages/index/index` });
   }
   render() {
-    const {
-      userStore: { avatarUrl,nickName }
-    } = this.props;
+    const { commentList } = this.state;
+    let CommentList;
+    if(commentList.length>0){
+        CommentList = commentList.map((comment) =>{
+        const time = (comment.created_at).split(' ');
+        comment.time = time[0]
+          return(
+            <Comment taroKey={String(comment.id)} created_at={comment.time} text={comment.text} />
+          )
+      })
+    }
     return (
       <View>
-        <NavBar text='' color='#8CC9BD' type='2' />
+        <NavBar text='' color='#ffffff' type='2' />
         <View className='head'>
           <Text className='name'>正念冥想评论区</Text>
+          {CommentList}
         </View>
       </View>
     );

@@ -5,10 +5,23 @@
 	"description": "酷炫脑",
 	"appid": "wxe89ec88bccf719ac",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
-		"minified": false
+		"minified": false,
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",
@@ -63,6 +76,12 @@
 					"name": "我的日记",
 					"pathName": "pages/Diary/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "冥想成功",
+					"pathName": "pages/playVideo/success",
 					"scene": null
 				}
 			]

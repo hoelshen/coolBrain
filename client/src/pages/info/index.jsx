@@ -40,8 +40,13 @@ class Index extends Component {
   componentDidHide() {}
 
 
-  toHome() {
+  onHome(e) {
+    e.stopPropagation()
     Taro.navigateTo({ url: `/pages/index/index` });
+  }
+  onDiary(e){
+    e.stopPropagation()
+    Taro.navigateTo({ url: `/pages/Diary/index` });
   }
   render() {
     const {
@@ -73,12 +78,13 @@ class Index extends Component {
               <Text className='day'>累计冥想天数</Text>
               <Text className='dayNum'>{useDay}</Text>
               <Text className='dayText'>DAY</Text>
+              <View className='day' onClick={this.onDiary}>我的冥想日记</View>
             </View>
           </View>
-          <View className='foot'>
-            <Button className='btn' onClick={this.toHome}>
+          <View className='foot' onClick={e=>{e.stopPropagation()}}>
+            <View className='btn'  onClick={this.onHome}>
               继续冥想
-            </Button>
+            </View>
           </View>
         </View>
       </View>

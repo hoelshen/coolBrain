@@ -1,21 +1,30 @@
 .contain{
+  margin-top: 26px;
   .left{
+    display: block;
+    float: left;
     .avatarUrl{
       width: 55px;
       height: 55px;
+      border-radius: 50%;
     }
   }
   .right{
+    display: block;
+    margin-left: 68px;
+    position: relative;
     .name{
-      width:55px;
       height:14px;
       font-size:14px;
       font-family:SourceHanSansCN-Regular,SourceHanSansCN;
       font-weight:400;
       color:rgba(74,74,74,1);
       line-height:21px;
+      display: block;
     }
     .text1{
+      margin-top: 8px;
+      display: block;
       width:256px;
       height:60px;
       font-size:15px;
@@ -26,7 +35,7 @@
       letter-spacing:1px;
     }
     .dayText{
-      width:69px;
+      margin-top: 8px;
       height:17px;
       font-size:13px;
       font-family:SourceHanSansCN-ExtraLight,SourceHanSansCN;
@@ -34,5 +43,33 @@
       color:rgba(0,0,0,1);
       line-height:17px;
     }
+    .thumDiv{
+      display: inline-block;
+      left: 218px;
+      position: absolute;
+      .thumbImg{
+        width:16px;
+        height:16px;
+      }
+      .thumb_num{
+        height:17px;
+        margin-left: 6px;
+        font-size:13px;
+        font-family:SourceHanSansCN-ExtraLight,SourceHanSansCN;
+        font-weight:200;
+        color:rgba(0,0,0,1);
+        line-height:17px;
+      }
+      .thumb_y_num{
+        height:17px;
+        margin-left: 6px;
+        font-size:13px;
+        font-family:SourceHanSansCN-ExtraLight,SourceHanSansCN;
+        font-weight:200;
+        color:rgba(247,178,112,1);
+        line-height:17px;
+      }
+    }
+
   }
 }

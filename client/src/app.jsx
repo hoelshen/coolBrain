@@ -6,6 +6,7 @@ import upload from "@/utils/upload";
 import dayjs from "@/utils/day";
 import counterStore from "./store/counter";
 import userStore from "./store/user";
+import { getResultData_auth } from '@/servers/servers'
 
 import "./app.less";
 
@@ -57,7 +58,7 @@ class App extends Component {
   }
   
   config = {
-    pages: ["pages/index/index", "pages/info/index", "pages/playVideo/index", 'pages/Mail/index',"pages/Diary/index"],
+    pages: ["pages/index/index", "pages/info/index", "pages/playVideo/index", "pages/playVideo/success",'pages/Mail/index',"pages/Diary/index"],
     window: {
       navigationStyle: 'custom',
     },
@@ -71,7 +72,26 @@ class App extends Component {
   static options = {
     addGlobalClass: true
   }
-  componentDidShow() {}
+  componentDidShow() {
+     Taro.login({
+      success: function (res) {
+        if (res.code) {
+          console.log('res.code: ', res.code);
+          //发起网络请求
+             getResultData_auth({ code: res.code}).then(json=>{
+               const data = json.data;
+              Taro.setStorage({
+                key: "Ticket",
+                data: data.ticket
+              });
+              console.log('val: ', data);
+            })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    })
+  }
 
   componentDidHide() {
   }

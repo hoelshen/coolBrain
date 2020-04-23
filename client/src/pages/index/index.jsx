@@ -5,6 +5,7 @@ import MDay from "@/components/Mday";
 import NavBar from "@/components/Navbar/index";
 import MDialog from '@/components/MDialog/index';
 import headImg from "@/assets/avatar.png";
+import { getResultData_badges,getResultData_MyBadge,getResultData_sentencesTody } from '@/servers/servers'
 
 import "../../app.less";
 import "./index.less";
@@ -50,6 +51,7 @@ class Index extends Component {
     } else if (process.env.TARO_ENV === "h5") {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
+    getResultData_sentencesTody()
   }
 
   componentDidShow() {
@@ -88,6 +90,11 @@ class Index extends Component {
         }
       })
       .catch(console.error)
+
+      getResultData_badges()
+
+      getResultData_MyBadge()
+
   }
 
   componentDidHide() { }
