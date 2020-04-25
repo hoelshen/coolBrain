@@ -10,11 +10,11 @@ const Play = props => {
   const { videoUrl } = props;
   if (!videoUrl) return false;
 
-  Taro.$backgroundAudioManager.url = videoUrl;
   const isFirstRender = useRef(true);
   const [isPlay, setIsPlay] = useState(false);
   const [currentTime, setCurrentTime] = useState(1)
   const [duration, setDuration] = useState(0)
+  const useDurationTime = useRef(duration);
   const [leftDeg, setLeftDeg] = useState("45deg");
   const [rightDeg, setRightDeg] = useState("45deg");
   const [playState, setPlayState] = useState("PLAY_START");
@@ -29,18 +29,19 @@ const Play = props => {
       setIsPlay(false);
     } else if(playState === "PLAY_PAUSE"){
       setPlayState('PLAY_LOAD');
+      setIsPlay(true)
     }
   }
   
   function processTime(){
     const countTime =  Taro.getStorageSync('useTime');
-    console.log('countTime: ', countTime);
+    // console.log('countTime: ', countTime);
     const startTime =  Taro.getStorageSync('startTime');
-    console.log('startTime: ', startTime);
+    // console.log('startTime: ', startTime);
 
     var dateEnd = parseInt(new Date().getTime()/1000);
     const useTime = dateEnd - parseInt(startTime /1000);
-    console.log('useTime: ', useTime);
+    // console.log('useTime: ', useTime);
     
 
     Taro.setStorage({
@@ -48,30 +49,7 @@ const Play = props => {
       data: countTime + useTime
     });
   }
-
-
-  useEffect(() => {
-    setCurrentTime(Taro.$backgroundAudioManager.currentTime);
-    setDuration(Taro.$backgroundAudioManager.duration);
-    // 右侧半圆在进度超过一半之后要保持旋转225deg状态,未超过一半，左侧半圆保持原始角度45deg
-    if(currentTime !==0 && duration !==0){
-      if (currentTime / duration <= 0.5) {
-        setLeftDeg("45deg");
-        setRightDeg((currentTime / duration) * 360 + 45 + "deg");
-      } else {
-        setLeftDeg((currentTime / duration) * 360 + 225 + "deg" );
-        setRightDeg("225deg");
-      }
-      console.log('duration', duration)
-      if(currentTime && currentTime == duration){
-        console.log('🍎🍎🍎🍎🍎🍎🍎🍎', currentTime, duration)
-        Taro.$backgroundAudioManager.stop()
-        Taro.navigateTo({ url: `/pages/playVideo/success?duration=${duration}`});
-      }
-    }
-
-  }, [currentTime]);
-
+  
   useEffect(()=>{
     if(!isFirstRender.current){
       if (playState === "PLAY_LOAD") {
@@ -81,17 +59,43 @@ const Play = props => {
           data: startTime
         });
         Taro.$backgroundAudioManager.title =  ' ';
-        Taro.$backgroundAudioManager.src =  Taro.$backgroundAudioManager.url;
+        Taro.$backgroundAudioManager.src = props.videoUrl;
       } else if (playState === "PLAY_PAUSE") {
         Taro.$backgroundAudioManager.pause()
       } else {
         Taro.$backgroundAudioManager.stop()
       } 
-      processTime();
-      setCurrentTime(2)
+      let interval = null ;
+      let nexTime = 0;
+      if (isPlay) {
+        interval = setInterval(() => {
+          const curTime = Taro.$backgroundAudioManager.currentTime;
+          const durTime = Taro.$backgroundAudioManager.duration;
+          console.log('cur', curTime, durTime)
+          // 右侧半圆在进度超过一半之后要保持旋转225deg状态,未超过一半，左侧半圆保持原始角度45deg
+          if(curTime && durTime && curTime !==0 && durTime !==0){
+            if (curTime / durTime <= 0.5) {
+              setLeftDeg("45deg");
+              setRightDeg((curTime / durTime) * 360 + 45 + "deg");
+            } else {
+              setLeftDeg((curTime / durTime) * 360 + 225 + "deg" );
+              setRightDeg("225deg");
+            }
+          }
+          if(curTime == 0 && curTime == durTime){
+            console.log('🍎🍎🍎🍎🍎🍎🍎🍎', curTime, durTime)
+            Taro.$backgroundAudioManager.stop()
+            clearInterval(interval)
+            processTime();
+            Taro.navigateTo({ url: `/pages/playVideo/success?duration=${nexTime}`});
+          } 
+          nexTime = durTime;
+        }, 1000)
+      }
     }else{
       isFirstRender.current = false
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[playState])
 
   const rightStyle = {

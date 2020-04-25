@@ -21,10 +21,9 @@ class Index extends Component {
     ],
     cheVoice: "男声",
     playState: types.PLAY_START,
-    Triangle: true
   };
   componentWillMount() {
-    console.log('22222xxxx2')
+
   }
 
   componentDidMount() {
@@ -74,8 +73,7 @@ class Index extends Component {
   }
 
   render() {
-    const { id, playState, Triangle,videoUrl } = this.state;
-    console.log('videoUrl: ', videoUrl);
+    const { id, playState,videoUrl } = this.state;
     const vStyle = classNames({
       playing: true,
       "vStyle-a": id === "A",
@@ -115,7 +113,7 @@ class Index extends Component {
                   range={this.state.seMin}
                   onChange={this.onChangeMin}
                 >
-                  <View className='num'>{this.state.cheMin} min</View>
+                  <View className='num'>{this.state.cheMin} Min</View>
                 </Picker>
               </View>
               { id=='A' && <View class='voice'>

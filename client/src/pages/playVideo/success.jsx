@@ -1,15 +1,14 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Image, Textarea, Button } from "@tarojs/components";
+import { View, Image, Textarea,Text, Button } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import NavBar from "@/components/Navbar/index";
-import Comment from "@/components/Comment2/index";
 import Group6 from "@/assets/Group6.png";
 import topSign from "@/assets/topSign.png";
 
 import bottomSign from "@/assets/bottomSign.png";
 import Group2 from "@/assets/Group2.png";
 import share from "@/assets/fx.png";
-import { getResultData_postsDiary } from "@/servers/servers";
+import { getResultData_postsDiary,getResultData_postComment } from "@/servers/servers";
 
 import "./success.less";
 
@@ -68,8 +67,7 @@ class Index extends Component {
     Taro.navigateTo({ url: `/pages/index/index` });
   }
   render() {
-    const {duration} = this.state;
-    const {commentText} = this.state;
+    const {duration, showComment,commentText} = this.state;
     return (
       <View>
         <NavBar text='' color='#8CC9BD' type='' />
