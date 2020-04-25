@@ -25,14 +25,14 @@ const Comment = props => {
           {text}
         </Text>
         <Text className='dayText'>{created_at}</Text>
-        <View className='thumDiv'>
+{/*         <View className='thumDiv'>
         {thumb ? (
           <Image src={thumb_up} className='thumbImg'></Image>
         ) : (
           <Image src={thumb_up_y} className='thumbImg'></Image>
         )}
         <Text className={thumb ? 'thumb_num' : 'thumb_y_num'}>13</Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );

@@ -4,35 +4,38 @@ import play from "@/assets/play.png";
 import stop from "@/assets/stop.png";
 import "./index.less";
 
-function onPlay() {
-  this.isPlay = true;
-  this.isStop = false;
-}
-function onPause() {
-  this.isPlay = false;
-  this.isStop = false;
-}
-function onStop() {
-  this.isPlay = false;
-  this.isStop = true;
-} 
-function onEnded() {
-  this.percent = 0;
-  this.isPlay = false;
-  this.isStop = true;
-}
+
 
 const Play = props => {
+
+  function onPlay() {
+    isPlay = true;
+    isStop = false;
+  }
+  function onPause() {
+    isPlay = false;
+    isStop = false;
+  }
+  function onStop() {
+    isPlay = false;
+    tisStop = true;
+  } 
+  function onEnded() {
+    percent = 0;
+    isPlay = false;
+    isStop = true;
+  }
+
   const { Triangle, url } = props;
   const audio = Taro.$backgroundAudioManager;
-  // audio.src = url || "http://audio.heardtech.com/endAudio.mp3";;
+  audio.src = url || "";
   audio.title = "今日片尾";
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [leftDeg, setLeftDeg] = useState("45deg");
   const [rightDeg, setRightDeg] = useState("45deg");
 
-/*   useEffect(() => {
+  useEffect(() => {
     setCurrentTime(audio.currentTime);
     setDuration(audio.duration);
     // 右侧半圆在进度超过一半之后要保持旋转225deg状态,未超过一半，左侧半圆保持原始角度45deg
@@ -45,7 +48,7 @@ const Play = props => {
         setRightDeg("225deg");
       }
     }
-  }, [audio, audio.currentTime, audio.duration, currentTime, duration]); */
+  }, [audio, audio.currentTime, audio.duration, currentTime, duration]);
 
   const rightStyle = {
     transform: `rotate(${rightDeg})`

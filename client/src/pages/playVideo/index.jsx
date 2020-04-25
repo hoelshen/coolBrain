@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import classNames from "classnames";
 import { View, Text, Image, Picker } from "@tarojs/components";
 import NavBar from "@/components/Navbar/index";
-import Player from "@/components/Player/index";
+//import Player from "@/components/Player/index";
 
 
 import { getResultData_frequencies } from '@/servers/servers'
@@ -15,7 +15,7 @@ class Index extends Component {
   state = {
     type: 0,
     id: "A",
-    videoUrl: "cloud://pro-dcxrw.7072-pro-dcxrw-1301694500/837497.6467527878.mp3",
+    videoUrl: "",
     seMin: [1, 2, 3],
     cheMin: 10,
     seVoice: [
@@ -27,7 +27,7 @@ class Index extends Component {
     Triangle: true
   };
   componentWillMount() {
-    Taro.cloud.init();
+    console.log('22222xxxx2')
   }
 
   componentDidMount() {
@@ -35,7 +35,6 @@ class Index extends Component {
     this.setState({
       videoUrl : url,
       id,
-     
     });
   }
 
@@ -126,7 +125,7 @@ class Index extends Component {
   }
 
   render() {
-    const { id, playState, Triangle } = this.state;
+    const { id, playState, Triangle,videoUrl } = this.state;
     const vStyle = classNames({
       playing: true,
       "vStyle-a": id === "A",
@@ -157,7 +156,7 @@ class Index extends Component {
         <NavBar text='冥想小程序' color={vColor} type='1' />
           <View className={vStyle}>
             <View className={`${pStyle}`} onClick={this.clickPlay}>
-              <Player Triangle={Triangle} url='http://audio.heardtech.com/endAudio.mp3'></Player>
+              {/* <Player Triangle={Triangle} url={videoUrl}></Player> */}
             </View>
             <View className=''>
               <View class={`${bColor}`} >

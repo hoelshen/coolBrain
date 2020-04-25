@@ -5,7 +5,7 @@ import MDay from "@/components/Mday";
 import NavBar from "@/components/Navbar/index";
 import MDialog from '@/components/MDialog/index';
 import headImg from "@/assets/avatar.png";
-import { getResultData_badges,getResultData_MyBadge,getResultData_sentencesTody } from '@/servers/servers'
+import { getResultData_badges,getResultData_MyBadge,getResultData_sentencesTody,getResultData_frequencies } from '@/servers/servers'
 
 import "../../app.less";
 import "./index.less";
@@ -20,11 +20,13 @@ class Index extends Component {
       url: ''
     },{
       url: ''
-    }]
+    }],
+    loginDay: 0,
+    loginText: '',
+    isShow: false
   }
   componentWillMount() {
     const { userStore } = this.props;
-    Taro.cloud.init();
 
     Taro.getSetting({
       success: function (res) {
@@ -43,7 +45,8 @@ class Index extends Component {
       }.bind(this)
     });
   }
-   componentDidMount() {
+  componentDidMount() {
+    const { userStore } = this.props;
     // 如果 ref 的是小程序原生组件，那只有在 didMount 生命周期之后才能通过
     // this.refs.input 访问到小程序原生组件
     if (process.env.TARO_ENV === "weapp") {
@@ -51,11 +54,19 @@ class Index extends Component {
     } else if (process.env.TARO_ENV === "h5") {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
-    getResultData_sentencesTody()
+    getResultData_sentencesTody().then(res=>{
+      const data = res.data;
+      userStore.updateId(
+        data.id
+      );
+      this.setState({loginDay: data.days, loginText: data.text})
+    })
   }
 
   componentDidShow() {
     const dayStart =  Taro.getStorageSync('createDay');
+    const isShow =  Taro.getStorageSync('isShow');
+    this.setState({isShow: isShow})
     if(!dayStart){
       Taro.setStorage({
         key: "createDay",
@@ -66,30 +77,15 @@ class Index extends Component {
         data: 0
       });
     }
-    Taro.cloud.callFunction({
-      // 云函数名称
-      name: 'voice',
-      // 传给云函数的参数
-    }).then(res => {
-        const data = res.result.data;
+
+    getResultData_frequencies().then(res => {
+      const data = res.data.objects;
+      console.log('data: ', data);
         if (data.length > 0) {
-          Taro.cloud.getTempFileURL({
-            fileList: [data[0].url,data[1].url,data[2].url],
-            success: val => {
-              if (val.fileList.length > 0) {
-                this.setState({ fileList: val.fileList });
-              } else {
-                Taro.showToast({ title: "获取音频失败", icon: "none" });
-              }
-            },
-            fail: err => {
-              console.log("err: ", err);
-              // handle error
-            }
-          });
+          this.setState({ fileList: data });
         }
-      })
-      .catch(console.error)
+      }
+    )
 
       getResultData_badges()
 
@@ -141,7 +137,20 @@ class Index extends Component {
     const {
       userStore: { avatarUrl, nickName }
     } = this.props;
-    const {fileList} = this.state;
+    const {fileList,loginDay, loginText ,isShow} = this.state;
+
+    const ModalComProps = {
+      isShow: this.state.isShow,
+      onCancelCallback: ()=>{     
+        Taro.setStorage({
+          key: "isShow",
+          data: false
+        }); 
+        this.setState({isShow: false})
+      }
+    }
+
+
     return (
       <View className='home'>
         <NavBar text='' color='white' type='' />
@@ -173,20 +182,20 @@ class Index extends Component {
             onScrollToUpper={this.onScrollToUpper.bind(this)}
             onScroll={this.onScroll}
           >
-            <View className='vStyleA' onClick={this.toPlay.bind(this, {id:'A',url: fileList[0].tempFileURL})}>
-              <Text className='mindName'>冥想的名字</Text>
+            <View className='vStyleA' onClick={this.toPlay.bind(this, {id:'A',url: fileList[0].file})}>
+              <Text className='mindName'>正念冥想</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            <View className='vStyleB' onClick={this.toPlay.bind(this, {id:'B',url: fileList[1].tempFileURL})}>
-              <Text className='mindName'>冥想的名字</Text>
+            <View className='vStyleB' onClick={this.toPlay.bind(this, {id:'B',url: fileList[1].file})}>
+              <Text className='mindName'>白噪音</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            <View className='vStyleC' onClick={this.toPlay.bind(this, {id:'C',url: fileList[2].tempFileURL})}>
-              <Text className='mindName'>冥想的名字</Text>
+            <View className='vStyleC' onClick={this.toPlay.bind(this, {id:'C',url: fileList[2].file})}>
+              <Text className='mindName'>自然声音</Text>
               <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
@@ -194,7 +203,7 @@ class Index extends Component {
           </ScrollView>
         </View>
         <View />
-        <MDialog isShow={false} num={19} />
+        <MDialog num={loginDay} text={loginText} isShow={isShow} {...ModalComProps} />
       </View>
     );
   }

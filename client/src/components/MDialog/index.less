@@ -47,7 +47,7 @@
       color:rgba(255,255,255,1);
       line-height:23px;
       letter-spacing:1px;
-      .velign{
+      .vertical{
         margin-top: 25px;
         view{
           display: inline-block
@@ -83,21 +83,22 @@
     margin: 0 auto;
     display: block;
   }
-  .shareImg{
-    display: block;
+  .btn{
+    background-color: transparent;
+    padding: 0;
     width: 61px;
     height: 61px;
     position: absolute;
     bottom: 11px;
     right: 27px;
+    .shareImg{
+      display: block;
+      width: 61px;
+      height: 61px;
+    }
+    &::after {
+      border: none;
+    }
   }
-}
 
-button{
-  background-color: #fff;
-  position: static;
-  padding: 0;
-}
-button::after {
-  border: none;
 }

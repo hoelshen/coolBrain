@@ -65,7 +65,6 @@ class Index extends Component {
       CommentList2  = diaryList.map( (diary)=>{
         const time = (diary.created_at).split(' ');
         diary.time = time[0]
-
         return(
           <Comment2 taroKey={String(diary.id)} created_at={diary.time} text={diary.text} />
         )
@@ -75,6 +74,7 @@ class Index extends Component {
          
     return (
       <View>
+        <NavBar text='' color='#fff' type='2' />
         <View className='head'>我的冥想日记</View>
         {CommentList}
         <View className='foot'>

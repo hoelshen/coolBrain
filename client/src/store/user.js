@@ -12,6 +12,7 @@ class userStore {
   @observable useDay =  0;
   @observable avatarUrl =  '';
   @observable nickName =  '';
+  @observable id =  '';
   
   @computed get diffDay() {
     var dateStart = this.creatDay;
@@ -41,6 +42,10 @@ class userStore {
   updateInfo(avatarUrl, nickName){
     this.avatarUrl = avatarUrl
     this.nickName = nickName
+  }
+  @action.bound
+  updateId(id){
+    this.id = id
   }
 }
 export default new userStore()

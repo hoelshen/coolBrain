@@ -42,7 +42,7 @@ class Index extends Component {
     if(showComment){
       getResultData_postComment(commentText)
     }
-    getResultData_postsDiary(commentText)
+    getResultData_postsDiary({'shares': commentText, 'text': commentText})
   }
   onHome(){
     Taro.reLaunch({ url: `/pages/index/index` });

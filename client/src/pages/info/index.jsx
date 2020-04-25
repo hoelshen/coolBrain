@@ -4,6 +4,9 @@ import { observer, inject } from "@tarojs/mobx";
 import share from "@/assets/share.png";
 import NavBar from "@/components/Navbar/index";
 
+import { getResultData_MyBadge } from "@/servers/servers";
+
+
 import "./index.less";
 
 @inject("userStore")
@@ -11,7 +14,8 @@ import "./index.less";
 class Index extends Component {
   state ={
     useDay: 0,
-    useTime: 0
+    useTime: 0,
+    badgeList:[]
   }
   componentWillMount() {}
 
@@ -35,7 +39,14 @@ class Index extends Component {
     addGlobalClass: true
   };
 
-  componentDidShow() {}
+  async componentDidShow() {
+    const data = await getResultData_MyBadge();
+
+    this.setState({badgeList: data.data})
+
+
+    console.log('badgeList: ', data.data);
+  }
 
   componentDidHide() {}
 
@@ -52,7 +63,12 @@ class Index extends Component {
     const {
       userStore: { nickName }
     } = this.props;
-    const {useTime, useDay} = this.state;
+    const {useTime, useDay, badgeList} = this.state;
+    const ImageList = badgeList.map(element=>{
+      return (
+        <Image src={element.picture} className='badgeImg'></Image>
+      )
+    })
     return (
       <View>
         <NavBar text='冥想小程序' color='#8CC9BD' type='2' />
@@ -64,8 +80,11 @@ class Index extends Component {
                 <Image className='share' src={share} />
               </Button>
             </View>
-            <View className='boder column'>
+            <View className='border column'>
               <Text className='name'>{nickName}</Text>
+              <View className='badgeDiv'>
+                {ImageList}
+              </View>
             </View>
           </View>
           <View className='contain flex column a-center'>
@@ -78,7 +97,7 @@ class Index extends Component {
               <Text className='day'>累计冥想天数</Text>
               <Text className='dayNum'>{useDay}</Text>
               <Text className='dayText'>DAY</Text>
-              <View className='day' onClick={this.onDiary}>我的冥想日记</View>
+              <View className='diary' onClick={this.onDiary}>我的冥想日记</View>
             </View>
           </View>
           <View className='foot' onClick={e=>{e.stopPropagation()}}>

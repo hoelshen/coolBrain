@@ -48,6 +48,11 @@ class App extends Component {
         }
         return nav(data)
     }
+    Taro.setStorage({
+      key: "isShow",
+      data: true
+    });
+
   }
 
   componentDidMount() {

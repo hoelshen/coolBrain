@@ -1,6 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text, Image } from "@tarojs/components";
 import Icon from '@/assets/back_icon.png'
+import Group6 from '@/assets/Group6.png'
 
 import "./index.less";
 
@@ -27,7 +28,7 @@ class Navbar extends Component {
           <View className='navbar'>
             {type == 1
               ?
-              <Text className='iconText' onClick={this.toHome}>x</Text>
+              <Image className='iconText' src={Group6} onClick={this.toHome} />
               :
               <Image className='iconImg' src={Icon} onClick={this.toPrevious} />
             }
