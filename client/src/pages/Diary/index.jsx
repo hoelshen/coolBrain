@@ -75,7 +75,6 @@ class Index extends Component {
          
     return (
       <View>
-c
         <View className='head'>我的冥想日记</View>
         {CommentList}
         <View className='foot'>

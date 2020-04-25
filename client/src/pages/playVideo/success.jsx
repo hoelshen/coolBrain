@@ -9,7 +9,7 @@ import topSign from "@/assets/topSign.png";
 import bottomSign from "@/assets/bottomSign.png";
 import Group2 from "@/assets/Group2.png";
 import share from "@/assets/fx.png";
-import { getResultData_postDiary } from "@/servers/servers";
+import { getResultData_postsDiary } from "@/servers/servers";
 
 import "./success.less";
 
@@ -19,7 +19,8 @@ class Index extends Component {
   constructor() {
     super();
     this.state = {
-      commentText:''
+      commentText:'',
+      showComment: false
     };
   }
   componentWillMount() {}
@@ -37,15 +38,23 @@ class Index extends Component {
   }
 
   onPostDiary(){
-    getResultData_postDiary()
+    const {showComment, commentText } =  this.state
+    if(showComment){
+      getResultData_postComment(commentText)
+    }
+    getResultData_postsDiary(commentText)
   }
   onHome(){
     Taro.reLaunch({ url: `/pages/index/index` });
   }
-  onBlur(){
-
+  handleChange(e){
+    console.log('e: ', e.detail.value);
+    this.setState({commentText: e.detail.value});
   }
 
+  onCheck(){
+    this.setState({showComment: !this.state.showComment})
+  }
   componentDidHide() {}
 
   toHome() {
@@ -56,9 +65,9 @@ class Index extends Component {
     const {commentText} = this.state;
     return (
       <View>
-        <NavBar text='' color='#ffffff' type='2' />
-        <View class='toplife_modal_content'>
-          <View class='toplife_modal_btn'>
+        <NavBar text='' color='#8CC9BD' type='' />
+        <View class='modal_content'>
+          <View class='modal_btn'>
             <View className='played'>
               <View className='head'>
                 <View className='top' onClick={this.onClose}>
@@ -70,12 +79,24 @@ class Index extends Component {
                 </View>
               </View>
               <Image className='iconImg topSign' src={topSign} />
-              <Textarea placeholder='记录今天的冥想日记吧~' className='textArea' value={commentText}  onBlur={this.onBlur}  autoHeight />
+              <View className='AreaDiv'>
+              <Textarea placeholder='记录今天的冥想日记吧~' className='textArea'  value={commentText}  onInput={this.handleChange.bind(this)}  autoFocus  autoHeight />
+              <View className={showComment ? 'cheShareView': 'shareView'} onClick={this.onCheck}> 
+              </View>  
+              <Text className='shareText'>
+                分享到评论区
+              </Text>  
+              <View  className='shareBtn' onClick={this.onPostDiary}>
+                记录
+              </View>
+              </View>
               <Image className='iconImg bottomSign' src={bottomSign} />
-              <Image class='Group2' src={Group2} onClick={this.onHome}></Image> 
-              <Button className='btn'>
-                <Image className='shareImg' src={share} />
-              </Button>
+              <View className='foot'>
+                <Image class='Group2' src={Group2} onClick={this.onHome}></Image> 
+                <Button className='btn'>
+                  <Image className='shareImg' src={share} />
+                </Button>
+              </View>
             </View>
           </View>
         </View>
