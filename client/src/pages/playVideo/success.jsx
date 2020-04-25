@@ -19,13 +19,20 @@ class Index extends Component {
   constructor() {
     super();
     this.state = {
+      duration: '',
       commentText:'',
       showComment: false
     };
   }
   componentWillMount() {}
 
-  componentDidMount() {}
+  componentDidMount() {
+    const  { duration  } = this.$router.params;
+    console.log('duration: ', duration);
+    this.setState({
+      duration: parseInt(duration / 60)
+    });
+  }
 
   componentWillUnmount() {}
 
@@ -61,7 +68,7 @@ class Index extends Component {
     Taro.navigateTo({ url: `/pages/index/index` });
   }
   render() {
-    // const {num} = this.props;
+    const {duration} = this.state;
     const {commentText} = this.state;
     return (
       <View>
@@ -75,7 +82,7 @@ class Index extends Component {
                 </View>
                 <View className='body'>
                   <View>本次冥想分钟数</View>
-                  <View className='num'>10</View>
+                  <View className='num'>{duration}</View>
                 </View>
               </View>
               <Image className='iconImg topSign' src={topSign} />
@@ -93,7 +100,7 @@ class Index extends Component {
               <Image className='iconImg bottomSign' src={bottomSign} />
               <View className='foot'>
                 <Image class='Group2' src={Group2} onClick={this.onHome}></Image> 
-                <Button className='btn'>
+                <Button className='shareBtn'>
                   <Image className='shareImg' src={share} />
                 </Button>
               </View>

@@ -22,7 +22,7 @@ class Index extends Component {
   }
 
   componentWillMount() {
-
+    
   }
 
   async componentDidMount() {

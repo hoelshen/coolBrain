@@ -2,10 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import classNames from "classnames";
 import { View, Text, Image, Picker } from "@tarojs/components";
 import NavBar from "@/components/Navbar/index";
-//import Player from "@/components/Player/index";
-
-
-import { getResultData_frequencies } from '@/servers/servers'
+import Player from "@/components/Player/index";
 
 import * as types from "@/constants/PlayTypes.js";
 
@@ -16,8 +13,8 @@ class Index extends Component {
     type: 0,
     id: "A",
     videoUrl: "",
-    seMin: [1, 2, 3],
-    cheMin: 10,
+    seMin: [1, 2, 3, 5],
+    cheMin: 1,
     seVoice: [
       { name: "男声", id: 0 },
       { name: "女声", id: 1 }
@@ -41,7 +38,6 @@ class Index extends Component {
   componentWillUnmount() {}
 
   componentDidShow() {
-    getResultData_frequencies()
   }
 
   componentDidHide() {}
@@ -69,54 +65,7 @@ class Index extends Component {
     const val = e.detail.value;
     Taro.$backgroundAudioManager.seek(val * 60);
   }
-  clickPlay() {
-    const { playState, videoUrl } = this.state;
-    console.log('videoUrl: ', videoUrl);
-    if (!videoUrl) return false;
 
-    if (playState === "PLAY_START") {
-      const startTime  = new Date().getTime();
-      Taro.setStorage({
-        key: "startTime",
-        data: startTime
-      });
-      this.setState({ playState: "PLAY_LOAD", Triangle: false });
-
-
-      Taro.playBackgroundAudio({
-        dataUrl: videoUrl,
-        title: "bg1",
-        coverImgUrl: ""
-      });
-  
-    } else if (playState === "PLAY_LOAD") {
-      this.setState({ playState: "PLAY_STOP", Triangle: true });
-      this.processTime();
-      Taro.pauseBackgroundAudio();
-    } else {
-      this.setState({ playState: "PLAY_START", Triangle: false });
-      Taro.s
-    }
-  }
-
-  
-   processTime(){
-
-    const countTime =  Taro.getStorageSync('useTime');
-    console.log('countTime: ', countTime);
-    const startTime =  Taro.getStorageSync('startTime');
-    console.log('startTime: ', startTime);
-
-    var dateEnd = parseInt(new Date().getTime()/1000);
-    const useTime = dateEnd - parseInt(startTime /1000);
-    console.log('useTime: ', useTime);
-    
-
-    Taro.setStorage({
-      key: "useTime",
-      data: countTime + useTime
-    });
-  }
   mind() {
     Taro.reLaunch({ url: `/pages/index/index` });
   }
@@ -126,6 +75,7 @@ class Index extends Component {
 
   render() {
     const { id, playState, Triangle,videoUrl } = this.state;
+    console.log('videoUrl: ', videoUrl);
     const vStyle = classNames({
       playing: true,
       "vStyle-a": id === "A",
@@ -155,8 +105,8 @@ class Index extends Component {
       <View className='contain'>
         <NavBar text='冥想小程序' color={vColor} type='1' />
           <View className={vStyle}>
-            <View className={`${pStyle}`} onClick={this.clickPlay}>
-              {/* <Player Triangle={Triangle} url={videoUrl}></Player> */}
+            <View className={`${pStyle}`}>
+              {videoUrl && <Player videoUrl={videoUrl}></Player>}
             </View>
             <View className=''>
               <View class={`${bColor}`} >
