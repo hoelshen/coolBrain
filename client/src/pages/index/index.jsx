@@ -46,7 +46,6 @@ class Index extends Component {
     });
   }
   componentDidMount() {
-    const { userStore } = this.props;
     // 如果 ref 的是小程序原生组件，那只有在 didMount 生命周期之后才能通过
     // this.refs.input 访问到小程序原生组件
     if (process.env.TARO_ENV === "weapp") {
@@ -56,9 +55,6 @@ class Index extends Component {
     }
     getResultData_sentencesTody().then(res=>{
       const data = res.data;
-      userStore.updateId(
-        data.id
-      );
       this.setState({loginDay: data.days, loginText: data.text})
     })
   }

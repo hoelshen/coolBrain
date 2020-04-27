@@ -59,4 +59,9 @@ export const getResultData_profiles = (postData) => {
 export const getResultData_sentencesTody = (postData) => {
   return HTTPREQUEST.get('sentences/today/', postData)
 }
+//发送心情
+export const getResultData_moodTody = (postData) => {
+  return HTTPREQUEST.post('mood/today/', postData)
+}
+
 

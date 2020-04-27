@@ -30,7 +30,9 @@ class Modal extends Component {
     console.log('e', e)
     e.stopPropagation();
   };
+  onPush(){
 
+  }
   render() {
     const { num, isShow, text } = this.props;
     console.log('title', isShow, num, text)
@@ -47,20 +49,9 @@ class Modal extends Component {
                       <Image src={Group6} className='Group6Img' />
                     </View>
                     <View className='body'>
-                      <View>这是你坚持冥想的</View>
-                      <View className='vertical'>
-                        <View>第</View>
-                        <View className='num'>{num}</View>
-                        <View>天</View>
-                      </View>
+                      <View className='btn' onClick={this.onPush}><Text>确认提交</Text></View>
                     </View>
                   </View>
-                  <Image className='iconImg topSign' src={topSign} />
-                  <Text class='endText'>{text}</Text>
-                  <Image className='iconImg bottomSign' src={bottomSign} />
-                  <Button className='btn' openType='share'>
-                    <Image className='shareImg' src={share} />
-                  </Button>
                 </View>
               </View>
             </View>

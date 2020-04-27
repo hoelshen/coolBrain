@@ -28,6 +28,7 @@ class Index extends Component {
 
   componentDidMount() {
     let { id, url } = this.$router.params;
+    console.log('id, url: ', id, url);
     this.setState({
       videoUrl : url,
       id,
@@ -74,6 +75,7 @@ class Index extends Component {
 
   render() {
     const { id, playState,videoUrl } = this.state;
+    console.log('id: ', id);
     const vStyle = classNames({
       playing: true,
       "vStyle-a": id === "A",
@@ -102,7 +104,7 @@ class Index extends Component {
     return (
       <View className='contain'>
         <NavBar text='冥想小程序' color={vColor} type='1' />
-          <View className={vStyle}>
+          <View className={vStyle} style='background-size: 100% 100%;'>
             <View className={`${pStyle}`}>
               {videoUrl && <Player videoUrl={videoUrl}></Player>}
             </View>

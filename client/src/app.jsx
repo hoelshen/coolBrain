@@ -85,6 +85,11 @@ class App extends Component {
           //发起网络请求
              getResultData_auth({ code: res.code}).then(json=>{
                const data = json.data;
+               userStore.updateId(
+                data.user.id,
+                data.user.profile.days,
+                data.user.profile.duration
+              );
               Taro.setStorage({
                 key: "Ticket",
                 data: data.ticket

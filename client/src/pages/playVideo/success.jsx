@@ -4,6 +4,7 @@ import { observer, inject } from "@tarojs/mobx";
 import NavBar from "@/components/Navbar/index";
 import Group6 from "@/assets/Group6.png";
 import topSign from "@/assets/topSign.png";
+import Mood from "@/components/Mood/index";
 
 import bottomSign from "@/assets/bottomSign.png";
 import Group2 from "@/assets/Group2.png";
@@ -20,7 +21,8 @@ class Index extends Component {
     this.state = {
       duration: '',
       commentText:'',
-      showComment: false
+      showComment: false,
+      isShow: true
     };
   }
   componentWillMount() {}
@@ -45,10 +47,11 @@ class Index extends Component {
 
   onPostDiary(){
     const {showComment, commentText } =  this.state
+    const { id } = this.props.userStore
     if(showComment){
       getResultData_postComment(commentText)
     }
-    getResultData_postsDiary({'shares': commentText, 'text': commentText})
+    getResultData_postsDiary({'owner': id ,'text': commentText})
   }
   onHome(){
     Taro.reLaunch({ url: `/pages/index/index` });
@@ -67,14 +70,24 @@ class Index extends Component {
     Taro.navigateTo({ url: `/pages/index/index` });
   }
   render() {
-    const {duration, showComment,commentText} = this.state;
+    const {duration, showComment,commentText , isShow} = this.state;
+    const ModalComProps = {
+      isShow: this.state.isShow,
+      onCancelCallback: ()=>{     
+        Taro.setStorage({
+          key: "isShow",
+          data: false
+        }); 
+        this.setState({isShow: false})
+      }
+    }
     return (
       <View>
         <NavBar text='' color='#8CC9BD' type='' />
         <View class='modal_content'>
           <View class='modal_btn'>
             <View className='played'>
-              <View className='head'>
+              <View className='head ' style='background-size: 100% 100%;'>
                 <View className='top' onClick={this.onClose}>
                   <Image src={Group6} className='Group6Img' />
                 </View>
@@ -105,6 +118,7 @@ class Index extends Component {
             </View>
           </View>
         </View>
+        <Mood  isShow={isShow} {...ModalComProps} />
       </View>
     );
   }

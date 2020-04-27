@@ -2,6 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text, Button } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import share from "@/assets/share.png";
+import Icon from '@/assets/mingleft.png'
 import NavBar from "@/components/Navbar/index";
 
 import { getResultData_MyBadge } from "@/servers/servers";
@@ -20,7 +21,8 @@ class Index extends Component {
   componentWillMount() {}
 
    componentDidMount() {
-    const dayStart =  Taro.getStorageSync('createDay');
+
+/*     const dayStart =  Taro.getStorageSync('createDay');
     if(dayStart){
       var dateEnd = new Date().getTime();
       const filteDay = (dateEnd - dayStart) / (1000 * 60 * 60 * 24)
@@ -30,7 +32,7 @@ class Index extends Component {
     const time =  Taro.getStorageSync('useTime');
     if(time){
       this.setState({useTime: Math.floor(time%3600/60)});
-    }
+    } */
   }
 
   componentWillUnmount() {}
@@ -43,7 +45,6 @@ class Index extends Component {
     const data = await getResultData_MyBadge();
 
     this.setState({badgeList: data.data})
-
 
     console.log('badgeList: ', data.data);
   }
@@ -61,9 +62,9 @@ class Index extends Component {
   }
   render() {
     const {
-      userStore: { nickName }
+      userStore: { nickName, avatarUrl,  days, duration  }
     } = this.props;
-    const {useTime, useDay, badgeList} = this.state;
+    const { badgeList } = this.state;
     const ImageList = badgeList.map(element=>{
       return (
         <Image src={element.picture} className='badgeImg'></Image>
@@ -74,11 +75,15 @@ class Index extends Component {
         <NavBar text='冥想小程序' color='#8CC9BD' type='2' />
         <View className='body flex column j-between'>
           <View className='head'>
-            <View className='shareDiv'>
+            <View className='shareDiv' style='background-size: 100% 100%;'>
               <Text className='mind'>我的冥想</Text>
               <Button className='btn' openType='share'>
                 <Image className='share' src={share} />
               </Button>
+              <Image
+                className='avatarImg'
+                src={avatarUrl}
+              />
             </View>
             <View className='border column'>
               <Text className='name'>{nickName}</Text>
@@ -90,14 +95,19 @@ class Index extends Component {
           <View className='contain flex column a-center'>
             <View className='minBlock flex column'>
               <Text className='min'>累计冥想分钟</Text>
-              <Text className='minNum'>{useTime}</Text>
+              <Text className='minNum'>{duration}</Text>
               <Text className='minText'>MIN</Text>
             </View>
             <View className='dayBlock flex column'>
               <Text className='day'>累计冥想天数</Text>
-              <Text className='dayNum'>{useDay}</Text>
+              <Text className='dayNum'>{days}</Text>
               <Text className='dayText'>DAY</Text>
-              <View className='diary' onClick={this.onDiary}>我的冥想日记</View>
+              <View className='diary' onClick={this.onDiary}>
+                <Text>
+                  我的冥想日记
+                </Text>
+                <Image src={Icon} className='iconImg' />
+              </View>
             </View>
           </View>
           <View className='foot' onClick={e=>{e.stopPropagation()}}>
