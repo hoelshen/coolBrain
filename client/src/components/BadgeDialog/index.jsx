@@ -1,3 +1,12 @@
+/* width:180px;
+height:42px;
+font-size:42px;
+font-family:SourceHanSansCN-Medium,SourceHanSansCN;
+font-weight:500;
+color:rgba(74,74,74,1);
+line-height:63px;
+letter-spacing:3px; */
+
 import Taro, { Component } from "@tarojs/taro";
 import { View, Button, Image, Text } from "@tarojs/components";
 import topSign from "@/assets/topSign.png";

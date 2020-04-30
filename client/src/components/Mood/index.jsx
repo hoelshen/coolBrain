@@ -5,6 +5,8 @@ import bottomSign from "@/assets/bottomSign.png";
 import share from "@/assets/fx.png";
 import Group6 from "@/assets/Group6.png";
 
+import Process from "../Process/index";
+
 import "./index.less";
 
 class Modal extends Component {
@@ -30,7 +32,7 @@ class Modal extends Component {
     console.log('e', e)
     e.stopPropagation();
   };
-  onPush(){
+  onPush(mood, duration){
 
   }
   render() {
@@ -48,10 +50,11 @@ class Modal extends Component {
                     <View className='top' onClick={this.isClose} >
                       <Image src={Group6} className='Group6Img' />
                     </View>
-                    <View className='body'>
+                  </View>
+                  <View className='body'>
+                      <Process></Process>
                       <View className='btn' onClick={this.onPush}><Text>确认提交</Text></View>
                     </View>
-                  </View>
                 </View>
               </View>
             </View>
