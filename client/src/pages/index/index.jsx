@@ -4,6 +4,7 @@ import { observer, inject } from "@tarojs/mobx";
 import MDay from "@/components/Mday";
 import NavBar from "@/components/Navbar/index";
 import MDialog from '@/components/MDialog/index';
+import BadgeDialog from '@/components/BadgeDialog/index';
 import headImg from "@/assets/avatar.png";
 import { getResultData_badges,getResultData_MyBadge,getResultData_sentencesTody,getResultData_frequencies } from '@/servers/servers'
 
@@ -23,7 +24,9 @@ class Index extends Component {
     }],
     loginDay: 0,
     loginText: '',
-    isShow: false
+    showDialog: false,
+    showBadgeDialog: false,
+    ShowBadge: {}
   }
   componentWillMount() {
     const { userStore } = this.props;
@@ -55,14 +58,18 @@ class Index extends Component {
     }
     getResultData_sentencesTody().then(res=>{
       const data = res.data;
+      if(data.badge){
+        this.setState({badge: data.badge, showBadge : true});
+      } else {}
       this.setState({loginDay: data.days, loginText: data.text})
     })
   }
 
   componentDidShow() {
     const dayStart =  Taro.getStorageSync('createDay');
-    const isShow =  Taro.getStorageSync('isShow');
-    this.setState({isShow: isShow})
+    const isShow =  true || Taro.getStorageSync('isShow');
+    console.log('isShow: ', isShow);
+    this.setState({showDialog: isShow})
     if(!dayStart){
       Taro.setStorage({
         key: "createDay",
@@ -133,19 +140,35 @@ class Index extends Component {
     const {
       userStore: { avatarUrl, nickName }
     } = this.props;
-    const {fileList,loginDay, loginText ,isShow} = this.state;
+    const {fileList, loginDay, loginText ,showDialog, showBadgeDialog,showBadge ,badge} = this.state;
+    console.log('badge: ', badge);
 
     const ModalComProps = {
-      isShow: this.state.isShow,
+      showDialog,
+      loginDay ,
+      loginText,
+      showBadge,
       onCancelCallback: ()=>{     
         Taro.setStorage({
           key: "isShow",
           data: false
         }); 
-        this.setState({isShow: false})
+        this.setState({showDialog: false})
+        this.setState({showBadgeDialog: true})
       }
     }
 
+    const BadgeModalComProps = {
+      showBadgeDialog,
+      badge,
+      onCancelCallback: ()=>{     
+        Taro.setStorage({
+          key: "isShow",
+          data: false
+        }); 
+        this.setState({showBadgeDialog: false})
+      }
+    }
 
     return (
       <View className='home'>
@@ -199,7 +222,8 @@ class Index extends Component {
           </ScrollView>
         </View>
         <View />
-        <MDialog num={loginDay} text={loginText} isShow={isShow} {...ModalComProps} />
+        <MDialog  {...ModalComProps} />
+        <BadgeDialog {...BadgeModalComProps}/>
       </View>
     );
   }

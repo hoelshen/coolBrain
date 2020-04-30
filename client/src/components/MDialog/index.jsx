@@ -23,7 +23,7 @@ class Modal extends Component {
   };
 
   onRecored = (param)=>{
-    this.setState({ShowBadgeDialog: true})
+    this.props.onCancelCallback();
   }
   authConfirmClick = e => {
     this.props.onConfirmCallback(e.detail);
@@ -36,12 +36,13 @@ class Modal extends Component {
   };
 
   render() {
-    const { num, isShow, text, ShowBadge, Badge } = this.props;
-    console.log('title', isShow, num, text)
+    const { loginDay, showDialog, loginText, showBadge, badge } = this.props;
+    console.log('title', showDialog, loginDay, loginText, showBadge, badge)
+    
     return (
       <View>
         {
-          isShow && 
+          showDialog && 
           <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
             <View class='toplife_modal_content'>
               <View class='toplife_modal_btn'>
@@ -54,16 +55,18 @@ class Modal extends Component {
                       <View>这是你坚持冥想的</View>
                       <View className='vertical'>
                         <View>第</View>
-                        <View className='num'>{num}</View>
+                        <View className='num'>{loginDay}</View>
                         <View>天</View>
                       </View>
                     </View>
                   </View>
                   <Image className='iconImg topSign' src={topSign} />
-                  <Text class='endText'>{text}</Text>
+                  <Text class='endText'>{loginText}</Text>
                   <Image className='iconImg bottomSign' src={bottomSign} />
-                  <View>
-                    {ShowBadge} && <Image className='Group3' src={Group3} onClick={onRecored(Badge)}></Image>
+                  <View className='badge'>
+                   { showBadge && 
+                     <Image className='Group3' src={Group3} onClick={this.onRecored}></Image>
+                   }
                   <Button className='btn' openType='share'>
                     <Image className='shareImg' src={share} />
                   </Button>
@@ -85,6 +88,7 @@ Modal.defaultProps = {
   text: "", //提示的描述
   cancelText: "取消", //取消
   confirmText: "确定", //确定
+  showBadge: false,
   isShow: false, //不显示
   isAuth: false, //是否为授权按钮
   cancelCallback: () => {},

@@ -1,12 +1,3 @@
-/* width:180px;
-height:42px;
-font-size:42px;
-font-family:SourceHanSansCN-Medium,SourceHanSansCN;
-font-weight:500;
-color:rgba(74,74,74,1);
-line-height:63px;
-letter-spacing:3px; */
-
 import Taro, { Component } from "@tarojs/taro";
 import { View, Button, Image, Text } from "@tarojs/components";
 import topSign from "@/assets/topSign.png";
@@ -27,64 +18,54 @@ class Modal extends Component {
   };
 
   isClose = () => {
-    console.log('2222')
+    console.log("2222");
     this.props.onCancelCallback();
   };
 
-  onRecored = (param)=>{
-    this.setState({ShowBadgeDialog: true})
-  }
+  onInfo = param => {
+    Taro.navigateTo({
+      url: `/pages/Info/index`
+    });
+  };
   authConfirmClick = e => {
     this.props.onConfirmCallback(e.detail);
     Taro.setStorageSync("isHomeLongHideAuthModal", true);
   };
 
   preventTouchMove = e => {
-    console.log('e', e)
+    console.log("e", e);
     e.stopPropagation();
   };
 
   render() {
-    const { num, isShow, text, ShowBadge, Badge } = this.props;
-    console.log('title', isShow, num, text)
+    const { showBadgeDialog, badge } = this.props;
+    console.log("title", showBadgeDialog, badge);
     return (
       <View>
-        {
-          isShow && 
-          <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
-            <View class='toplife_modal_content'>
-              <View class='toplife_modal_btn'>
-                <View className='played'>
-                  <View className='head' style='background-size: 100% 100%;'>
-                    <View className='top' onClick={this.isClose} >
-                      <Image src={Group6} className='Group6Img' />
-                    </View>
-                    <View className='body'>
-                      <View>这是你坚持冥想的</View>
-                      <View className='vertical'>
-                        <View>第</View>
-                        <View className='num'>{num}</View>
-                        <View>天</View>
-                      </View>
-                    </View>
-                  </View>
-                  <Image className='iconImg topSign' src={topSign} />
-                  <Text class='endText'>{text}</Text>
-                  <Image className='iconImg bottomSign' src={bottomSign} />
-                  <View>
-                    {ShowBadge} && <Image className='Group3' src={Group3} onClick={onRecored(Badge)}></Image>
-                  <Button className='btn' openType='share'>
-                    <Image className='shareImg' src={share} />
-                  </Button>
-                  </View>  
-
-                </View>
+        {showBadgeDialog && (
+          <View class="toplife_modal" onTouchMove={this.preventTouchMove}>
+            <View
+              class="toplife_modal_content"
+              style="background-size: 100% 100%;"
+            >
+              <View className="head">
+                <View className="close" onClick={this.isClose}></View>
+              </View>
+              <View className="body">
+                <View className="text">打卡成功</View>
+                <Image className="iconImg" src={badge.picture} />
+              </View>
+              <View className="foot">
+                <Image
+                  className="Group7"
+                  src={Group3}
+                  onClick={this.onInfo}
+                ></Image>
               </View>
             </View>
           </View>
-        }
+        )}
       </View>
-
     );
   }
 }
@@ -94,7 +75,7 @@ Modal.defaultProps = {
   text: "", //提示的描述
   cancelText: "取消", //取消
   confirmText: "确定", //确定
-  isShow: false, //不显示
+  showBadgeDialog: false, //不显示
   isAuth: false, //是否为授权按钮
   cancelCallback: () => {},
   confirmCallback: () => {}
