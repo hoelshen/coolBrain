@@ -22,10 +22,8 @@ class Modal extends Component {
     this.props.onCancelCallback();
   };
 
-  onInfo = param => {
-    Taro.navigateTo({
-      url: `/pages/Info/index`
-    });
+  onInfo = () => {
+    this.props.onCancelCallback();
   };
   authConfirmClick = e => {
     this.props.onConfirmCallback(e.detail);

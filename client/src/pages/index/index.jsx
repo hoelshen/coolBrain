@@ -3,10 +3,15 @@ import { View, Image, ScrollView, Button, Text } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import MDay from "@/components/Mday";
 import NavBar from "@/components/Navbar/index";
-import MDialog from '@/components/MDialog/index';
-import BadgeDialog from '@/components/BadgeDialog/index';
+import MDialog from "@/components/MDialog/index";
+import BadgeDialog from "@/components/BadgeDialog/index";
 import headImg from "@/assets/avatar.png";
-import { getResultData_badges,getResultData_MyBadge,getResultData_sentencesTody,getResultData_frequencies } from '@/servers/servers'
+import {
+  getResultData_badges,
+  getResultData_MyBadge,
+  getResultData_sentencesTody,
+  getResultData_frequencies
+} from "@/servers/servers";
 
 import "../../app.less";
 import "./index.less";
@@ -15,24 +20,37 @@ import "./index.less";
 @observer
 class Index extends Component {
   state = {
-    fileList:[{
-      url: ''
-    },{
-      url: ''
-    },{
-      url: ''
-    }],
+    fileList: [
+      {
+        url: "",  //地址
+        name: {},  //分钟数
+        frequency_type: '',  //类型
+        subtype:{}  //声音类型
+      },
+      {
+        url: "",  //地址
+        name: {},  //分钟数
+        frequency_type: '',  //类型
+        subtype:{}  //声音类型
+      },
+      {
+        url: "",  //地址
+        name: {},  //分钟数
+        frequency_type: '',  //类型
+        subtype:{}  //声音类型
+      }
+    ],
     loginDay: 0,
-    loginText: '',
+    loginText: "",
     showDialog: false,
     showBadgeDialog: false,
     ShowBadge: {}
-  }
+  };
   componentWillMount() {
     const { userStore } = this.props;
 
     Taro.getSetting({
-      success: function (res) {
+      success: function(res) {
         if (res.authSetting && res.authSetting["scope.userInfo"]) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
           Taro.getUserInfo({
@@ -56,21 +74,22 @@ class Index extends Component {
     } else if (process.env.TARO_ENV === "h5") {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
-    getResultData_sentencesTody().then(res=>{
+    getResultData_sentencesTody().then(res => {
       const data = res.data;
-      if(data.badge){
-        this.setState({badge: data.badge, showBadge : true});
-      } else {}
-      this.setState({loginDay: data.days, loginText: data.text})
-    })
+      if (data.badge) {
+        this.setState({ badge: data.badge, showBadge: true });
+      } else {
+      }
+      this.setState({ loginDay: data.days, loginText: data.text });
+    });
   }
 
   componentDidShow() {
-    const dayStart =  Taro.getStorageSync('createDay');
-    const isShow =  true || Taro.getStorageSync('isShow');
-    console.log('isShow: ', isShow);
-    this.setState({showDialog: isShow})
-    if(!dayStart){
+    const dayStart = Taro.getStorageSync("createDay");
+    const isShow = true || Taro.getStorageSync("isShow");
+    console.log("isShow: ", isShow);
+    this.setState({ showDialog: isShow });
+    if (!dayStart) {
       Taro.setStorage({
         key: "createDay",
         data: new Date().getTime()
@@ -83,27 +102,25 @@ class Index extends Component {
 
     getResultData_frequencies().then(res => {
       const data = res.data.objects;
-      console.log('data: ', data);
-        if (data.length > 0) {
-          this.setState({ fileList: data });
-        }
+      console.log("data: ", data);
+      if (data.length > 0) {
+        this.setState({ fileList: data });
       }
-    )
+    });
 
-      getResultData_badges()
+    getResultData_badges();
 
-      getResultData_MyBadge()
-
+    getResultData_MyBadge();
   }
 
-  componentDidHide() { }
+  componentDidHide() {}
   componentWillReact() {
     console.log("componentWillReact");
   }
   onScroll(e) {
     console.log(e);
   }
-  onScrollToUpper() { }
+  onScrollToUpper() {}
   toInfo() {
     Taro.navigateTo({
       url: `/pages/info/index`
@@ -123,11 +140,11 @@ class Index extends Component {
   }
   static config = {
     disableScroll: true
-  }
-  
+  };
+
   config = {
     disableScroll: true
-  }
+  };
 
   render() {
     const scrollStyle = {
@@ -140,58 +157,64 @@ class Index extends Component {
     const {
       userStore: { avatarUrl, nickName }
     } = this.props;
-    const {fileList, loginDay, loginText ,showDialog, showBadgeDialog,showBadge ,badge} = this.state;
-    console.log('badge: ', badge);
+    const {
+      fileList,
+      loginDay,
+      loginText,
+      showDialog,
+      showBadgeDialog,
+      showBadge,
+      badge
+    } = this.state;
 
     const ModalComProps = {
       showDialog,
-      loginDay ,
+      loginDay,
       loginText,
       showBadge,
-      onCancelCallback: ()=>{     
+      onCancelCallback: () => {
         Taro.setStorage({
           key: "isShow",
           data: false
-        }); 
-        this.setState({showDialog: false})
-        this.setState({showBadgeDialog: true})
+        });
+        this.setState({ showDialog: false });
+        this.setState({ showBadgeDialog: true });
       }
-    }
+    };
 
     const BadgeModalComProps = {
       showBadgeDialog,
       badge,
-      onCancelCallback: ()=>{     
-        Taro.setStorage({
-          key: "isShow",
-          data: false
-        }); 
-        this.setState({showBadgeDialog: false})
+      onCancelCallback: () => {
+        this.setState({ showBadgeDialog: false });
+        Taro.navigateTo({
+          url: `/pages/Info/index`
+        });
       }
-    }
+    };
 
     return (
-      <View className='home'>
-        <NavBar text='' color='white' type='' />
-        <View className='head'>
+      <View className="home">
+        <NavBar text="" color="white" type="" />
+        <View className="head">
           {!avatarUrl ? (
             <Button
-              className='aliasImg'
-              v-if='!user.aliasPortrait'
-              openType='getUserInfo'
-              lang='zh_CN'
+              className="aliasImg"
+              v-if="!user.aliasPortrait"
+              openType="getUserInfo"
+              lang="zh_CN"
               onGetUserInfo={this.onGotUserInfo.bind(this)}
             >
-              <Image className='img' src={headImg} />
+              <Image className="img" src={headImg} />
             </Button>
           ) : (
-              <Image onClick={this.toInfo} className='img' src={avatarUrl} />
-            )}
+            <Image onClick={this.toInfo} className="img" src={avatarUrl} />
+          )}
         </View>
         <MDay nickName={nickName} time={new Date()}></MDay>
-        <View className='pageSectionSpacing'>
+        <View className="pageSectionSpacing">
           <ScrollView
-            className='scrollview'
+            className="scrollview"
             scrollX
             scrollWithAnimation
             scrollTop={scrollTop}
@@ -201,29 +224,54 @@ class Index extends Component {
             onScrollToUpper={this.onScrollToUpper.bind(this)}
             onScroll={this.onScroll}
           >
-            <View className='vStyleA' onClick={this.toPlay.bind(this, {id:'A',url: fileList[0].file})}>
-              <Text className='mindName'>正念冥想</Text>
-              <Text className='mindInfo'>
+            <View
+              className="vStyleA"
+              onClick={this.toPlay.bind(this, {
+                id: "A",
+                url: fileList[0].file,
+                name: fileList[0].name,
+                frequency_type: fileList[0].frequency_type,
+                subtype: fileList[0].subtype
+              })}
+            >
+              <Text className="mindName">正念冥想</Text>
+              <Text className="mindInfo">
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            <View className='vStyleB' onClick={this.toPlay.bind(this, {id:'B',url: fileList[1].file})}>
-              <Text className='mindName'>白噪音</Text>
-              <Text className='mindInfo'>
+            <View
+              className="vStyleB"
+              onClick={this.toPlay.bind(this, {
+                id: "B",
+                url: fileList[1].file,
+                name: fileList[1].name,
+                frequency_type: fileList[1].frequency_type
+              })}
+            >
+              <Text className="mindName">白噪音</Text>
+              <Text className="mindInfo">
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            <View className='vStyleC' onClick={this.toPlay.bind(this, {id:'C',url: fileList[2].file})}>
-              <Text className='mindName'>自然声音</Text>
-              <Text className='mindInfo'>
+            <View
+              className="vStyleC"
+              onClick={this.toPlay.bind(this, {
+                id: "C",
+                url: fileList[2].file,
+                name: fileList[2].name,
+                frequency_type: fileList[2].frequency_type
+              })}
+            >
+              <Text className="mindName">自然声音</Text>
+              <Text className="mindInfo">
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
           </ScrollView>
         </View>
         <View />
-        <MDialog  {...ModalComProps} />
-        <BadgeDialog {...BadgeModalComProps}/>
+        <MDialog {...ModalComProps} />
+        <BadgeDialog {...BadgeModalComProps} />
       </View>
     );
   }
