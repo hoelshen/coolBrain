@@ -19,7 +19,7 @@ class Index extends Component {
   constructor() {
     super();
     this.state = {
-      duration: '',
+      isDuration: '',
       commentText:'',
       showComment: false,
       isShow: true
@@ -28,10 +28,9 @@ class Index extends Component {
   componentWillMount() {}
 
   componentDidMount() {
-    const  { duration  } = this.$router.params;
-    console.log('duration: ', duration);
+    const  {  duration  } = this.$router.params;
     this.setState({
-      duration: parseInt(duration / 60)
+      isDuration: parseInt(Number(duration) / 60)
     });
   }
 
@@ -70,7 +69,8 @@ class Index extends Component {
     Taro.navigateTo({ url: `/pages/index/index` });
   }
   render() {
-    const {duration, showComment,commentText , isShow} = this.state;
+    const {isDuration, showComment,commentText , isShow} = this.state;
+    console.log('duration: ', isDuration);
     const ModalComProps = {
       isShow: this.state.isShow,
       onCancelCallback: ()=>{     
@@ -93,7 +93,7 @@ class Index extends Component {
                 </View>
                 <View className='body'>
                   <View>本次冥想分钟数</View>
-                  <View className='num'>{duration}</View>
+                  <View className='num'>{isDuration}</View>
                 </View>
               </View>
               <Image className='iconImg topSign' src={topSign} />
@@ -118,7 +118,7 @@ class Index extends Component {
             </View>
           </View>
         </View>
-        <Mood  isShow={isShow} {...ModalComProps} />
+        <Mood  isShow={isShow} isDuration={isDuration} {...ModalComProps} />
       </View>
     );
   }

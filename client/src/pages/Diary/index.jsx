@@ -26,9 +26,11 @@ class Index extends Component {
   }
 
   async componentDidMount() {
+    const { userStore } = this.props;
+    console.log('id: ', userStore);
     const diary = await getResultData_getDiary()
     this.setState({diaryList: diary.data.objects})
-    const comment = await getResultData_getComment()
+    const comment = await getResultData_getComment(id)
     this.setState({commentList: comment.data.objects})
   }
 
@@ -56,7 +58,7 @@ class Index extends Component {
        CommentList = commentList.map((comment) =>{
         const time = (comment.created_at).split(' ');
         comment.time = time[0]
-         return(
+         return (
            <Comment taroKey={String(comment.id)} created_at={comment.time} text={comment.text} />
          )
      })

@@ -1,44 +1,55 @@
 import Taro, { Component } from "@tarojs/taro";
 import classNames from "classnames";
-import { View, Text, Image, Picker } from "@tarojs/components";
+import { View, Picker } from "@tarojs/components";
 import NavBar from "@/components/Navbar/index";
 import Player from "@/components/Player/index";
+import FM from "@/components/FM/index";
 
 import * as types from "@/constants/PlayTypes.js";
+import {
+  getResultData_frequencies
+} from "@/servers/servers";
 
 import "./index.less";
 
 class Index extends Component {
   state = {
-    type: 0,
     id: "A",
-    videoUrl: "",
-    seMin: [1, 2, 3, 5],
-    cheMin: 1,
+    frequency_type: "",
+    seMin: [{verbose:'5 Min', id: "5min"}, {verbose: '10 Min' ,id: "10min"}, {id: '15min', verbose: "15 Min"}, {id: 'more', verbose:'更多' } ],
+    cheMin: '5 Min',
+    fileList:[],
+    originList:[],
     seVoice: [
-      { name: "男声", id: 0 },
-      { name: "女声", id: 1 }
+      { name: "男声", id: "male_voice" },
+      { name: "女声", id: "female_voice" }
     ],
     cheVoice: "男声",
     playState: types.PLAY_START,
+    isShowFM: false
   };
+
   componentWillMount() {
+    let { id, frequency_type } = this.$router.params;
 
-  }
-
-  componentDidMount() {
-    let { id, url } = this.$router.params;
-    console.log('id, url: ', id, url);
-    this.setState({
-      videoUrl : url,
-      id,
+    getResultData_frequencies().then(res => {
+      const data = res.data.objects;
+      console.log("data: ", data);
+      if (data.length > 0) {
+        this.filterList('key',frequency_type, data);
+      }
+      this.setState({
+        id,
+      });
     });
+
   }
+
+  componentDidMount() {}
 
   componentWillUnmount() {}
 
-  componentDidShow() {
-  }
+  componentDidShow() {}
 
   componentDidHide() {}
 
@@ -48,34 +59,77 @@ class Index extends Component {
       console.log(res.target);
     }
     return {
-      title: "自定义转发标题",
-      path: "/page/user?id=123"
+      title: "冥想小程序",
+      path: "/page/index/index"
     };
   }
+
   onChangeVoice(e) {
+    const { originList } = this.state;
+    console.log('originList: ', originList);
     this.setState({
       cheVoice: this.state.seVoice[e.detail.value]["name"]
     });
-  }
-  onChangeMin(e) {
-    this.setState({
-      cheMin: e.detail.value
-    });
-    
-    const val = e.detail.value;
-    Taro.$backgroundAudioManager.seek(val * 60);
+    if (originList.length > 0) {
+      this.cheVoiceList('key', this.state.seMin[e.detail.value]['id'], originList);
+    }
   }
 
+  onChangeMin(e) {
+    console.log('e: ', e);
+    if(e.detail.value == 3){
+      return this.setState({isShowFM: true})
+    } 
+
+    const { originList } = this.state;
+    console.log('originList: ', originList);
+    this.setState({
+      cheMin: this.state.seMin[e.detail.value]['verbose']
+    });
+    if (originList.length > 0) {
+      this.cheMinList('key', this.state.seMin[e.detail.value]['id'], originList);
+    }
+  }
+
+  
   mind() {
     Taro.reLaunch({ url: `/pages/index/index` });
   }
+
   toHome() {
     Taro.reLaunch({ url: `/pages/index/index` });
   }
 
+  filterList(key, item, list){
+    const newlist = list.filter(l => (l.frequency_type[key] == item))
+    console.log('newlist: ', newlist);
+    this.setState({
+      originList: newlist,
+      fileList: newlist
+    });
+  }
+
+  cheMinList(key, item, list){
+    console.log('key, item, list: ', key, item, list);
+    const newlist = list.filter(l => (l.name[key] == item))
+    console.log('newlist: ', newlist);
+    this.setState({
+      fileList: newlist
+    });
+  }
+
+  cheVoiceList(key, item, list){
+    console.log('key, item, list: ', key, item, list);
+    const newlist = list.filter(l => (l.name[key] == item))
+    console.log('newlist: ', newlist);
+    this.setState({
+      fileList: newlist
+    });
+  }
+
   render() {
-    const { id, playState,videoUrl } = this.state;
-    console.log('id: ', id);
+    const { id, playState,fileList,isShowFM } = this.state;
+    console.log('id: ', id, fileList);
     const vStyle = classNames({
       playing: true,
       "vStyle-a": id === "A",
@@ -101,36 +155,45 @@ class Index extends Component {
        {blueBtn:id === 'B'},
        {redBtn:id === 'C'} 
     )
+
+    const FMModal = {
+      isShowFM: this.state.isShowFM,
+      onCancelCallback: ()=>{     
+        this.setState({isShowFM: false})
+      }
+    }
     return (
       <View className='contain'>
         <NavBar text='冥想小程序' color={vColor} type='1' />
-          <View className={vStyle} style='background-size: 100% 100%;'>
-            <View className={`${pStyle}`}>
-              {videoUrl && <Player videoUrl={videoUrl}></Player>}
+        <View className={vStyle} style='background-size: 100% 100%;'>
+          <View className={`${pStyle}`}>
+            {fileList[0] && <Player videoUrl={fileList[0].file}></Player>}
+          </View>
+          <View className=''>
+            <View class={`${bColor}`} >
+              <Picker
+                mode='selector'
+                range={this.state.seMin}
+                rangeKey="{{'verbose'}}"
+                onChange={this.onChangeMin}
+              >
+                <View className='num'> {this.state.cheMin}</View>
+              </Picker>
             </View>
-            <View className=''>
-              <View class={`${bColor}`} >
+            { id=='A' && <View class='voice'>
                 <Picker
                   mode='selector'
-                  range={this.state.seMin}
-                  onChange={this.onChangeMin}
+                  range={this.state.seVoice}
+                  rangeKey="{{'name'}}"
+                  onChange={this.onChangeVoice}
                 >
-                  <View className='num'>{this.state.cheMin} Min</View>
+                  <View className='num' >{this.state.cheVoice}</View>
                 </Picker>
-              </View>
-              { id=='A' && <View class='voice'>
-                  <Picker
-                    mode='selector'
-                    range={this.state.seVoice}
-                    rangeKey="{{'name'}}"
-                    onChange={this.onChangeVoice}
-                  >
-                    <View className='num' >{this.state.cheVoice}</View>
-                  </Picker>
-              </View>
-              }
             </View>
+            }
           </View>
+        </View>
+        <FM  showFMDialog={isShowFM} {...FMModal} />
       </View>
     );
   }

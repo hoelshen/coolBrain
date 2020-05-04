@@ -10,7 +10,6 @@ import {
   getResultData_badges,
   getResultData_MyBadge,
   getResultData_sentencesTody,
-  getResultData_frequencies
 } from "@/servers/servers";
 
 import "../../app.less";
@@ -20,31 +19,11 @@ import "./index.less";
 @observer
 class Index extends Component {
   state = {
-    fileList: [
-      {
-        url: "",  //地址
-        name: {},  //分钟数
-        frequency_type: '',  //类型
-        subtype:{}  //声音类型
-      },
-      {
-        url: "",  //地址
-        name: {},  //分钟数
-        frequency_type: '',  //类型
-        subtype:{}  //声音类型
-      },
-      {
-        url: "",  //地址
-        name: {},  //分钟数
-        frequency_type: '',  //类型
-        subtype:{}  //声音类型
-      }
-    ],
     loginDay: 0,
     loginText: "",
     showDialog: false,
     showBadgeDialog: false,
-    ShowBadge: {}
+    showBadge: {}
   };
   componentWillMount() {
     const { userStore } = this.props;
@@ -76,11 +55,23 @@ class Index extends Component {
     }
     getResultData_sentencesTody().then(res => {
       const data = res.data;
+      this.setState({ loginDay: data.days, loginText: data.text });
       if (data.badge) {
         this.setState({ badge: data.badge, showBadge: true });
-      } else {
       }
-      this.setState({ loginDay: data.days, loginText: data.text });
+      if(data.clock){
+        const { clock_date} = data.clock;
+        const day = Taro.$dayjs().format('YYYY-MM-DD HH:mm:ss');
+        console.log('day: ', day);
+        const value = Taro.$dayjs(day).diff(clock_date, 'hour');
+        console.log('value: ', value);
+
+        if(value > 0){
+          this.setState({showDialog: true})
+        } else {
+          this.setState({showDialog: false})
+        }
+      }
     });
   }
 
@@ -99,14 +90,6 @@ class Index extends Component {
         data: 0
       });
     }
-
-    getResultData_frequencies().then(res => {
-      const data = res.data.objects;
-      console.log("data: ", data);
-      if (data.length > 0) {
-        this.setState({ fileList: data });
-      }
-    });
 
     getResultData_badges();
 
@@ -128,7 +111,7 @@ class Index extends Component {
   }
   toPlay(obj) {
     Taro.navigateTo({
-      url: `/pages/playVideo/index?id=${obj.id}&url=${obj.url}&type=${0}`
+      url: `/pages/playVideo/index?id=${obj.id}&frequency_type=${obj.frequency_type}`
     });
   }
   onGotUserInfo(e) {
@@ -158,7 +141,6 @@ class Index extends Component {
       userStore: { avatarUrl, nickName }
     } = this.props;
     const {
-      fileList,
       loginDay,
       loginText,
       showDialog,
@@ -194,27 +176,27 @@ class Index extends Component {
     };
 
     return (
-      <View className="home">
-        <NavBar text="" color="white" type="" />
-        <View className="head">
+      <View className='home'>
+        <NavBar text='' color='white' type='' />
+        <View className='head'>
           {!avatarUrl ? (
             <Button
-              className="aliasImg"
-              v-if="!user.aliasPortrait"
-              openType="getUserInfo"
-              lang="zh_CN"
+              className='aliasImg'
+              v-if='!user.aliasPortrait'
+              openType='getUserInfo'
+              lang='zh_CN'
               onGetUserInfo={this.onGotUserInfo.bind(this)}
             >
-              <Image className="img" src={headImg} />
+            <Image className='img' src={headImg} />
             </Button>
           ) : (
-            <Image onClick={this.toInfo} className="img" src={avatarUrl} />
+            <Image onClick={this.toInfo} className='img' src={avatarUrl} />
           )}
         </View>
         <MDay nickName={nickName} time={new Date()}></MDay>
-        <View className="pageSectionSpacing">
+        <View className='pageSectionSpacing'>
           <ScrollView
-            className="scrollview"
+            className='scrollview'
             scrollX
             scrollWithAnimation
             scrollTop={scrollTop}
@@ -225,45 +207,38 @@ class Index extends Component {
             onScroll={this.onScroll}
           >
             <View
-              className="vStyleA"
+              className='vStyleA'
               onClick={this.toPlay.bind(this, {
                 id: "A",
-                url: fileList[0].file,
-                name: fileList[0].name,
-                frequency_type: fileList[0].frequency_type,
-                subtype: fileList[0].subtype
+                frequency_type: 'meditation'
               })}
             >
-              <Text className="mindName">正念冥想</Text>
-              <Text className="mindInfo">
+              <Text className='mindName'>正念冥想</Text>
+              <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
             <View
-              className="vStyleB"
+              className='vStyleB'
               onClick={this.toPlay.bind(this, {
                 id: "B",
-                url: fileList[1].file,
-                name: fileList[1].name,
-                frequency_type: fileList[1].frequency_type
+                frequency_type: 'white'
               })}
             >
-              <Text className="mindName">白噪音</Text>
-              <Text className="mindInfo">
+              <Text className='mindName'>白噪音</Text>
+              <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
             <View
-              className="vStyleC"
+              className='vStyleC'
               onClick={this.toPlay.bind(this, {
                 id: "C",
-                url: fileList[2].file,
-                name: fileList[2].name,
-                frequency_type: fileList[2].frequency_type
+                frequency_type: 'general'
               })}
             >
-              <Text className="mindName">自然声音</Text>
-              <Text className="mindInfo">
+              <Text className='mindName'>自然声音</Text>
+              <Text className='mindInfo'>
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>

@@ -27,6 +27,7 @@
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+	"libVersion": "2.11.0",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -82,6 +83,14 @@
 					"id": -1,
 					"name": "冥想成功",
 					"pathName": "pages/playVideo/success",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "测试",
+					"pathName": "pages/test/index",
+					"query": "",
 					"scene": null
 				}
 			]

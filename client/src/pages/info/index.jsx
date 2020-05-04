@@ -14,8 +14,6 @@ import "./index.less";
 @observer
 class Index extends Component {
   state ={
-    useDay: 0,
-    useTime: 0,
     badgeList:[]
   }
   componentWillMount() {}

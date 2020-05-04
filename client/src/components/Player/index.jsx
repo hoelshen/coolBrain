@@ -71,7 +71,6 @@ const Play = props => {
         interval = setInterval(() => {
           const curTime = Taro.$backgroundAudioManager.currentTime;
           const durTime = Taro.$backgroundAudioManager.duration;
-          console.log('cur', curTime, durTime)
           // 右侧半圆在进度超过一半之后要保持旋转225deg状态,未超过一半，左侧半圆保持原始角度45deg
           if(curTime && durTime && curTime !==0 && durTime !==0){
             if (curTime / durTime <= 0.5) {
@@ -83,7 +82,7 @@ const Play = props => {
             }
           }
           if(curTime == 0 && curTime == durTime){
-            console.log('🍎🍎🍎🍎🍎🍎🍎🍎', curTime, durTime)
+            // console.log('🍎🍎🍎🍎🍎🍎🍎🍎', curTime, durTime)
             Taro.$backgroundAudioManager.stop()
             clearInterval(interval)
             processTime();

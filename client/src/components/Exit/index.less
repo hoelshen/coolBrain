@@ -4,7 +4,7 @@
   position:fixed;
   top: 0;right: 0;left: 0;bottom: 0;
   background:rgba(0,0,0,0.8);
-  z-index: 99;
+  z-index: 1;
 }
 
 .toplife_modal_content{
@@ -16,6 +16,7 @@
   margin:auto;
   z-index:1;
   top: 0;right: 0;left: 0;bottom: 0;
+
 }
 
 
@@ -24,8 +25,8 @@
     height:219px;
     width: 331px;
     border-radius:36px;
-    position: relative;
-    background: url('@{images}/top-bg.png') no-repeat;
+
+    background: url('@{images}/ybg.png') no-repeat;
     display: inline-block;
     .top{
       width: 39px;
@@ -38,37 +39,15 @@
         background-size: 100%;
       }
     }
-    .score{
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      margin: auto;
-      height:24px;
+    .body{
+      text-align: center;
+      width:245px;
+      height:62px;
       font-size:24px;
       font-family:SourceHanSansCN-Medium,SourceHanSansCN;
       font-weight:500;
       color:rgba(255,255,255,1);
-      line-height:36px;
-    }
-    .body{
-      text-align: center;
-      margin-top: 6px;
-      height:107px;
-      font-size:15px;
-      font-family:SourceHanSansCN-Medium,SourceHanSansCN;
-      font-weight:500;
-      color:rgba(255,255,255,1);
-      line-height:23px;
-      letter-spacing:1px;
-      .vertical{
-        margin-top: 25px;
-        view{
-          display: inline-block
-        }
-        .num{
-          font-size: 70px;
-        }
-      }
+      line-height:31px;
     }
     .mindImg{
       width: 195px;
@@ -85,23 +64,43 @@
     height: 36px;
     margin-top: 15px;
   }
+  .badge{
+    text-align: center;
+    margin: 5px 0 0 20px;
+    display: inline-block;
+    .Group3{
+      width: 195px;
+      height: 61px;
+      line-height: 61px;
+      margin: 0 auto;
+      border-radius: 24px;
+    }
+  }
   .endText{
     margin: 0 auto;
     margin-top: 38px;
     display: block;
     text-align: center;
   }
-  .btn{
-    background-color: #8CC9BD;
-    color: #fff;
-    width: 195px;
-    height: 50px;
-    line-height: 50px;
+  .bottomSign{
+    padding-top: 38px;
     margin: 0 auto;
-    margin-bottom: 11px;
-    margin-top: 180px;
-    border-radius: 24px;
-    text-align: center;
+    display: block;
+  }
+
+  .qrcode{
+    margin: 0 auto;
+    width:176px;
+    height:176px;
+  }
+  .btn{
+    background-color: transparent;
+    padding: 0;
+    width: 61px;
+    height: 61px;
+    position: absolute;
+    bottom: 11px;
+    right: 27px;
     .shareImg{
       display: block;
       width: 61px;

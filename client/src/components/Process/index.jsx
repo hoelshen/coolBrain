@@ -2,10 +2,30 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Canvas } from "@tarojs/components";
 
 class Process extends Component {
+  static defaultProps = {
+    canvasWidth: 100, // 画布宽度
+    canvasHeight: 100, // 画布高度
+    x0: 50,
+    y0: 50,
+    r: 50,
+    lineWidth: 5,
+    strokeStyle: "rgba(248, 248, 248, 1)",
+    LinearGradientColor1: "#3EECED",
+    LinearGradientColor2: "#499BE6"
+  };
+
   constructor(props) {
     super(props);
-    this.initCanvas = this.initCanvas.bind(this);
   }
+
+  componentDidMount() {
+    this.initCanvas();
+  }
+
+  componentDidUpdate() {
+    this.initCanvas();
+  }
+
   initCanvas() {
     const {
       x0, //原点坐标
@@ -17,18 +37,18 @@ class Process extends Component {
       LinearGradientColor2, //结束渐变颜色
       Percentage // 进度百分比
     } = this.props;
-    const query = Taro.createSelectorQuery().in(this.$scope);
-    console.log("query: ", query);
-    query
-      .select("#timeCanvas")
-      .fields({ node: true, size: true })
-      .exec(res => {
-        console.log("res[0]: ", res);
-        const ele = res[0].node;
-        let circle = ele.getContext("2d");
+    const query = Taro.createSelectorQuery().in(this.$scope)
+    query.select('#canvas').fields({
+      node: true,
+      size: true
+    }).exec(res => {
+        const canvas = res[0].node
+        const circle = canvas.getContext('2d')        
+        console.log('circle: ', circle);
         const dpr = Taro.getSystemInfoSync().pixelRatio;
+        console.log('dpr: ', dpr);
         //创建背景圆
-        circle.lineWidth = lineWidth * dpr;
+        circle.lineWidth = (lineWidth * dpr );
         console.log("lineWidth: ", lineWidth);
         circle.strokeStyle = strokeStyle;
         console.log("strokeStyle: ", strokeStyle);
@@ -40,8 +60,8 @@ class Process extends Component {
         let g = circle.createLinearGradient(
           x0,
           0,
-          x0 + r * Math.cos(Percentage * (Math.PI * 2)),
-          y0 + r * Math.sin(this.props.Percentage * (Math.PI * 2))
+          x0 + r * Math.floor(Math.cos(Percentage * (Math.PI * 2))),
+          y0 + r * Math.floor(Math.sin(this.props.Percentage * (Math.PI * 2)))
         ); //创建渐变对象  渐变开始点和渐变结束点
         g.addColorStop(0, LinearGradientColor1); //添加颜色点
         g.addColorStop(1, LinearGradientColor2);
@@ -58,30 +78,30 @@ class Process extends Component {
           true
         );
         circle.stroke(); //对当前路径进行描边
+        // ('canvas', this.$scope)
       });
   }
-  componentDidMount() {
-    this.initCanvas();
-  }
-  componentDidUpdate() {
-    this.initCanvas();
-  }
-  static defaultProps = {
-    canvaswidth: 93, // 画布宽度
-    canvasheight: 93, // 画布高度
-    x0: 80,
-    y0: 80,
-    r: 72,
-    lineWidth: 16,
-    strokeStyle: "rgba(248, 248, 248, 1)",
-    LinearGradientColor1: "#3EECED",
-    LinearGradientColor2: "#499BE6"
-  };
+
   render() {
-    const { width, height, canvaswidth, canvasheight } = this.props;
+    const { width, height, canvasWidth, canvasHeight } = this.props;
+    console.log(
+      "width, height, canvaswidth, canvasheight: ",
+      width,
+      height,
+      canvasWidth,
+      canvasHeight
+    );
+    const cStyle = {
+      width:canvasWidth, 
+      height:canvasHeight 
+    }
     return (
-      <View style={{ width: width, height: height, padding: 10 }}>
-        <Canvas type='2d 'className='timeCanvas'  width={200} height={200}></Canvas>
+      <View style={{ width: '100%', height: height,margin: '0 auto'}}>
+        <Canvas
+          type='2d'
+          id='canvas'
+          style={cStyle}
+        ></Canvas>
       </View>
     );
   }
