@@ -23,7 +23,9 @@ class Modal extends Component {
   };
 
   onRecored = (param)=>{
+    console.log('param: ', param);
     this.props.onCancelCallback();
+    this.props.onShowBadgeCallback(true);
   }
   authConfirmClick = e => {
     this.props.onConfirmCallback(e.detail);
@@ -89,7 +91,8 @@ Modal.defaultProps = {
   cancelText: "取消", //取消
   confirmText: "确定", //确定
   showBadge: false,
-  isShow: false, //不显示
+  showDialog:false, //不显示
+  isShow: false, // /不显示
   isAuth: false, //是否为授权按钮
   cancelCallback: () => {},
   confirmCallback: () => {}

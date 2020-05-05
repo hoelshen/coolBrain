@@ -33,6 +33,13 @@ class Modal extends Component {
     e.stopPropagation();
   };
 
+  onPreviewImage = e =>{
+    // const current = e.target.dataset.src
+/*     Taro.saveImageToPhotosAlbum({
+      current: current,
+      urls: [current]
+    }) */
+  }
   render() {
     const { showFMDialog,  } = this.props;
     console.log('title', showFMDialog)
@@ -51,10 +58,10 @@ class Modal extends Component {
                     </View>
                     <View className='body'>
                       <View className='text'>去荔枝微课 跟主创学习如何冥想吧</View>
-                      <Image src={Group8} className='btn'></Image>  
+                      <Image src={Group8} className='btn'  onClick={this.onPreviewImage}></Image>  
                     </View>
                   </View>
-                  <Image src={Qrcode} className='qrcode'></Image>  
+                  <Image src={Qrcode} className='qrcode' show-menu-by-longpress></Image>  
                 </View>
               </View>
             </View>

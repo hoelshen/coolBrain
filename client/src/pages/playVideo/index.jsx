@@ -4,6 +4,7 @@ import { View, Picker } from "@tarojs/components";
 import NavBar from "@/components/Navbar/index";
 import Player from "@/components/Player/index";
 import FM from "@/components/FM/index";
+import Ex from "@/components/Exit/index";
 
 import * as types from "@/constants/PlayTypes.js";
 import {
@@ -26,7 +27,8 @@ class Index extends Component {
     ],
     cheVoice: "男声",
     playState: types.PLAY_START,
-    isShowFM: false
+    isShowFM: false,
+    isShowEx: false
   };
 
   componentWillMount() {
@@ -110,7 +112,6 @@ class Index extends Component {
   }
 
   cheMinList(key, item, list){
-    console.log('key, item, list: ', key, item, list);
     const newlist = list.filter(l => (l.name[key] == item))
     console.log('newlist: ', newlist);
     this.setState({
@@ -119,7 +120,6 @@ class Index extends Component {
   }
 
   cheVoiceList(key, item, list){
-    console.log('key, item, list: ', key, item, list);
     const newlist = list.filter(l => (l.name[key] == item))
     console.log('newlist: ', newlist);
     this.setState({
@@ -127,8 +127,15 @@ class Index extends Component {
     });
   }
 
+  getPropsShowExDialog(value){
+    console.log('value: ', value);
+    this.setState({
+      isShowEx: value
+    }) 
+  }
+  
   render() {
-    const { id, playState,fileList,isShowFM } = this.state;
+    const { id, playState,fileList,isShowFM,isShowEx } = this.state;
     console.log('id: ', id, fileList);
     const vStyle = classNames({
       playing: true,
@@ -162,9 +169,17 @@ class Index extends Component {
         this.setState({isShowFM: false})
       }
     }
+
+    const ExModal = {
+      isShowEx: this.state.isShowEx,
+      onCancelCallback:()=>{
+        this.setState({isShowEx: false})
+      }
+    }
+
     return (
       <View className='contain'>
-        <NavBar text='冥想小程序' color={vColor} type='1' />
+        <NavBar text='冥想小程序' color={vColor} type='1'  onShowExDialog={this.getPropsShowExDialog.bind(this)} />
         <View className={vStyle} style='background-size: 100% 100%;'>
           <View className={`${pStyle}`}>
             {fileList[0] && <Player videoUrl={fileList[0].file}></Player>}
@@ -194,6 +209,7 @@ class Index extends Component {
           </View>
         </View>
         <FM  showFMDialog={isShowFM} {...FMModal} />
+        <Ex showExDialog={isShowEx} {...ExModal} />
       </View>
     );
   }

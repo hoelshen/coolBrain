@@ -4,17 +4,17 @@ import { observer, inject } from "@tarojs/mobx";
 import NavBar from "@/components/Navbar/index";
 import Comment from '@/components/Comment/index';
 import Comment2 from '@/components/Comment2/index';
+import userStore from "@/store/user";
 
 
 import { getResultData_getDiary,getResultData_getComment } from '@/servers/servers'
 
 import "./index.less";
 
-@inject("userStore")
 @observer
 class Index extends Component {
   constructor(){
-    super();
+    super(...arguments);
     this.state = {
       commentList:[],
       diaryList:[]
@@ -26,11 +26,14 @@ class Index extends Component {
   }
 
   async componentDidMount() {
-    const { userStore } = this.props;
-    console.log('id: ', userStore);
+    const {id} = userStore
     const diary = await getResultData_getDiary()
     this.setState({diaryList: diary.data.objects})
-    const comment = await getResultData_getComment(id)
+    const comment = await getResultData_getComment({'post': id})
+    console.log('comment: ', comment);
+    if(JSON.stringify(comment.data) === '{}'){
+      return false
+    }
     this.setState({commentList: comment.data.objects})
   }
 

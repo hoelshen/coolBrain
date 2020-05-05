@@ -1,7 +1,8 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Button, Image, Text } from "@tarojs/components";
+import { View,  Image  } from "@tarojs/components";
 import Group6 from "@/assets/Group6.png";
-import Group8 from "@/assets/Group8.png";
+import Group9 from "@/assets/Group9.png";
+import btn from "@/assets/btn.png";
 
 import "./index.less";
 
@@ -19,9 +20,6 @@ class Modal extends Component {
     this.props.onCancelCallback();
   };
 
-  onRecored = (param)=>{
-    this.props.onCancelCallback();
-  }
   authConfirmClick = e => {
     this.props.onConfirmCallback(e.detail);
     Taro.setStorageSync("isHomeLongHideAuthModal", true);
@@ -32,14 +30,21 @@ class Modal extends Component {
     e.stopPropagation();
   };
 
+  onContine = e =>{
+    this.props.onCancelCallback();
+  }
+  onExit = e =>{
+    this.props.onCancelCallback();
+    Taro.reLaunch({ url: `/pages/index/index` });
+  }
   render() {
-    const { loginDay, showFMDialog, loginText, showBadge, badge } = this.props;
-    console.log('title', showFMDialog, loginDay, loginText, showBadge, badge)
+    const {  showExDialog,   } = this.props;
+    console.log('title', showExDialog)
     
     return (
       <View>
         {
-          showFMDialog && 
+          showExDialog && 
           <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
             <View class='toplife_modal_content'>
               <View class='toplife_modal_btn'>
@@ -52,7 +57,8 @@ class Modal extends Component {
                       <View className='text'>退出后, 冥想进度不会保存 是否确认退出？</View>
                     </View>
                   </View>
-                  <Image src='' className='qrcode'></Image>  
+                  <Image src={btn} className='qrcode' onClick={this.onContine}></Image>  
+                  <Image src={Group9} className='qrcode' onClick={this.onExit}></Image>  
                 </View>
               </View>
             </View>

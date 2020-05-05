@@ -65,7 +65,7 @@ class Index extends Component {
     const { badgeList } = this.state;
     const ImageList = badgeList.map(element=>{
       return (
-        <Image src={element.picture} className='badgeImg'></Image>
+        <Image TaroKey={element.picture} src={element.picture} className='badgeImg'></Image>
       )
     })
     return (

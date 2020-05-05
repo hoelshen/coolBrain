@@ -9,7 +9,7 @@ import "./index.less";
 console.log("userStore: ", userStore);
 
 const Comment = props => {
-  const { avatarUrl, nickName, thumb } = userStore;
+  const { avatarUrl, nickName } = userStore;
   useDidShow(() => {
     console.log("111", props);
   });

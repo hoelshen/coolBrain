@@ -39,6 +39,7 @@ class Modal extends Component {
     if(score){
       getResultData_moodTody({mood:score, duration:isDuration})
     }
+    this.props.onCancelCallback()
   }
   render() {
     const { isShow, isDuration } = this.props;
@@ -52,7 +53,7 @@ class Modal extends Component {
     return (
       <View>
         {
-          true && 
+          isShow && 
           <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
             <View class='toplife_modal_content'>
               <View class='toplife_modal_btn'>

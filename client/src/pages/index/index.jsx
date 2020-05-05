@@ -160,7 +160,9 @@ class Index extends Component {
           data: false
         });
         this.setState({ showDialog: false });
-        this.setState({ showBadgeDialog: true });
+      },
+      onShowBadgeCallback:(value)=>{
+        this.setState({ showBadgeDialog: value });
       }
     };
 

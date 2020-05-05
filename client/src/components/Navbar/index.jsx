@@ -8,12 +8,24 @@ import "./index.less";
 
 class Navbar extends Component {
   toHome() {
+    var pages = Taro.getCurrentPages()    //获取加载的页面
+    console.log('pages: ', pages);
+
+    var currentPage = pages[pages.length-1]    //获取当前页面的对象
+    
+    var url = currentPage.route  
+    console.log('url: ', url);
+    
+    if(url  == 'pages/playVideo/index'){
+      return this.props.onShowExDialog(true)
+    }
     Taro.navigateTo({
       url: `/pages/index/index`
     });
   }
   toPrevious() {
     Taro.navigateBack({ delta: 1 })
+
   }
   render() {
     const { text, color, type } = this.props

@@ -74,10 +74,7 @@ class Index extends Component {
     const ModalComProps = {
       isShow: this.state.isShow,
       onCancelCallback: ()=>{     
-        Taro.setStorage({
-          key: "isShow",
-          data: false
-        }); 
+        console.log('this.isShow', this.state.isShow)
         this.setState({isShow: false})
       }
     }

@@ -63,8 +63,8 @@ class Percentage extends Component {
     const radius = 80;
     //中心点横坐标
     const dotStyle = {
-      left: dotLeft + 'px',
-      top: dotTop + 'px'
+      left: 80 + 'px',
+      top: 90 + 'px'
     }
     const boxList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
       let boxStyle = {

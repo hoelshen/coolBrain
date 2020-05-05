@@ -81,7 +81,6 @@ class App extends Component {
      Taro.login({
       success: function (res) {
         if (res.code) {
-          console.log('res.code: ', res.code);
           //发起网络请求
              getResultData_auth({ code: res.code}).then(json=>{
                const data = json.data;
