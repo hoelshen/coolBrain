@@ -168,7 +168,6 @@ class Index extends Component {
 
   render() {
     const { id, playState, fileList, isShowFM, isShowEx } = this.state;
-    console.log("id: ", id, fileList);
     const vStyle = classNames({
       playing: true,
       "vStyle-a": id === "A",
@@ -210,57 +209,57 @@ class Index extends Component {
     };
 
     return (
-      <View className="contain">
+      <View className='contain'>
         <NavBar
-          text="冥想小程序"
+          text='冥想小程序'
           color={vColor}
-          type="1"
+          type='1'
           onShowExDialog={this.getPropsShowExDialog.bind(this)}
         />
-        <View className={vStyle} style="background-size: 100% 100%;">
+        <View className={vStyle} style='background-size: 100% 100%;'>
           <View className={`${pStyle}`}>
             {fileList[0] && <Player videoUrl={fileList[0].file}></Player>}
           </View>
-          <View className="">
+          <View className=''>
             <View class={`${bColor}`}>
             { {
               'A': (<Picker
-                mode="selector"
+                mode='selector'
                 range={this.state.seMin}
                 rangeKey="{{'verbose'}}"
                 onChange={this.onChangeMin.bind(this,'A')}
               >
-                <View className="num"> {this.state.cheMin}</View>
+                <View className='num'> {this.state.cheMin}</View>
               </Picker>),
               'B':  (<Picker
-                mode="selector"
+                mode='selector'
                 range={this.state.seMin2}
                 rangeKey="{{'verbose'}}"
                 onChange={this.onChangeMin.bind(this,'B')}
               >
-                <View className="num"> {this.state.cheMin}</View>
+                <View className='num'> {this.state.cheMin}</View>
               </Picker>),
               'C':  (<Picker
-                mode="selector"
+                mode='selector'
                 range={this.state.seMin2}
                 rangeKey="{{'verbose'}}"
                 onChange={this.onChangeMin.bind(this,'A')}
               >
-                <View className="num"> {this.state.cheMin}</View>
+                <View className='num'> {this.state.cheMin}</View>
               </Picker>),
             }[id]
 
             }
             </View>
             {id == "A" && (
-              <View className="voice">
+              <View className='voice'>
                 <Picker
-                  mode="selector"
+                  mode='selector'
                   range={this.state.seVoice}
                   rangeKey="{{'name'}}"
                   onChange={this.onChangeVoice}
                 >
-                  <View className="num">{this.state.cheVoice}</View>
+                  <View className='num'>{this.state.cheVoice}</View>
                 </Picker>
               </View>
             )}

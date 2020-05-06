@@ -50,5 +50,10 @@ class userStore {
     this.days = days;
     this.duration = Number(duration).toFixed(0);
   }
+  @action.bound
+  update(days, duration){
+    this.days = days;
+    this.duration = Number(duration).toFixed(0);
+  }
 }
 export default new userStore()

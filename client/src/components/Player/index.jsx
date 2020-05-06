@@ -3,6 +3,7 @@ import { View, Image } from "@tarojs/components";
 import play from "@/assets/play.png";
 import stop from "@/assets/stop.png";
 import "./index.less";
+import { set } from "mobx";
 
 const Play = props => {
   const { videoUrl } = props;
@@ -53,8 +54,11 @@ const Play = props => {
     // console.log('useTime: ', useTime);
   }
   Taro.$backgroundAudioManager.onEnded(() => {
+    console.log('111',Taro.$backgroundAudioManager )
+    // setDuration(Taro.$backgroundAudioManager.duration)
+
     Taro.navigateTo({
-      url: `/pages/playVideo/success?duration=${Taro.$backgroundAudioManager.duration}`
+      url: `/pages/playVideo/success?duration=${duration}`
     });
   });
 
@@ -62,18 +66,19 @@ const Play = props => {
     console.log('video变化了', videoUrl)
     setPlayState('PLAY_START');
     setIsPlay(false);
+    setLeftDeg('45deg')
+    setRightDeg('45deg')
+
   }, [videoUrl])
 
   useEffect(() => {
     if (!isFirstRender.current) {
       if (playState === "PLAY_LOAD") {
-        const startTime = new Date().getTime();
-        Taro.setStorage({
-          key: "startTime",
-          data: startTime
-        });
         Taro.$backgroundAudioManager.title = " ";
         Taro.$backgroundAudioManager.src = props.videoUrl;
+        setDuration(Taro.$backgroundAudioManager.duration)
+        console.log('Taro.$backgroundAudioManager',Taro.$backgroundAudioManager,Taro.$backgroundAudioManager.duration)
+        console.log('dura', duration)
       } else if (playState === "PLAY_PAUSE") {
         Taro.$backgroundAudioManager.pause();
       } else {
@@ -90,7 +95,6 @@ const Play = props => {
               setLeftDeg("45deg");
               setRightDeg((curTime / durTime) * 360 + 45 + "deg");
               setVisible('visible')
-            
             } else {
               setLeftDeg((curTime / durTime) * 360 + 225 + "deg");
               setRightDeg("225deg");
@@ -101,9 +105,9 @@ const Play = props => {
             // console.log('🍎🍎🍎🍎🍎🍎🍎🍎', curTime, durTime)
             Taro.$backgroundAudioManager.stop();
             clearInterval(interval);
-
             processTime();
           }
+          setDuration(durTime)
         }, 1000);
       }
     } else {
@@ -125,21 +129,21 @@ const Play = props => {
     visibility: `${visible}`
   }
   return (
-    <View className="circle_container" onClick={onPlay}>
-      <View class="circleProgress_wrapper">
+    <View className='circle_container' onClick={onPlay}>
+      <View class='circleProgress_wrapper'>
         <View style={markStyle} class='circle_markup_top'></View>
-        <View class="wrapper right">
-          <View class="circleProgress rightcircle" style={rightStyle}></View>
+        <View class='wrapper right'>
+          <View class='circleProgress rightcircle' style={rightStyle}></View>
         </View>
-        <View class="wrapper left">
-          <View class="circleProgress leftcircle" style={leftStyle}></View>
+        <View class='wrapper left'>
+          <View class='circleProgress leftcircle' style={leftStyle}></View>
         </View>
         {!isPlay ? (
-          <Image className="Triangle" src={play}></Image>
+          <Image className='Triangle' src={play}></Image>
         ) : (
-          <Image className="Triangle" src={stop}></Image>
+          <Image className='Triangle' src={stop}></Image>
         )}
-        <View style={markStyle} class="circle_markup_bottom"></View>
+        <View style={markStyle} class='circle_markup_bottom'></View>
       </View>
     </View>
   );

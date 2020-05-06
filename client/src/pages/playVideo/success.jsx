@@ -7,9 +7,8 @@ import topSign from "@/assets/topSign.png";
 import Mood from "@/components/Mood/index";
 
 import bottomSign from "@/assets/bottomSign.png";
-import Group2 from "@/assets/Group2.png";
 import share from "@/assets/fx.png";
-import { getResultData_postsDiary,getResultData_postComment,getResultData_checkMood } from "@/servers/servers";
+import { getResultData_postsDiary,getResultData_postComment,getResultData_checkMood,getResultData_moodTody } from "@/servers/servers";
 
 import "./success.less";
 
@@ -35,6 +34,8 @@ class Index extends Component {
     const value = await getResultData_checkMood()
     if(value.data.is_clock){
       this.setState({isShow: false})
+    } else {
+      this.setState({isShow: true})
     }
   }
 
@@ -49,7 +50,9 @@ class Index extends Component {
   }
 
   onPostDiary(){
-    const {showComment, commentText } =  this.state
+    const {showComment, commentText, isDuration } =  this.state
+
+    getResultData_moodTody({duration:isDuration})
 
     if(showComment){
       getResultData_postComment({'text':commentText})

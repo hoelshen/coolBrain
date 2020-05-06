@@ -62,6 +62,7 @@ class Index extends Component {
     const {
       userStore: { nickName, avatarUrl,  days, duration  }
     } = this.props;
+    console.log('duration: ', duration);
     const { badgeList } = this.state;
     const ImageList = badgeList.map(element=>{
       return (

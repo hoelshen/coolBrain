@@ -1,6 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Swiper,SwiperItem, Button, Text } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
+
 import MDay from "@/components/Mday";
 import NavBar from "@/components/Navbar/index";
 import MDialog from "@/components/MDialog/index";
@@ -10,6 +11,7 @@ import {
   getResultData_badges,
   getResultData_MyBadge,
   getResultData_sentencesTody,
+  getResultData_myDetail,
 } from "@/servers/servers";
 
 import "../../app.less";
@@ -78,9 +80,18 @@ class Index extends Component {
   }
 
   componentDidShow() {
+    const { userStore } = this.props;
+
     getResultData_badges();
 
     getResultData_MyBadge();
+    getResultData_myDetail().then(json=>{
+      const data = json.data;
+      userStore.update(
+       data.days,
+       data.duration
+     );
+    })
   }
 
   componentDidHide() {}

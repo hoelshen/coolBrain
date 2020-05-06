@@ -68,3 +68,8 @@ export const getResultData_moodTody = (postData) => {
 export const getResultData_checkMood = (postData) => {
   return HTTPREQUEST.get('mood/', postData)
 }
+
+
+export const getResultData_myDetail = (postData)=>{
+  return HTTPREQUEST.get('profiles/my_detail/', postData)
+}
