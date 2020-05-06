@@ -1,6 +1,11 @@
-import Taro from "@tarojs/taro";
+import Taro , { useState, useEffect, useRef, useDidShow } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import PropTypes from "prop-types";
+
+
+import {
+  getResultData_greeting,
+} from "@/servers/servers";
 
 import "./index.less";
 
@@ -27,6 +32,15 @@ function formatName() {
   }
   return value;
 }
+
+useDidShow(
+  ()=>{
+    const value = getResultData_greeting()
+    console.log('value: ', value);
+  
+  }
+)
+
 
 function formatEnName(){
   const val = Taro.$dayjs().hour();

@@ -37,7 +37,7 @@ export const getResultData_frequencies = (postData) => {
 
 //获取欢迎语
 export const getResultData_greeting = (postData) => {
-  return HTTPREQUEST.post('greeting/now/', postData)
+  return HTTPREQUEST.get('greeting/now/', postData)
 }
 
 //写日记
