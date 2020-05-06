@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Image, ScrollView, Button, Text } from "@tarojs/components";
+import { View, Image, Swiper,SwiperItem, Button, Text } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import MDay from "@/components/Mday";
 import NavBar from "@/components/Navbar/index";
@@ -130,13 +130,6 @@ class Index extends Component {
   };
 
   render() {
-    const scrollStyle = {
-      width: "375px",
-      "white-space": "nowrap"
-    };
-    const scrollTop = 0;
-    const Threshold = 20;
-
     const {
       userStore: { avatarUrl, nickName }
     } = this.props;
@@ -197,17 +190,13 @@ class Index extends Component {
         </View>
         <MDay nickName={nickName} time={new Date()}></MDay>
         <View className='pageSectionSpacing'>
-          <ScrollView
+          <Swiper
             className='scrollview'
-            scrollX
-            scrollWithAnimation
-            scrollTop={scrollTop}
-            style={scrollStyle}
-            lowerThreshold={Threshold}
-            upperThreshold={Threshold}
-            onScrollToUpper={this.onScrollToUpper.bind(this)}
-            onScroll={this.onScroll}
+            circular
+            indicatorDots
+            autoplay
           >
+            <SwiperItem>
             <View
               className='vStyleA'
               onClick={this.toPlay.bind(this, {
@@ -220,6 +209,8 @@ class Index extends Component {
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
+            </SwiperItem>
+            <SwiperItem>
             <View
               className='vStyleB'
               onClick={this.toPlay.bind(this, {
@@ -232,6 +223,9 @@ class Index extends Component {
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
+
+            </SwiperItem>
+            <SwiperItem>
             <View
               className='vStyleC'
               onClick={this.toPlay.bind(this, {
@@ -244,7 +238,9 @@ class Index extends Component {
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-          </ScrollView>
+            
+            </SwiperItem>
+            </Swiper>
         </View>
         <View />
         <MDialog {...ModalComProps} />
