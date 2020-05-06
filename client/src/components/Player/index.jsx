@@ -89,11 +89,12 @@ const Play = props => {
             if (curTime / durTime <= 0.5) {
               setLeftDeg("45deg");
               setRightDeg((curTime / durTime) * 360 + 45 + "deg");
-              setVisible('hidden')
+              setVisible('visible')
+            
             } else {
               setLeftDeg((curTime / durTime) * 360 + 225 + "deg");
               setRightDeg("225deg");
-              setVisible('visible')
+              setVisible('hidden')
             }
           }
           if (curTime == 0 && curTime == durTime) {
@@ -126,6 +127,7 @@ const Play = props => {
   return (
     <View className="circle_container" onClick={onPlay}>
       <View class="circleProgress_wrapper">
+        <View style={markStyle} class='circle_markup_top'></View>
         <View class="wrapper right">
           <View class="circleProgress rightcircle" style={rightStyle}></View>
         </View>
@@ -137,7 +139,7 @@ const Play = props => {
         ) : (
           <Image className="Triangle" src={stop}></Image>
         )}
-        <View style={markStyle} class="circle_markup"></View>
+        <View style={markStyle} class="circle_markup_bottom"></View>
       </View>
     </View>
   );

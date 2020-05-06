@@ -57,7 +57,7 @@ class Index extends Component {
     getResultData_postsDiary({'text': commentText})
     Taro.navigateTo({ url: `/pages/index/index` });
   }
-  onHome(){
+  onClose(){
     Taro.reLaunch({ url: `/pages/index/index` });
   }
   handleChange(e){
@@ -69,8 +69,6 @@ class Index extends Component {
   }
   componentDidHide() {}
 
-  toHome() {
-  }
   render() {
     const {isDuration, showComment,commentText , isShow} = this.state;
     const ModalComProps = {

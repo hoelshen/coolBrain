@@ -176,8 +176,10 @@ class Index extends Component {
           <Swiper
             className='scrollview'
             indicatorDots
+            previousMargin='10px'
+            nextMargin='10px'
           >
-            <SwiperItem className='scrollviewItem'>
+            <SwiperItem >
             <View
               className='vStyleA'
               style='background-size: 100% 100%;'

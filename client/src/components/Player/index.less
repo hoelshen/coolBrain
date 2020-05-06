@@ -29,10 +29,12 @@
   overflow: hidden;
 }
 .right {
-  right: 0;
+  right: 0px;
+  top: 0px;
 }
 .left {
-  left: 0;
+  left: 0px;
+  top: 0px;
 }
 
 .rightcircle {
@@ -46,12 +48,22 @@
   left: 0;
 }
 
-.circle_markup {
+.circle_markup_bottom {
   position: absolute;
   left: 99px;
-  bottom: 0;
+  bottom: 1.5px;
   width: 4px;
-  height:20px;
+  height:19.5px;
+  background: #578095;
+  visibility: hidden;
+}
+
+.circle_markup_top{
+  position: absolute;
+  left: 198rpx;
+  top: 0;
+  width: 8rpx;
+  height: 40rpx;
   background: #578095;
   visibility: hidden;
 }
