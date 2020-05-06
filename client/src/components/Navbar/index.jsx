@@ -12,11 +12,9 @@ class Navbar extends Component {
     console.log('pages: ', pages);
 
     var currentPage = pages[pages.length-1]    //获取当前页面的对象
-    
-    var url = currentPage.route  
-    console.log('url: ', url);
-    
-    if(url  == 'pages/playVideo/index'){
+    var url = currentPage.route 
+    const state = Taro.getStorageSync('playState');
+    if(url  == 'pages/playVideo/index' && state == 'PLAY_LOAD'){
       return this.props.onShowExDialog(true)
     }
     Taro.navigateTo({

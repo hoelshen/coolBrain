@@ -35,11 +35,11 @@ class Modal extends Component {
   }
   onExit = e =>{
     this.props.onCancelCallback();
+    Taro.$backgroundAudioManager.stop()
     Taro.reLaunch({ url: `/pages/index/index` });
   }
   render() {
     const {  showExDialog,   } = this.props;
-    console.log('title', showExDialog)
     
     return (
       <View>

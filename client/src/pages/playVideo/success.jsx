@@ -5,6 +5,7 @@ import NavBar from "@/components/Navbar/index";
 import Group6 from "@/assets/Group6.png";
 import topSign from "@/assets/topSign.png";
 import Mood from "@/components/Mood/index";
+import userStore from "@/store/user";
 
 import bottomSign from "@/assets/bottomSign.png";
 import Group2 from "@/assets/Group2.png";
@@ -22,7 +23,7 @@ class Index extends Component {
       isDuration: '',
       commentText:'',
       showComment: false,
-      isShow: true
+      isShow: false,
     };
   }
   componentWillMount() {}
@@ -46,17 +47,17 @@ class Index extends Component {
 
   onPostDiary(){
     const {showComment, commentText } =  this.state
-    const { id } = this.props.userStore
+    const { id } = userStore;
+
     if(showComment){
-      getResultData_postComment(commentText)
+      getResultData_postComment({'text':commentText})
     }
-    getResultData_postsDiary({'owner': id ,'text': commentText})
+    getResultData_postsDiary({'text': commentText})
   }
   onHome(){
     Taro.reLaunch({ url: `/pages/index/index` });
   }
   handleChange(e){
-    console.log('e: ', e.detail.value);
     this.setState({commentText: e.detail.value});
   }
 
@@ -70,11 +71,9 @@ class Index extends Component {
   }
   render() {
     const {isDuration, showComment,commentText , isShow} = this.state;
-    console.log('duration: ', isDuration);
     const ModalComProps = {
       isShow: this.state.isShow,
       onCancelCallback: ()=>{     
-        console.log('this.isShow', this.state.isShow)
         this.setState({isShow: false})
       }
     }
@@ -95,8 +94,9 @@ class Index extends Component {
               </View>
               <Image className='iconImg topSign' src={topSign} />
               <View className='AreaDiv'>
-              <Textarea placeholder='记录今天的冥想日记吧~' className='textArea'  value={commentText}  onInput={this.handleChange.bind(this)}  autoFocus  autoHeight />
-              <View className={showComment ? 'cheShareView': 'shareView'} onClick={this.onCheck}> 
+              {
+               !isShow && <Textarea placeholder='记录今天的冥想日记吧~' className='textArea'  value={commentText}  onInput={this.handleChange.bind(this)}  autoFocus  autoHeight />
+              }<View className={showComment ? 'cheShareView': 'shareView'} onClick={this.onCheck}> 
               </View>  
               <Text className='shareText'>
                 分享到评论区

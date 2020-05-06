@@ -33,13 +33,6 @@ function formatName() {
   return value;
 }
 
-useDidShow(
-  ()=>{
-    const value = getResultData_greeting()
-    console.log('value: ', value);
-  
-  }
-)
 
 
 function formatEnName(){
@@ -64,11 +57,17 @@ function formatEnName(){
     value = "Good night";
   }
   return value;
-
-  
 }
 
 const MDAY = props => {
+  useDidShow(
+    ()=>{
+      const value = getResultData_greeting()
+      console.log('getResultData_greeting: ', value);
+    }
+  )
+
+
   const { nickName } = props;
   let flag = nickName ? true : false;
   return (

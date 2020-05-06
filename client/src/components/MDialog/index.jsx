@@ -18,12 +18,10 @@ class Modal extends Component {
   };
 
   isClose = () => {
-    console.log('2222')
     this.props.onCancelCallback();
   };
 
   onRecored = (param)=>{
-    console.log('param: ', param);
     this.props.onCancelCallback();
     this.props.onShowBadgeCallback(true);
   }

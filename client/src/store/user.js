@@ -47,8 +47,8 @@ class userStore {
   @action.bound
   updateId(id,days, duration){
     this.id = id;
-    this.days =days;
-    this,duration = duration;
+    this.days = days;
+    this.duration = Number(duration).toFixed(0);
   }
 }
 export default new userStore()

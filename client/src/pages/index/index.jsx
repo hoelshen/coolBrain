@@ -59,38 +59,25 @@ class Index extends Component {
       if (data.badge) {
         this.setState({ badge: data.badge, showBadge: true });
       }
-      if(data.clock){
-        const { clock_date} = data.clock;
+      if(data.clock){ //当天登录了
+        const { last_time } = data.clock;
         const day = Taro.$dayjs().format('YYYY-MM-DD HH:mm:ss');
         console.log('day: ', day);
-        const value = Taro.$dayjs(day).diff(clock_date, 'hour');
+        const value = Taro.$dayjs(day).diff(last_time, 'day', true);
         console.log('value: ', value);
 
-        if(value > 0){
-          this.setState({showDialog: true})
-        } else {
+        if(value< 1 && value > 0){
           this.setState({showDialog: false})
+        } else if(value>1) {
+          this.setState({showDialog: true})
         }
+      } else {  //当天没有登录
+        this.setState({showDialog: true})
       }
     });
   }
 
   componentDidShow() {
-    const dayStart = Taro.getStorageSync("createDay");
-    const isShow = true || Taro.getStorageSync("isShow");
-    console.log("isShow: ", isShow);
-    this.setState({ showDialog: isShow });
-    if (!dayStart) {
-      Taro.setStorage({
-        key: "createDay",
-        data: new Date().getTime()
-      });
-      Taro.setStorage({
-        key: "useTime",
-        data: 0
-      });
-    }
-
     getResultData_badges();
 
     getResultData_MyBadge();
@@ -148,10 +135,6 @@ class Index extends Component {
       loginText,
       showBadge,
       onCancelCallback: () => {
-        Taro.setStorage({
-          key: "isShow",
-          data: false
-        });
         this.setState({ showDialog: false });
       },
       onShowBadgeCallback:(value)=>{
@@ -192,13 +175,12 @@ class Index extends Component {
         <View className='pageSectionSpacing'>
           <Swiper
             className='scrollview'
-            circular
             indicatorDots
-            autoplay
           >
             <SwiperItem>
             <View
               className='vStyleA'
+              style='background-size: 100% 100%;'
               onClick={this.toPlay.bind(this, {
                 id: "A",
                 frequency_type: 'meditation'
@@ -213,6 +195,7 @@ class Index extends Component {
             <SwiperItem>
             <View
               className='vStyleB'
+              style='background-size: 100% 100%;'
               onClick={this.toPlay.bind(this, {
                 id: "B",
                 frequency_type: 'white'
@@ -228,6 +211,7 @@ class Index extends Component {
             <SwiperItem>
             <View
               className='vStyleC'
+              style='background-size: 100% 100%;'
               onClick={this.toPlay.bind(this, {
                 id: "C",
                 frequency_type: 'general'

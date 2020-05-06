@@ -6,7 +6,6 @@ import thumb_up_y from "@/assets/thumb_up-y.png";
 
 import "./index.less";
 
-console.log("userStore: ", userStore);
 
 const Comment = props => {
   const { avatarUrl, nickName } = userStore;
