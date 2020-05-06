@@ -81,11 +81,11 @@ class Index extends Component {
       <View>
         <NavBar text='' color='#fff' type='2' />
         <View className='head'>我的冥想日记</View>
-        {CommentList}
+          {CommentList2}
         <View className='foot'>
           <Text class='text1'>评论区</Text>
           <Text class='text2' onClick={this.onMail}>查看全部</Text>
-          {CommentList2}
+          {CommentList}
         </View>
       </View>
     );

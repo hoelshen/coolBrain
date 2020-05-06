@@ -177,7 +177,7 @@ class Index extends Component {
             className='scrollview'
             indicatorDots
           >
-            <SwiperItem>
+            <SwiperItem className='scrollviewItem'>
             <View
               className='vStyleA'
               style='background-size: 100% 100%;'
@@ -222,7 +222,6 @@ class Index extends Component {
                 冥想的介绍信息，冥想的介绍 介绍信息，冥。。。
               </Text>
             </View>
-            
             </SwiperItem>
             </Swiper>
         </View>

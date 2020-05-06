@@ -64,4 +64,7 @@ export const getResultData_moodTody = (postData) => {
   return HTTPREQUEST.post('mood/today/', postData)
 }
 
-
+//发送心情
+export const getResultData_checkMood = (postData) => {
+  return HTTPREQUEST.get('mood/', postData)
+}

@@ -5,12 +5,11 @@ import NavBar from "@/components/Navbar/index";
 import Group6 from "@/assets/Group6.png";
 import topSign from "@/assets/topSign.png";
 import Mood from "@/components/Mood/index";
-import userStore from "@/store/user";
 
 import bottomSign from "@/assets/bottomSign.png";
 import Group2 from "@/assets/Group2.png";
 import share from "@/assets/fx.png";
-import { getResultData_postsDiary,getResultData_postComment } from "@/servers/servers";
+import { getResultData_postsDiary,getResultData_postComment,getResultData_checkMood } from "@/servers/servers";
 
 import "./success.less";
 
@@ -28,11 +27,15 @@ class Index extends Component {
   }
   componentWillMount() {}
 
-  componentDidMount() {
+  async componentDidMount() {
     const  {  duration  } = this.$router.params;
     this.setState({
       isDuration: parseInt(Number(duration) / 60)
     });
+    const value = await getResultData_checkMood()
+    if(value.data.is_clock){
+      this.setState({isShow: false})
+    }
   }
 
   componentWillUnmount() {}
@@ -47,12 +50,12 @@ class Index extends Component {
 
   onPostDiary(){
     const {showComment, commentText } =  this.state
-    const { id } = userStore;
 
     if(showComment){
       getResultData_postComment({'text':commentText})
     }
     getResultData_postsDiary({'text': commentText})
+    Taro.navigateTo({ url: `/pages/index/index` });
   }
   onHome(){
     Taro.reLaunch({ url: `/pages/index/index` });
@@ -67,7 +70,6 @@ class Index extends Component {
   componentDidHide() {}
 
   toHome() {
-    Taro.navigateTo({ url: `/pages/index/index` });
   }
   render() {
     const {isDuration, showComment,commentText , isShow} = this.state;
@@ -101,13 +103,12 @@ class Index extends Component {
               <Text className='shareText'>
                 分享到评论区
               </Text>  
-              <View  className='shareBtn' onClick={this.onPostDiary}>
-                记录
-              </View>
               </View>
               <Image className='iconImg bottomSign' src={bottomSign} />
               <View className='foot'>
-                <Image class='Group2' src={Group2} onClick={this.onHome}></Image> 
+                <View  className='record' onClick={this.onPostDiary}>
+                  记录
+                </View>
                 <Button className='shareBtn'>
                   <Image className='shareImg' src={share} />
                 </Button>
