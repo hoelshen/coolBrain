@@ -47,14 +47,17 @@ class Index extends Component {
   };
 
   onPostDiary(){
-    const { showComment, commentText, isDuration, fileId } =  this.state
+    const { showComment, commentText, isDuration } =  this.state
     getResultData_moodTody({duration:isDuration})
 
     if(showComment){
-      getResultData_postsDiary({'text': commentText, location:'public'})
-      getResultData_postsDiary({'text': commentText, location: 'private'})
+      console.log('commentText', commentText)
+      commentText && getResultData_postsDiary({'text': commentText, location:'public'})
+      commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
     } else {
-      getResultData_postsDiary({'text': commentText, location: 'private'})
+      console.log('commentText', commentText)
+      
+      commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
     }
     Taro.navigateTo({ url: `/pages/index/index` });
   }

@@ -24,7 +24,7 @@ const Comment = (props)=> {
           {text}
         </Text>
       </View> 
-      <View className='btn' onClick={onPush(text)}><Text>发布</Text></View>
+      <View className='btn' onClick={()=>onPush(text)}><Text>发布</Text></View>
   </View>
   );
 }

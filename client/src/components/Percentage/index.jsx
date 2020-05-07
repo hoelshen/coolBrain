@@ -1,5 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View } from "@tarojs/components";
+import classNames from "classnames";
+
 import "./index.less";
 
 class Percentage extends Component {
@@ -12,7 +14,8 @@ class Percentage extends Component {
         dotTop: '',
         avd: '',
         ahd: '',
-        score: 0 
+        score: 0,
+        isActived:false 
       }
     }
 
@@ -44,36 +47,32 @@ class Percentage extends Component {
         })
   }
 
-  componentDidMount() {
-
-
-  }
 
   clickHandle(item,index){
     console.log('item: ', item, index);
-    this.setState({score: index + 1},function(){
+    this.setState({score: index + 1, isActived: true},function(){
       this.props.onScore(index+1);
     });
   }
 
   render() {
-    const {avd, ahd,dotLeft,dotTop,dotWidth, dotHeight, score} = this.state;
+    const {avd, ahd,dotLeft,dotTop,dotWidth, dotHeight, score, isActived} = this.state;
     console.log('ahd,dotLeft,dotTop,dotWidth, dotHeight: ', avd, ahd,dotLeft,dotTop,dotWidth, dotHeight, score);
 
     const radius = 80;
     //中心点横坐标
     const dotStyle = {
-      left: 80 + 'px',
-      top: 90 + 'px'
+      left: 55 + 'px',
+      top: 55 + 'px'
     }
     const boxList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
       let boxStyle = {
-        left: Math.cos((ahd*(index -2)))*radius+ dotLeft + 'px',
-        top: Math.sin((ahd*(index -2)))*radius+dotTop+ 'px'
+        left: Math.cos((ahd*(index -2)))*radius + 80 + 'px',
+        top: Math.sin((ahd*(index -2)))*radius + 80+ 'px'
       }
-        return(
-         <View className='box' style={boxStyle} key={item}  onClick={(ind) => this.clickHandle(ind, index)}>{index+1}</View>
-        )
+      return (
+        <View className={classNames('box', isActived && 'actived')}  style={boxStyle} key={item}  onClick={(ind) => this.clickHandle(ind, index)}>{index+1}</View>
+      )
     })
     return (
       <View className='container' id='container'>

@@ -30,6 +30,7 @@ class Index extends Component {
     if(JSON.stringify(comment.data) !== '{}'){
       this.setState({commentList: comment.data.objects})
     }
+    
   }
 
 
@@ -43,6 +44,7 @@ class Index extends Component {
 
   render() {
     const { diaryList, commentList } = this.state;
+    console.log(' diaryList, commentList: ',  diaryList, commentList);
     let CommentList , CommentList2;
     if(diaryList.length>0){
       //日记
@@ -57,8 +59,7 @@ class Index extends Component {
 
     if(commentList.length>0){
       //评论
-       CommentList2 = commentList.filter((l,index) => index < 1)
-       .map((comment) =>{
+       CommentList2 = commentList.filter((l,index) =>  index < 2).map((comment) =>{
         const time = (comment.created_at).split(' ');
         comment.time = time[0]
          return (

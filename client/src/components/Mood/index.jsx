@@ -46,14 +46,13 @@ class Modal extends Component {
     console.log('title', isShow,isDuration);
     const PercentageModal = {
       onScore: (item)=>{
-        console.log('item: ', item);
         this.setState({score: item})
       }
     }
     return (
       <View>
         {
-          isShow && 
+          true && 
           <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
             <View class='toplife_modal_content'>
               <View class='toplife_modal_btn'>
@@ -62,8 +61,8 @@ class Modal extends Component {
                     <View className='score'>给今天的心情打个分吧</View>
                   </View>
                   <View className='body'>
-                      <Percentage {...PercentageModal} />
-                      {/* <Process width='100px' height='100px' canvasWidth='100px' canvasHeight='100px'></Process> */}
+                    {/*   <Percentage {...PercentageModal} /> */}
+                      {<Process width='100px' height='100px' canvasWidth='100px' canvasHeight='100px'></Process>}
                       <View className='btn' onClick={this.onPush}>确认提交</View>
                     </View>
                 </View>

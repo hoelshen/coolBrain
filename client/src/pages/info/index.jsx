@@ -18,19 +18,7 @@ class Index extends Component {
   }
   componentWillMount() {}
 
-   componentDidMount() {
-
-/*     const dayStart =  Taro.getStorageSync('createDay');
-    if(dayStart){
-      var dateEnd = new Date().getTime();
-      const filteDay = (dateEnd - dayStart) / (1000 * 60 * 60 * 24)
-      const useDay = Number(filteDay.toFixed(0) + 1)
-      this.setState({useDay});
-    }
-    const time =  Taro.getStorageSync('useTime');
-    if(time){
-      this.setState({useTime: Math.floor(time%3600/60)});
-    } */
+  componentDidMount() {
   }
 
   componentWillUnmount() {}
@@ -41,10 +29,7 @@ class Index extends Component {
 
   async componentDidShow() {
     const data = await getResultData_MyBadge();
-
     this.setState({badgeList: data.data})
-
-    console.log('badgeList: ', data.data);
   }
 
   componentDidHide() {}
