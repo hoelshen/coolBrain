@@ -15,10 +15,10 @@ const customInterceptor = (chain) => {
 
     } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
       console.log('res.statusCode : ', res.statusCode );
-      Taro.setStorageSync("Ticket", "")
+      Taro.setStorageSync("Authorization", "")
       // pageToLogin()
       // TODO 根据自身业务修改
-      return Promise.reject("没有权限访问");
+      return Promise.reject("没有权限访问, 请登录");
 
     } else if (res.statusCode === HTTP_STATUS.AUTHENTICATE) {
       Taro.setStorageSync("Authorization", "")

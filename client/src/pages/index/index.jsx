@@ -108,6 +108,12 @@ class Index extends Component {
     });
   }
   toPlay(obj) {
+    const {
+      userStore: { avatarUrl, nickName }
+    } = this.props;
+    if(!avatarUrl){
+      return 
+    }
     Taro.navigateTo({
       url: `/pages/playVideo/index?id=${obj.id}&frequency_type=${obj.frequency_type}`
     });
@@ -187,8 +193,8 @@ class Index extends Component {
           <Swiper
             className='scrollview'
             indicatorDots
-            previousMargin='10px'
-            nextMargin='10px'
+            previousMargin='5px'
+            nextMargin='5px'
           >
             <SwiperItem >
             <View

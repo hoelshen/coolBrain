@@ -83,7 +83,7 @@ const MDAY = props => {
           {formatEnName()}, 
           </Text>
           <Text className='enName'>
-            ,welcome back
+            welcome back
           </Text>
       </View>
     </View>

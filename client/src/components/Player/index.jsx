@@ -3,14 +3,14 @@ import { View, Image } from "@tarojs/components";
 import play from "@/assets/play.png";
 import stop from "@/assets/stop.png";
 import "./index.less";
-import { set } from "mobx";
 
 const Play = props => {
-  const { videoUrl } = props;
+  const { videoUrl, fileId } = props;
   if (!videoUrl) return false;
 
   const isFirstRender = useRef(true);
   const [isPlay, setIsPlay] = useState(false);
+  const [showRight, setShowRight] = useState('display');
   const [currentTime, setCurrentTime] = useState(1)
   const [duration, setDuration] = useState(0)
   const useDurationTime = useRef(duration);
@@ -43,6 +43,18 @@ const Play = props => {
     }
   }
 
+  function initialization(){
+    setPlayState('PLAY_START');
+    Taro.setStorage({
+      key: "playState",
+      data: "PLAY_START"
+    });
+    setIsPlay(false);
+    setLeftDeg('45deg')
+    setRightDeg('45deg')
+    console.log('r', rightDeg, leftDeg)
+  }
+
   function processTime() {
     const countTime = Taro.getStorageSync("useTime");
     // console.log('countTime: ', countTime);
@@ -51,34 +63,28 @@ const Play = props => {
 
     var dateEnd = parseInt(new Date().getTime() / 1000);
     const useTime = dateEnd - parseInt(startTime / 1000);
-    // console.log('useTime: ', useTime);
   }
   Taro.$backgroundAudioManager.onEnded(() => {
-    console.log('111',Taro.$backgroundAudioManager )
-    // setDuration(Taro.$backgroundAudioManager.duration)
-
     Taro.navigateTo({
-      url: `/pages/playVideo/success?duration=${duration}`
+      url: `/pages/playVideo/success?duration=${duration}&fileId=${fileId}`
     });
   });
 
+
   useEffect(()=>{
     console.log('video变化了', videoUrl)
-    setPlayState('PLAY_START');
-    setIsPlay(false);
-    setLeftDeg('45deg')
-    setRightDeg('45deg')
-
+    initialization()
   }, [videoUrl])
 
   useEffect(() => {
+    console.log('111sd', )
     if (!isFirstRender.current) {
+      console.log('111sd')
       if (playState === "PLAY_LOAD") {
         Taro.$backgroundAudioManager.title = " ";
         Taro.$backgroundAudioManager.src = props.videoUrl;
         setDuration(Taro.$backgroundAudioManager.duration)
         console.log('Taro.$backgroundAudioManager',Taro.$backgroundAudioManager,Taro.$backgroundAudioManager.duration)
-        console.log('dura', duration)
       } else if (playState === "PLAY_PAUSE") {
         Taro.$backgroundAudioManager.pause();
       } else {
@@ -98,7 +104,8 @@ const Play = props => {
             } else {
               setLeftDeg((curTime / durTime) * 360 + 225 + "deg");
               setRightDeg("225deg");
-              setVisible('hidden')
+              setVisible('hidden');
+              setShowRight('none');
             }
           }
           if (curTime == 0 && curTime == durTime) {
@@ -112,13 +119,15 @@ const Play = props => {
       }
     } else {
       isFirstRender.current = false;
+      console.log('2')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playState]);
 
 
   const rightStyle = {
-    transform: `rotate(${rightDeg})`
+    transform: `rotate(${rightDeg})`,
+    display: `${showRight}`
   };
 
   const leftStyle = {
@@ -126,13 +135,19 @@ const Play = props => {
   };
 
   const markStyle = {
-    visibility: `${visible}`
+    visibility: `${visible}`,
   }
+  const android = {
+    visibility: `${visible}`,
+    bottom: '4rpx'
+  }
+
+  console.log('jinlaile', videoUrl)
   return (
     <View className='circle_container' onClick={onPlay}>
       <View class='circleProgress_wrapper'>
         <View style={markStyle} class='circle_markup_top'></View>
-        <View class='wrapper right'>
+        <View class='wrapper right' >
           <View class='circleProgress rightcircle' style={rightStyle}></View>
         </View>
         <View class='wrapper left'>
@@ -143,7 +158,7 @@ const Play = props => {
         ) : (
           <Image className='Triangle' src={stop}></Image>
         )}
-        <View style={markStyle} class='circle_markup_bottom'></View>
+        <View style={android} class='circle_markup_bottom'></View>
       </View>
     </View>
   );

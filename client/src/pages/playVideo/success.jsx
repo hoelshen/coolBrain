@@ -5,6 +5,7 @@ import NavBar from "@/components/Navbar/index";
 import Group6 from "@/assets/Group6.png";
 import topSign from "@/assets/topSign.png";
 import Mood from "@/components/Mood/index";
+import userStore from "@/store/user";
 
 import bottomSign from "@/assets/bottomSign.png";
 import share from "@/assets/fx.png";
@@ -22,14 +23,16 @@ class Index extends Component {
       commentText:'',
       showComment: false,
       isShow: false,
+      fileId: ''
     };
   }
   componentWillMount() {}
 
   async componentDidMount() {
-    const  {  duration  } = this.$router.params;
+    const  {  duration, fileId   } = this.$router.params;
     this.setState({
-      isDuration: parseInt(Number(duration) / 60)
+      isDuration: parseInt(Number(duration) / 60),
+      fileId
     });
     const value = await getResultData_checkMood()
     if(value.data.is_clock){
@@ -39,25 +42,19 @@ class Index extends Component {
     }
   }
 
-  componentWillUnmount() {}
-
   static options = {
     addGlobalClass: true
   };
 
-  async componentDidShow() {
-
-  }
-
   onPostDiary(){
-    const {showComment, commentText, isDuration } =  this.state
-
+    const { showComment, commentText, isDuration, fileId } =  this.state
     getResultData_moodTody({duration:isDuration})
 
     if(showComment){
-      getResultData_postComment({'text':commentText})
+      getResultData_postsDiary({'text': commentText, choices:[' private', 'public']})
+    } else {
+      getResultData_postsDiary({'text': commentText, choices:['private']})
     }
-    getResultData_postsDiary({'text': commentText})
     Taro.navigateTo({ url: `/pages/index/index` });
   }
   onClose(){

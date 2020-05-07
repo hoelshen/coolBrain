@@ -54,14 +54,6 @@ class Index extends Component {
     });
   }
 
-  componentDidMount() {}
-
-  componentWillUnmount() {}
-
-  componentDidShow() {}
-
-  componentDidHide() {}
-
   onShareAppMessage(res) {
     if (res.from === "button") {
       // 来自页面内转发按钮
@@ -110,6 +102,7 @@ class Index extends Component {
         );
       }
     } else {
+      console.log('id', id)
       this.setState({
         cheMin: this.state.seMin2[e.detail.value]["verbose"]
       });
@@ -121,9 +114,6 @@ class Index extends Component {
         );
       }
     }
-
-
-
   }
 
   mind() {
@@ -136,7 +126,6 @@ class Index extends Component {
 
   filterList(key, item, list) {
     const newlist = list.filter(l => l.frequency_type[key] == item);
-    console.log("newlist: ", newlist);
     this.setState({
       originList: newlist,
       fileList: newlist
@@ -145,7 +134,6 @@ class Index extends Component {
 
   cheMinList(key, item, list) {
     const newlist = list.filter(l => l.name[key] == item);
-    console.log("newlist: ", newlist);
     this.setState({
       fileList: newlist
     });
@@ -153,14 +141,12 @@ class Index extends Component {
 
   cheVoiceList(key, item, list) {
     const newlist = list.filter(l => l.name[key] == item);
-    console.log("newlist: ", newlist);
     this.setState({
       fileList: newlist
     });
   }
 
   getPropsShowExDialog(value) {
-    console.log("value: ", value);
     this.setState({
       isShowEx: value
     });
@@ -218,7 +204,7 @@ class Index extends Component {
         />
         <View className={vStyle} style='background-size: 100% 100%;'>
           <View className={`${pStyle}`}>
-            {fileList[0] && <Player videoUrl={fileList[0].file}></Player>}
+            {fileList[0] && <Player videoUrl={fileList[0].file} fileId={fileList[0].id}></Player>}
           </View>
           <View className=''>
             <View class={`${bColor}`}>

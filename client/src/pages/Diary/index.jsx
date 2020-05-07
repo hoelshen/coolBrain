@@ -21,39 +21,32 @@ class Index extends Component {
     }
   }
 
-  componentWillMount() {
-    
-  }
-
   async componentDidMount() {
     const {id} = userStore
-    const diary = await getResultData_getDiary()
-    this.setState({diaryList: diary.data.objects})
-    const comment = await getResultData_getComment({'post': id})
-    console.log('comment: ', comment);
-    if(JSON.stringify(comment.data) === '{}'){
-      return false
+    const diary = await getResultData_getDiary({location: {choices:[' private', 'public']}})
+    if(JSON.stringify(comment.data) !== '{}'){
+      this.setState({diaryList: diary.data.objects})
     }
-    this.setState({commentList: comment.data.objects})
+    // const comment = await getResultData_getComment({'post': id})
+     //todo
+    console.log('comment: ', comment);
+    if(JSON.stringify(comment.data) !== '{}'){
+      this.setState({commentList: comment.data.objects})
+    }
   }
 
-  componentWillUnmount() {}
 
   static options = {
     addGlobalClass: true
   };
 
   componentDidShow() {
-
   }
-
-  componentDidHide() {}
-
-
 
   onMail(){
     Taro.navigateTo({ url: `/pages/Mail/index` });
   }
+
   render() {
     const { diaryList, commentList } = this.state;
     let CommentList , CommentList2;
