@@ -193,8 +193,8 @@ class Index extends Component {
           <Swiper
             className='scrollview'
             indicatorDots
-            previousMargin='5px'
-            nextMargin='5px'
+            previousMargin='20px'
+            nextMargin='15px'
           >
             <SwiperItem >
             <View

@@ -1,40 +1,32 @@
-import Taro, { useDidShow } from "@tarojs/taro";
-import { View, Image, Text } from "@tarojs/components";
-import userStore from "@/store/user";
-import thumb_up from "@/assets/thumb_up.png";
-import thumb_up_y from "@/assets/thumb_up-y.png";
+import Taro, { useDidShow,  } from "@tarojs/taro";
+import { View, Text } from "@tarojs/components";
+import { getResultData_postsDiary } from "@/servers/servers";
 
-import "./index.less";
+import './index.less'
 
-
-const Comment = props => {
-  const { avatarUrl, nickName } = userStore;
-  useDidShow(() => {
-    console.log("111", props);
-  });
-  const { created_at,text} = props
+const Comment = (props)=> {
+  useDidShow(()=>{
+    console.log('111', props)
+  })
+  const onPush = (commentText)=>{
+    getResultData_postsDiary({'text': commentText, location:'public'})
+  }
+  const { created_at, text  } = props
   return (
-    <View className='contain flex column a-center'>
-      <View className='left flex column'>
-        <Image className='avatarUrl' src={avatarUrl} />
+    <View className='body'>
+      <View className='left'>
+          <Text className='time'>
+            {created_at}
+          </Text>
       </View>
-      <View className='right flex column'>
-        <Text className='name'>{nickName}</Text>
+      <View className='right'>
         <Text className='text1'>
           {text}
         </Text>
-        <Text className='dayText'>{created_at}</Text>
-{/*         <View className='thumDiv'>
-        {thumb ? (
-          <Image src={thumb_up} className='thumbImg'></Image>
-        ) : (
-          <Image src={thumb_up_y} className='thumbImg'></Image>
-        )}
-        <Text className={thumb ? 'thumb_num' : 'thumb_y_num'}>13</Text>
-        </View> */}
-      </View>
-    </View>
+      </View> 
+      <View className='btn' onClick={onPush(text)}><Text>发布</Text></View>
+  </View>
   );
-};
+}
 
 export default Comment;

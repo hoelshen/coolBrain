@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Text, Button } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import NavBar from "@/components/Navbar/index";
-import Comment from '@/components/Comment2/index';
+import Comment from '@/components/Comment/index';
 
 
 import { getResultData_getDiary } from '@/servers/servers'
@@ -31,8 +31,10 @@ class Index extends Component {
   };
 
   async componentDidShow() {
-    const comment = await getResultData_getDiary()
-    this.setState({commentList: comment.data.objects})
+    const comment = await getResultData_getDiary({location: 'public'}) //评论
+    if(JSON.stringify(comment.data) !== '{}'){
+      this.setState({commentList: comment.data.objects})
+    }
   }
 
   componentDidHide() {}
