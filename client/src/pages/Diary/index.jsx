@@ -44,7 +44,6 @@ class Index extends Component {
 
   render() {
     const { diaryList, commentList } = this.state;
-    console.log(' diaryList, commentList: ',  diaryList, commentList);
     let CommentList , CommentList2;
     if(diaryList.length>0){
       //日记

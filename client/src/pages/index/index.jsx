@@ -64,9 +64,7 @@ class Index extends Component {
       if(data.clock){ //当天登录了
         const { last_time } = data.clock;
         const day = Taro.$dayjs().format('YYYY-MM-DD HH:mm:ss');
-        console.log('day: ', day);
         const value = Taro.$dayjs(day).diff(last_time, 'day', true);
-        console.log('value: ', value);
 
         if(value< 1 && value > 0){
           this.setState({showDialog: false})
@@ -109,7 +107,7 @@ class Index extends Component {
   }
   toPlay(obj) {
     const {
-      userStore: { avatarUrl, nickName }
+      userStore: { avatarUrl }
     } = this.props;
     if(!avatarUrl){
       return 

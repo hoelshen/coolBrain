@@ -10,6 +10,7 @@ const Comment = (props)=> {
   })
   const onPush = (commentText)=>{
     getResultData_postsDiary({'text': commentText, location:'public'})
+    this.props.onRefresh()
   }
   const { created_at, text  } = props
   return (

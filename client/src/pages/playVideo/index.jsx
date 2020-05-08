@@ -88,7 +88,6 @@ class Index extends Component {
       return this.setState({ isShowFM: true });
     }
     const { originList } = this.state;
-    console.log("originList: ", originList, id);
     Taro.$backgroundAudioManager.stop();
     if(id =='A'){
       this.setState({
@@ -102,7 +101,6 @@ class Index extends Component {
         );
       }
     } else {
-      console.log('id', id)
       this.setState({
         cheMin: this.state.seMin2[e.detail.value]["verbose"]
       });
@@ -197,7 +195,7 @@ class Index extends Component {
     return (
       <View className='contain'>
         <NavBar
-          text='冥想小程序'
+          text=' '
           color={vColor}
           type='1'
           onShowExDialog={this.getPropsShowExDialog.bind(this)}

@@ -2,7 +2,8 @@ import Taro, { Component } from "@tarojs/taro";
 import { View,  Image  } from "@tarojs/components";
 import Group6 from "@/assets/Group6.png";
 import Group9 from "@/assets/Group9.png";
-import btn from "@/assets/btn.png";
+
+import ContinueBtn from "@/assets/continue.png";
 
 import "./index.less";
 
@@ -16,7 +17,6 @@ class Modal extends Component {
   };
 
   isClose = () => {
-    console.log('2222')
     this.props.onCancelCallback();
   };
 
@@ -39,7 +39,7 @@ class Modal extends Component {
     Taro.reLaunch({ url: `/pages/index/index` });
   }
   render() {
-    const {  showExDialog,   } = this.props;
+    const {  showExDialog  } = this.props;
     
     return (
       <View>
@@ -57,7 +57,7 @@ class Modal extends Component {
                       <View className='text'>退出后, 冥想进度不会保存 是否确认退出？</View>
                     </View>
                   </View>
-                  <View  className='btn' onClick={this.onContine}>继续冥想</View>  
+                  <Image src={ContinueBtn} className='qrcode' onClick={this.onContine}></Image>  
                   <Image src={Group9} className='qrcode' onClick={this.onExit}></Image>  
                 </View>
               </View>

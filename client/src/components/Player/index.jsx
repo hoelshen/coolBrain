@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useRef } from "@tarojs/taro";
+import Taro, { useState, useEffect, useRef, useDidShow } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import play from "@/assets/play.png";
 import stop from "@/assets/stop.png";
@@ -8,6 +8,7 @@ const Play = props => {
   const { videoUrl, fileId } = props;
   if (!videoUrl) return false;
 
+  const [isIOS, setIsIos] = useState(true)
   const isFirstRender = useRef(true);
   const [isPlay, setIsPlay] = useState(false);
   const [showRight, setShowRight] = useState('display');
@@ -18,6 +19,17 @@ const Play = props => {
   const [rightDeg, setRightDeg] = useState("45deg");
   const [playState, setPlayState] = useState("PLAY_START");
   const [visible, setVisible] = useState('visible');
+  let res = Taro.getSystemInfoSync();
+  // 导航栏总高度 & 占位块高度
+  // {
+  //       'iPhone': 64,
+  //       'iPhoneX': 88,
+  //       'Android': 68,
+  //       'samsung': 72
+  // }
+  let isiOS = res.system.indexOf("iOS") > -1;
+  console.log('isiOS: ', isiOS);
+  setIsIos(isiOS)
   function onPlay() {
     if (playState === "PLAY_START") {
       setPlayState("PLAY_LOAD");
@@ -74,6 +86,7 @@ const Play = props => {
   useEffect(()=>{
     console.log('video变化了', videoUrl)
     initialization()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoUrl])
 
   useEffect(() => {
@@ -109,7 +122,6 @@ const Play = props => {
             }
           }
           if (curTime == 0 && curTime == durTime) {
-            // console.log('🍎🍎🍎🍎🍎🍎🍎🍎', curTime, durTime)
             Taro.$backgroundAudioManager.stop();
             clearInterval(interval);
             processTime();
@@ -142,7 +154,11 @@ const Play = props => {
     bottom: '4rpx'
   }
 
-  console.log('jinlaile', videoUrl)
+  const ios = {
+    visibility: `${visible}`,
+    bottom: '0rpx'
+  }
+
   return (
     <View className='circle_container' onClick={onPlay}>
       <View class='circleProgress_wrapper'>
@@ -158,7 +174,7 @@ const Play = props => {
         ) : (
           <Image className='Triangle' src={stop}></Image>
         )}
-        <View style={android} class='circle_markup_bottom'></View>
+        <View style={isIOS ? ios : android} class='circle_markup_bottom'></View>
       </View>
     </View>
   );

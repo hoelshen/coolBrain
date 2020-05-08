@@ -42,9 +42,7 @@ class Modal extends Component {
     this.props.onCancelCallback()
   }
   render() {
-    const { isShow, isDuration } = this.props;
-    const { score } =this.state;
-    console.log('title', isShow,isDuration);
+    const { isShow } = this.props;
     const PercentageModal = {
       onScore: (item)=>{
         this.setState({score: item})
@@ -53,7 +51,7 @@ class Modal extends Component {
     return (
       <View>
         {
-          true && 
+          isShow && 
           <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
             <View class='toplife_modal_content'>
               <View class='toplife_modal_btn'>
@@ -63,7 +61,7 @@ class Modal extends Component {
                   </View>
                   <View className='body'>
                       <Percentage {...PercentageModal} />
-                      <Process width='100px' height='100px' canvasWidth='100' canvasHeight='100' score={score}></Process>
+                     {/*  <Process width='100px' height='100px' canvasWidth='100' canvasHeight='100' score={score}></Process> */}
                       <View className='btn' onClick={this.onPush}>确认提交</View>
                     </View>
                 </View>

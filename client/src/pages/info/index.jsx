@@ -23,17 +23,10 @@ class Index extends Component {
 
   componentWillUnmount() {}
 
-  static options = {
-    addGlobalClass: true
-  };
-
   async componentDidShow() {
     const data = await getResultData_MyBadge();
     this.setState({badgeList: data.data})
   }
-
-  componentDidHide() {}
-
 
   onHome(e) {
     e.stopPropagation()
@@ -47,7 +40,6 @@ class Index extends Component {
     const {
       userStore: { nickName, avatarUrl,  days, duration  }
     } = this.props;
-    console.log('duration: ', duration);
     const { badgeList } = this.state;
     const ImageList = badgeList.map(element=>{
       return (
