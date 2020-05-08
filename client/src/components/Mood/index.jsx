@@ -43,6 +43,7 @@ class Modal extends Component {
   }
   render() {
     const { isShow, isDuration } = this.props;
+    const { score } =this.state;
     console.log('title', isShow,isDuration);
     const PercentageModal = {
       onScore: (item)=>{
@@ -61,8 +62,8 @@ class Modal extends Component {
                     <View className='score'>给今天的心情打个分吧</View>
                   </View>
                   <View className='body'>
-                    {/*   <Percentage {...PercentageModal} /> */}
-                      {<Process width='100px' height='100px' canvasWidth='100px' canvasHeight='100px'></Process>}
+                      <Percentage {...PercentageModal} />
+                      <Process width='100px' height='100px' canvasWidth='100' canvasHeight='100' score={score}></Process>
                       <View className='btn' onClick={this.onPush}>确认提交</View>
                     </View>
                 </View>
