@@ -69,7 +69,12 @@ export const getResultData_checkMood = (postData) => {
   return HTTPREQUEST.get('mood/', postData)
 }
 
-
+//获取我的详情
 export const getResultData_myDetail = (postData)=>{
   return HTTPREQUEST.get('profiles/my_detail/', postData)
+}
+
+//发送评论
+export const getResultData_putPost = (postData)=>{
+  return HTTPREQUEST.put(`posts/${postData.id}`, postData)
 }

@@ -8,14 +8,44 @@ class Percentage extends Component {
     constructor(props){
       super(props)
       this.state={
+        list: [{
+          id: 1,
+          isActived: true
+        },{
+          id:2,
+          isActived: false
+        },{
+          id:3,
+          isActived: false
+        },{
+          id: 4,
+          isActived: true
+        },{
+          id:5,
+          isActived: false
+        },{
+          id:6,
+          isActived: false
+        },{
+          id: 7,
+          isActived: false
+        },{
+          id:8,
+          isActived: false
+        },{
+          id:9,
+          isActived: false
+        },{
+          id:10,
+          isActived: false
+        }],
         dotWidth: '',
         dotHeight: '',
         dotLeft: '',
         dotTop: '',
         avd: '',
         ahd: '',
-        score: 0,
-        isActived:false 
+        score: 1,
       }
     }
 
@@ -50,13 +80,21 @@ class Percentage extends Component {
 
   clickHandle(item,index){
     console.log('item: ', item, index);
-    this.setState({score: index + 1, isActived: true},function(){
+    const {list} = this.state;
+    list.forEach((item,index)=>{
+      item.isActived = false
+    })
+    list[index].isActived = true;
+    this.setState({
+      score: index + 1, 
+      list: list
+      },function(){
       this.props.onScore(index+1);
-    });
+    })
   }
 
   render() {
-    const {avd, ahd,dotLeft,dotTop,dotWidth, dotHeight, score, isActived} = this.state;
+    const {list,avd, ahd,dotLeft,dotTop,dotWidth, dotHeight, score} = this.state;
     console.log('ahd,dotLeft,dotTop,dotWidth, dotHeight: ', avd, ahd,dotLeft,dotTop,dotWidth, dotHeight, score);
 
     const radius = 80;
@@ -65,13 +103,13 @@ class Percentage extends Component {
       left: 55 + 'px',
       top: 55 + 'px'
     }
-    const boxList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item, index) => {
+    const boxList = list.map((item, index) => {
       let boxStyle = {
         left: Math.cos((ahd*(index -2)))*radius + 80 + 'px',
         top: Math.sin((ahd*(index -2)))*radius + 80+ 'px'
       }
       return (
-        <View className={classNames('box', isActived && 'actived')}  style={boxStyle} key={item}  onClick={(ind) => this.clickHandle(ind, index)}>{index+1}</View>
+        <View className={classNames('box', item.isActived ? 'actived' : '')}  style={boxStyle} key={item}  onClick={(ind) => this.clickHandle(ind, index)}>{index+1}</View>
       )
     })
     return (

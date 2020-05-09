@@ -1,4 +1,4 @@
-import Taro , { useState, useEffect, useRef, useDidShow } from "@tarojs/taro";
+import Taro , { useState, useEffect, useDidShow } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import PropTypes from "prop-types";
 
@@ -60,32 +60,38 @@ function formatEnName(){
 }
 
 const MDAY = props => {
-  useDidShow(
-    ()=>{
-      const value = getResultData_greeting()
-      console.log('getResultData_greeting: ', value);
-    }
-  )
+  const {text , setText} = useState('')
+
+  useEffect(()=>{
+   getResultData_greeting().then(res=>{
+    const value = res.data.text;
+      setText(value)
+    })
+
+  },[])
+
+/*   {flag ? (
+    <Text className='name'>{nickName}!</Text>
+  ) : (
+    <Text className='name'>请登录!</Text>
+  )}
+  <View>
+    <Text className='enName'>
+      {formatEnName()}, 
+      </Text>
+      <Text className='enName'>
+        welcome back
+      </Text>
+  </View> */
 
 
   const { nickName } = props;
   let flag = nickName ? true : false;
   return (
     <View className='greeting'>
-      <Text className='format'>{formatName()}, </Text>
-      {flag ? (
-        <Text className='name'>{nickName}!</Text>
-      ) : (
-        <Text className='name'>请登录!</Text>
-      )}
-      <View>
-        <Text className='enName'>
-          {formatEnName()}, 
-          </Text>
-          <Text className='enName'>
-            welcome back
-          </Text>
-      </View>
+      {
+        text && <Text className='format'> {text}</Text>
+      }
     </View>
   );
 };

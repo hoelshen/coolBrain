@@ -51,7 +51,7 @@ class Index extends Component {
         const time = (diary.created_at).split(' ');
         diary.time = time[0]
         return(
-          <Comment2 taroKey={String(diary.id)} created_at={diary.time} text={diary.text} />
+          <Comment2 taroKey={String(diary.id)} created_at={diary.time} text={diary.text} showPush={diary.is_public} CommentId={diary.id}/>
         )
       })
     }
@@ -62,7 +62,7 @@ class Index extends Component {
         const time = (comment.created_at).split(' ');
         comment.time = time[0]
          return (
-           <Comment taroKey={String(comment.id)} created_at={comment.time} text={comment.text} />
+           <Comment taroKey={String(comment.id)} created_at={comment.time} text={comment.text}/>
          )
      })
     }

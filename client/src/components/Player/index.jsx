@@ -90,7 +90,6 @@ const Play = props => {
   }, [videoUrl])
 
   useEffect(() => {
-    console.log('111sd', )
     if (!isFirstRender.current) {
       console.log('111sd')
       if (playState === "PLAY_LOAD") {
