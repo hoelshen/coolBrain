@@ -16,7 +16,7 @@ class Modal extends Component {
   };
 
   isClose = () => {
-    console.log('2222')
+    ('2222')
     this.props.onCancelCallback();
   };
 
@@ -29,7 +29,6 @@ class Modal extends Component {
   };
 
   preventTouchMove = e => {
-    console.log('e', e)
     e.stopPropagation();
   };
 
@@ -42,7 +41,6 @@ class Modal extends Component {
   }
   render() {
     const { showFMDialog,  } = this.props;
-    console.log('title', showFMDialog)
     
     return (
       <View>

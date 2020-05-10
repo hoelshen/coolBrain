@@ -47,12 +47,10 @@ export default class Menu extends Component {
 
 
     const query = Taro.createSelectorQuery();
-    console.log("query: ", query);
     query
       .select("#timeCanvas")
       .fields({ node: true })
       .exec(res => {
-        console.log("res[0]: ", res);
         const ele = res[0].node;
         let circle = ele.getContext("2d");
         const dpr = Taro.getSystemInfoSync().pixelRatio;

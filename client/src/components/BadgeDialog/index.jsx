@@ -18,7 +18,6 @@ class Modal extends Component {
   };
 
   isClose = () => {
-    console.log("2222");
     this.props.onCancelCallback();
   };
 
@@ -31,31 +30,29 @@ class Modal extends Component {
   };
 
   preventTouchMove = e => {
-    console.log("e", e);
     e.stopPropagation();
   };
 
   render() {
     const { showBadgeDialog, badge } = this.props;
-    console.log("title", showBadgeDialog, badge);
     return (
       <View>
         {showBadgeDialog && (
-          <View class="toplife_modal" onTouchMove={this.preventTouchMove}>
+          <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
             <View
-              class="toplife_modal_content"
-              style="background-size: 100% 100%;"
+              class='toplife_modal_content'
+              style='background-size: 100% 100%;'
             >
-              <View className="head">
-                <View className="close" onClick={this.isClose}></View>
+              <View className='head'>
+                <View className='close' onClick={this.isClose}></View>
               </View>
-              <View className="body">
-                <View className="text">打卡成功</View>
-                <Image className="iconImg" src={badge.picture} />
+              <View className='body'>
+                <View className='text'>打卡成功</View>
+                <Image className='iconImg' src={badge.picture} />
               </View>
-              <View className="foot">
+              <View className='foot'>
                 <Image
-                  className="Group7"
+                  className='Group7'
                   src={Group3}
                   onClick={this.onInfo}
                 ></Image>

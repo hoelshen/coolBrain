@@ -1,16 +1,13 @@
 import Taro, { useDidShow,  } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
-import { getResultData_postsDiary, getResultData_putPost } from "@/servers/servers";
+import { getResultData_putPost } from "@/servers/servers";
 
 import './index.less'
 
 const Comment = (props)=> {
-  useDidShow(()=>{
-    console.log('111', props)
-  })
+
   const onPush = (CommentId)=>{
     getResultData_putPost({id:CommentId, is_public: 'yes'})
-    this.props.onRefresh()
   }
   const { created_at, text, showPush, CommentId  } = props
   return (

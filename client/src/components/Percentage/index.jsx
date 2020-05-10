@@ -79,7 +79,6 @@ class Percentage extends Component {
 
 
   clickHandle(item,index){
-    console.log('item: ', item, index);
     const {list} = this.state;
     list.forEach((item,index)=>{
       item.isActived = false

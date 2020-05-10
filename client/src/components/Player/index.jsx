@@ -5,6 +5,9 @@ import stop from "@/assets/stop.png";
 import "./index.less";
 
 const Play = props => {
+  useDidShow(() => {
+    console.log("111", props);
+  });
   const { videoUrl, fileId } = props;
   if (!videoUrl) return false;
 

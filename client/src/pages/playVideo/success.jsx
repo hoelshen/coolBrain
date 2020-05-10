@@ -51,12 +51,9 @@ class Index extends Component {
     getResultData_moodTody({duration:isDuration})
 
     if(showComment){
-      console.log('commentText', commentText)
       commentText && getResultData_postsDiary({'text': commentText, location:'public'})
       commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
     } else {
-      console.log('commentText', commentText)
-      
       commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
     }
     Taro.navigateTo({ url: `/pages/index/index` });

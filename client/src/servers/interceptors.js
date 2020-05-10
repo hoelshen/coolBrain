@@ -15,7 +15,11 @@ const customInterceptor = (chain) => {
 
     } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
       console.log('res.statusCode : ', res.statusCode );
-      Taro.setStorageSync("Authorization", "")
+      Taro.showToast({
+        title: '没有权限访问, 请登录',
+        icon: 'none',
+        duration: 2000
+      })
       // pageToLogin()
       // TODO 根据自身业务修改
       return Promise.reject("没有权限访问, 请登录");
@@ -26,7 +30,6 @@ const customInterceptor = (chain) => {
       return Promise.reject("需要鉴权")
 
     } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
-      console.log('111')
       return res.data
 
     }

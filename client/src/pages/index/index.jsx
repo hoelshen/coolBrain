@@ -12,6 +12,8 @@ import {
   getResultData_MyBadge,
   getResultData_sentencesTody,
   getResultData_myDetail,
+  getResultData_tickValid,
+  getResultData_auth,
 } from "@/servers/servers";
 
 import "../../app.less";
@@ -89,6 +91,33 @@ class Index extends Component {
        data.days,
        data.duration
      );
+    })
+
+
+    getResultData_tickValid().then(json=>{
+      const data = json.data.is_valid 
+      if(!data){
+        Taro.login({
+          success: function (res) {
+            if (res.code) {
+                //发起网络请求
+                getResultData_auth({ code: res.code}).then(val=>{
+                  const result = val.data;
+                  userStore.updateId(
+                    result.user.id,
+                    result.user.profile.days,
+                    result.user.profile.duration
+                );
+                Taro.setStorage({
+                  key: "Ticket",
+                  data: result.ticket
+                });
+              })
+            }
+          }
+      })
+    }
+      console.log('json: ', json);
     })
   }
 

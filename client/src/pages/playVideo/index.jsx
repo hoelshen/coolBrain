@@ -44,7 +44,6 @@ class Index extends Component {
 
     getResultData_frequencies().then(res => {
       const data = res.data.objects;
-      console.log("data: ", data);
       if (data.length > 0) {
         this.filterList("key", frequency_type, data);
       }
@@ -83,7 +82,6 @@ class Index extends Component {
   }
 
   onChangeMin(id,e) {
-    console.log("e: ", id,e);
     if (e.detail.value == 3) {
       return this.setState({ isShowFM: true });
     }

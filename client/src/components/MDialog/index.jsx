@@ -31,13 +31,11 @@ class Modal extends Component {
   };
 
   preventTouchMove = e => {
-    console.log('e', e)
     e.stopPropagation();
   };
 
   render() {
     const { loginDay, showDialog, loginText, showBadge, badge } = this.props;
-    console.log('title', showDialog, loginDay, loginText, showBadge, badge)
     
     return (
       <View>

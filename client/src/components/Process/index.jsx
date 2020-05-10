@@ -24,7 +24,6 @@ class Process extends Component {
 
   componentDidUpdate() {
     const { score } = this.props;
-    console.log('score: ', score);
     this.initCanvas(score*10, 100,100);
   }
   canvasTap(start, end, time, w, h) {  //传入开始百分比和结束百分比的值，动画执行的时间，还有圆心横纵坐标

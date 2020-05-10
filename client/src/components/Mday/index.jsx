@@ -60,15 +60,14 @@ function formatEnName(){
 }
 
 const MDAY = props => {
-  const {text , setText} = useState('')
+  const [text , setNameText] = useState('')
 
-  useEffect(()=>{
+  useDidShow(()=>{
    getResultData_greeting().then(res=>{
     const value = res.data.text;
-      setText(value)
+    setNameText(value)
     })
-
-  },[])
+  })
 
 /*   {flag ? (
     <Text className='name'>{nickName}!</Text>
@@ -84,9 +83,6 @@ const MDAY = props => {
       </Text>
   </View> */
 
-
-  const { nickName } = props;
-  let flag = nickName ? true : false;
   return (
     <View className='greeting'>
       {

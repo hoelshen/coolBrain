@@ -10,7 +10,6 @@ import "./index.less";
 const Comment = props => {
   const { avatarUrl, nickName } = userStore;
   useDidShow(() => {
-    console.log("111", props);
   });
   const { created_at,text} = props
   return (

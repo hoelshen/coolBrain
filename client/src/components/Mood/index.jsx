@@ -35,7 +35,6 @@ class Modal extends Component {
   onPush(){
     const {score} = this.state;
     const {isDuration} = this.props;
-    console.log('isDuration: ', this.props);
     if(score){
       getResultData_moodTody({mood:score, duration:isDuration})
     }

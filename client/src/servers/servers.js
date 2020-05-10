@@ -76,5 +76,9 @@ export const getResultData_myDetail = (postData)=>{
 
 //发送评论
 export const getResultData_putPost = (postData)=>{
-  return HTTPREQUEST.put(`posts/${postData.id}`, postData)
+  return HTTPREQUEST.put(`posts/${postData.id}/`, postData)
+}
+//获取tick
+export const getResultData_tickValid = (postData)=>{
+  return HTTPREQUEST.get(`ticket/isvalid/`, postData)
 }
