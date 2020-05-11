@@ -43,9 +43,16 @@ class Index extends Component {
     let { id, frequency_type } = this.$router.params;
 
     getResultData_frequencies().then(res => {
-      const data = res.data.objects;
-      if (data.length > 0) {
+      const data = res.data;
+
+      if (JSON.stringify(data) !== '{}' && data.objects.length > 0) {
         this.filterList("key", frequency_type, data);
+      } else {
+        Taro.showToast({
+          title: '没有列表数据',
+          icon: 'none',
+          duration: 2000
+        })
       }
       this.setState({
         id
