@@ -63,18 +63,10 @@ class Index extends Component {
       if (data.badge) {
         this.setState({ badge: data.badge, showBadge: true });
       }
-      if(data.clock){ //当天登录了
-        const { last_time } = data.clock;
-        const day = Taro.$dayjs().format('YYYY-MM-DD HH:mm:ss');
-        const value = Taro.$dayjs(day).diff(last_time, 'day', true);
-
-        if(value< 1 && value > 0){
-          this.setState({showDialog: false})
-        } else if(value>1) {
-          this.setState({showDialog: true})
-        }
-      } else {  //当天没有登录
+      if(data.clock.is_first_login){ //首次登录
         this.setState({showDialog: true})
+      } else {  //登录过了
+        this.setState({showDialog: false})
       }
     });
   }
