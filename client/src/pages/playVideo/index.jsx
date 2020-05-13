@@ -46,7 +46,8 @@ class Index extends Component {
       const data = res.data;
 
       if (JSON.stringify(data) !== '{}' && data.objects.length > 0) {
-        this.filterList("key", frequency_type, data);
+        console.log('frequency_type, data',frequency_type, data)
+        this.filterList("key", frequency_type, data.objects);
       } else {
         Taro.showToast({
           title: '没有列表数据',
