@@ -1,11 +1,8 @@
-import Taro , { useState, useEffect, useDidShow } from "@tarojs/taro";
+import Taro, { useState, useEffect, useDidShow } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import PropTypes from "prop-types";
 
-
-import {
-  getResultData_greeting,
-} from "@/servers/servers";
+import { getResultData_greeting } from "@/servers/servers";
 
 import "./index.less";
 
@@ -33,9 +30,7 @@ function formatName() {
   return value;
 }
 
-
-
-function formatEnName(){
+function formatEnName() {
   const val = Taro.$dayjs().hour();
   let value;
   if (6 <= val && val <= 11) {
@@ -59,41 +54,34 @@ function formatEnName(){
   return value;
 }
 
-const MDAY = props => {
-  const [text , setNameText] = useState('')
+const MDAY = (props) => {
+  const [text, setNameText] = useState("");
 
-  useDidShow(()=>{
-   getResultData_greeting().then(res=>{
-    const value = res.data.text;
-    setNameText(value)
-    })
-  })
+  const flag = props.nickName ? true : false;
 
-/*   {flag ? (
-    <Text className='name'>{nickName}!</Text>
-  ) : (
-    <Text className='name'>请登录!</Text>
-  )}
-  <View>
-    <Text className='enName'>
-      {formatEnName()}, 
-      </Text>
-      <Text className='enName'>
-        welcome back
-      </Text>
-  </View> */
-
+  useDidShow(() => {
+    getResultData_greeting().then((res) => {
+      const value = res.data.text;
+      setNameText(value);
+    });
+  });
   return (
     <View className='greeting'>
-      {
-        text && <Text className='format'> {text}</Text>
-      }
+      <View>
+        {text && <Text className='format'> {text}, </Text>}
+        {flag ? (
+          <Text className='name'>{props.nickName}!</Text>
+        ) : (
+          <Text className='name'>请登录!</Text>
+        )}
+      </View>
+      <Text className='enName'>Have a nice day! Welcome back!</Text>
     </View>
   );
 };
 
 MDAY.propTypes = {
-  nickName: PropTypes.string
+  nickName: PropTypes.string,
 };
 
 export default MDAY;
