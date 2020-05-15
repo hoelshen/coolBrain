@@ -7,6 +7,9 @@ import NavBar from "@/components/Navbar/index";
 import MDialog from "@/components/MDialog/index";
 import BadgeDialog from "@/components/BadgeDialog/index";
 import headImg from "@/assets/avatar.png";
+
+import withLogin from '@/utils/withLogin'
+
 import {
   getResultData_badges,
   getResultData_MyBadge,
@@ -18,7 +21,6 @@ import {
 
 import "../../app.less";
 import "./index.less";
-
 @inject("userStore")
 @observer
 class Index extends Component {
@@ -224,17 +226,18 @@ class Index extends Component {
                 frequency_type: 'meditation'
               })}
             >
-              <Text className='mindName'>正念冥想</Text>
-              <Text className='mindInfo'>
+              <View className='mindName'>正念冥想</View>
+                <View className='clear'></View>
+              <View className='mindInfo'>
               在冥想时，
               允许自己慢一点、静下来。
-              </Text>
-              <Text className='mindInfo'>
+              </View>
+              <View className='mindInfo'>
               用音乐助力你的正念冥想之旅。
-              </Text>
-              <Text className='mindInfo'>
+              </View>
+              <View className='mindInfo'>
               选择适合自己的音乐时长，进入冥想的世界吧~
-              </Text>
+              </View>
             </View>
             </SwiperItem>
             <SwiperItem>
@@ -246,18 +249,19 @@ class Index extends Component {
                 frequency_type: 'white'
               })}
             >
-              <Text className='mindName'>白噪音</Text>
-              <Text className='mindInfo'>
+              <View className='mindName'>白噪音</View>
+                <View className='clear'></View>
+              <View className='mindInfo'>
               工作压力大、夜晚总是失眠、静不下心……
-              </Text>
-              <Text className='mindInfo'>
+              </View>
+              <View className='mindInfo'>
               放一首白噪音吧！
               让音乐拂过你的耳畔，
               让旋律平静你的心绪。
-              </Text>              
-              <Text className='mindInfo'>
+              </View>              
+              <View className='mindInfo'>
               来这里，在音乐中好好休息。
-              </Text>
+              </View>
             </View>
             </SwiperItem>
             <SwiperItem>
@@ -269,17 +273,18 @@ class Index extends Component {
                 frequency_type: 'general'
               })}
             >
-              <Text className='mindName'>自然声音</Text>
-              <Text className='mindInfo'>
+              <View className='mindName'>自然声音</View>
+                <View className='clear'></View>
+              <View className='mindInfo'>
               打开这份大自然声音地图，
-              </Text>
-              <Text className='mindInfo'>
+              </View>
+              <View className='mindInfo'>
               聆听自然之声，
               让身心慢慢得到疗愈。
-              </Text>
-              <Text className='mindInfo'>
+              </View>
+              <View className='mindInfo'>
               手指摁下，自然开启。
-              </Text>
+              </View>
             </View>
             </SwiperItem>
             </Swiper>
