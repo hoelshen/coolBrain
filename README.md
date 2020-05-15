@@ -1,5 +1,5 @@
 # coolBrain
-
+  酷炫脑冥想小程序
 ## taro+mobx
 
 ### 启动方式
