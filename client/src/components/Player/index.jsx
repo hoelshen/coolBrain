@@ -5,19 +5,18 @@ import stop from "@/assets/stop.png";
 import "./index.less";
 
 const Play = props => {
-  useDidShow(() => {
-    console.log("111", props);
-  });
   const { videoUrl, fileId } = props;
+  useDidShow(()=>{
+    let isiOS = res.system.indexOf("iOS") > -1;
+    setIsIos(isiOS)
+  })
   if (!videoUrl) return false;
 
   const [isIOS, setIsIos] = useState(true)
   const isFirstRender = useRef(true);
   const [isPlay, setIsPlay] = useState(false);
   const [showRight, setShowRight] = useState('display');
-  const [currentTime, setCurrentTime] = useState(1)
   const [duration, setDuration] = useState(0)
-  const useDurationTime = useRef(duration);
   const [leftDeg, setLeftDeg] = useState("45deg");
   const [rightDeg, setRightDeg] = useState("45deg");
   const [playState, setPlayState] = useState("PLAY_START");
@@ -30,9 +29,7 @@ const Play = props => {
   //       'Android': 68,
   //       'samsung': 72
   // }
-  let isiOS = res.system.indexOf("iOS") > -1;
-  console.log('isiOS: ', isiOS);
-  setIsIos(isiOS)
+
   function onPlay() {
     if (playState === "PLAY_START") {
       setPlayState("PLAY_LOAD");
@@ -67,18 +64,8 @@ const Play = props => {
     setIsPlay(false);
     setLeftDeg('45deg')
     setRightDeg('45deg')
-    console.log('r', rightDeg, leftDeg)
   }
 
-  function processTime() {
-    const countTime = Taro.getStorageSync("useTime");
-    // console.log('countTime: ', countTime);
-    const startTime = Taro.getStorageSync("startTime");
-    // console.log('startTime: ', startTime);
-
-    var dateEnd = parseInt(new Date().getTime() / 1000);
-    const useTime = dateEnd - parseInt(startTime / 1000);
-  }
   Taro.$backgroundAudioManager.onEnded(() => {
     Taro.navigateTo({
       url: `/pages/playVideo/success?duration=${duration}&fileId=${fileId}`
@@ -94,7 +81,6 @@ const Play = props => {
 
   useEffect(() => {
     if (!isFirstRender.current) {
-      console.log('111sd')
       if (playState === "PLAY_LOAD") {
         Taro.$backgroundAudioManager.title = " ";
         Taro.$backgroundAudioManager.src = props.videoUrl;
@@ -133,7 +119,6 @@ const Play = props => {
       }
     } else {
       isFirstRender.current = false;
-      console.log('2')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playState]);

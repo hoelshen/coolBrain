@@ -7,38 +7,12 @@ import "./index.less";
 class Percentage extends Component {
     constructor(props){
       super(props)
+      const list = Array.from({length: 10}, (_, i) => ({
+        id: `${i+1}`,
+        isActived: `${i+1}` == 1 ? true : false 
+      }));
       this.state={
-        list: [{
-          id: 1,
-          isActived: true
-        },{
-          id:2,
-          isActived: false
-        },{
-          id:3,
-          isActived: false
-        },{
-          id: 4,
-          isActived: true
-        },{
-          id:5,
-          isActived: false
-        },{
-          id:6,
-          isActived: false
-        },{
-          id: 7,
-          isActived: false
-        },{
-          id:8,
-          isActived: false
-        },{
-          id:9,
-          isActived: false
-        },{
-          id:10,
-          isActived: false
-        }],
+        list: list,
         dotWidth: '',
         dotHeight: '',
         dotLeft: '',
@@ -87,9 +61,9 @@ class Percentage extends Component {
     this.setState({
       score: index + 1, 
       list: list
-      },function(){
-      this.props.onScore(index+1);
-    })
+      },()=>{
+        this.props.onScore(index+1);
+      })
   }
 
   render() {
