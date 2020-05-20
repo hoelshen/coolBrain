@@ -61,7 +61,7 @@ const MDAY = (props) => {
 
   useDidShow(() => {
     getResultData_greeting().then((res) => {
-      const value = res.data.text;
+      const value = res.data && res.data.text;
       setNameText(value);
     });
   });

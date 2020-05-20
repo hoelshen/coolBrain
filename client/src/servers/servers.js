@@ -3,7 +3,10 @@ import HTTPREQUEST from "./http"
 
 //验证Ticket是否有效
 export const getResultData_auth = (postData) => {
-  return HTTPREQUEST.post('auth/', postData)
+  return HTTPREQUEST.post('auth/', postData, '', {
+    lockOthers: true,
+    hasErr: false
+  })
 }
 
 //获取徽章接口

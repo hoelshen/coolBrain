@@ -114,11 +114,6 @@ class Index extends Component {
       console.log('json: ', json);
     })
   }
-
-  componentDidHide() {}
-  componentWillReact() {
-    console.log("componentWillReact");
-  }
   onScroll(e) {
     console.log(e);
   }
