@@ -83,6 +83,7 @@ class App extends Component {
         if (res.code) {
           //发起网络请求
              getResultData_auth({ code: res.code}).then(json=>{
+               console.log('json2323: ', json);
                const data = json.data;
                userStore.updateId(
                 data.user.id,
@@ -93,7 +94,7 @@ class App extends Component {
                 key: "Ticket",
                 data: data.ticket
               });
-              console.log('val: ', data);
+              console.log('AuthData: ', data.ticket);
             })
         } else {
           console.log('登录失败！' + res.errMsg)

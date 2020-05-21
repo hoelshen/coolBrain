@@ -59,7 +59,7 @@ class Index extends Component {
     } else if (process.env.TARO_ENV === "h5") {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
-    getResultData_sentencesTody().then(res => {
+/*     getResultData_sentencesTody().then(res => {
       const data = res.data;
       this.setState({ loginDay: data.days, loginText: data.text });
       if (data.badge) {
@@ -70,13 +70,13 @@ class Index extends Component {
       } else {  //登录过了
         this.setState({showDialog: false})
       }
-    });
+    }); */
   }
 
   componentDidShow() {
     const { userStore } = this.props;
 
-    getResultData_badges();
+/*     getResultData_badges();
 
     getResultData_MyBadge();
     getResultData_myDetail().then(json=>{
@@ -85,7 +85,7 @@ class Index extends Component {
        data.days,
        data.duration
      );
-    })
+    }) */
 
 
     getResultData_tickValid().then(json=>{

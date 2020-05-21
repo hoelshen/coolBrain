@@ -26,10 +26,8 @@ class httpRequest {
       opts = { withOutLock: false, lockOthers: false, hasErr: false }, 
       option
     )=>{
-      console.log('opts.withOutLock', option.withOutLock)
       if(opts.withOutLock){
         const res = await Taro.request(option);
-        console.log(res)
         return
       }
       if(lock.runing){
@@ -42,7 +40,6 @@ class httpRequest {
       if (opts.lockOthers) {
         lock.runing = Taro.request(option);
         let res = await lock.runing;
-        console.log('res24: ', res);
         // 清空进行锁
         lock.runing = null;
     
@@ -50,7 +47,6 @@ class httpRequest {
         if (opts.hasErr) {
           lock.wait = Taro.request(option);
         } else {
-          console.log(res);
           return;
         }
       }
@@ -64,10 +60,9 @@ class httpRequest {
         console.log(`关键请求异常处理完成`);
       }
       const res = await Taro.request(option);
+      console.log('wating: ', res);
     
-      console.log('233res', res);
-      
-      return;
+      return res;
     }
     
     return request(opts, option)

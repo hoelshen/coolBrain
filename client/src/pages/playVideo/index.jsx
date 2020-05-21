@@ -7,7 +7,7 @@ import FM from "@/components/FM/index";
 import Ex from "@/components/Exit/index";
 
 import * as types from "@/constants/PlayTypes.js";
-import { getResultData_frequencies } from "@/servers/servers";
+import { getResultData_frequencies,getResultData_subtype_duration } from "@/servers/servers";
 
 import "./index.less";
 
@@ -59,6 +59,11 @@ class Index extends Component {
         id
       });
     });
+
+    getResultData_subtype_duration().then(res => {
+      console.log('res: ', res);
+
+    })
   }
 
   onShareAppMessage(res) {

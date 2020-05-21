@@ -60,10 +60,10 @@ const MDAY = (props) => {
   const flag = props.nickName ? true : false;
 
   useDidShow(() => {
-    getResultData_greeting().then((res) => {
+  /*   getResultData_greeting().then((res) => {
       const value = res.data && res.data.text;
       setNameText(value);
-    });
+    }); */
   });
   return (
     <View className='greeting'>
