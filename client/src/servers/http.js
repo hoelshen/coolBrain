@@ -7,7 +7,7 @@ interceptors.forEach(interceptorItem => Taro.addInterceptor(interceptorItem))
 const lock = { wait: null, runing: null };
 
 class httpRequest {
-  baseOptions(opts, params, method = "GET") {
+  baseOptions(config, params, method = "GET") {
     let { url, data } = params;
     const BASE_URL = getBaseUrl(url);
     let contentType = "application/json";
@@ -24,30 +24,32 @@ class httpRequest {
     };
     const request =  async (
       opts = { withOutLock: false, lockOthers: false, hasErr: false }, 
-      option
+      argument
     )=>{
       if(opts.withOutLock){
         const res = await Taro.request(option);
+        console.log('res: ', res);
         return
       }
+      console.log('lock.runing', lock.runing)
       if(lock.runing){
-        console.log(`${option}---------------wating...`)
+        console.log(`${argument}---------------wating...`)
         await lock.runing;
       }
     
     
       // 锁住之后进来的请求
       if (opts.lockOthers) {
-        lock.runing = Taro.request(option);
+        lock.runing = Taro.request(argument);
         let res = await lock.runing;
         // 清空进行锁
         lock.runing = null;
     
         // 模拟关键请求失败的 需要再次等待其他操作的情况 例如重新登陆等
         if (opts.hasErr) {
-          lock.wait = Taro.request(option);
+          lock.wait = Taro.request(argument);
         } else {
-          return;
+          return res;
         }
       }
       
@@ -59,13 +61,13 @@ class httpRequest {
         lock.wait = null;
         console.log(`关键请求异常处理完成`);
       }
-      const res = await Taro.request(option);
+      const res = await Taro.request(argument);
       console.log('wating: ', res);
     
       return res;
     }
     
-    return request(opts, option)
+    return request(config, option)
   }
 
   get(url, data = "", option) {
@@ -85,7 +87,7 @@ class httpRequest {
 
   delete(url, data = "", option) {
     let params = { url, data };
-    return this.baseOptions(option, option, "DELETE");
+    return this.baseOptions(option, params, "DELETE");
   }
 
 }

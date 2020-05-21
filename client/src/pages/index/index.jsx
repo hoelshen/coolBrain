@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Image, Swiper,SwiperItem, Button, Text } from "@tarojs/components";
+import { View, Image, Swiper,SwiperItem, Button } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 
 import MDay from "@/components/Mday";
@@ -8,19 +8,17 @@ import MDialog from "@/components/MDialog/index";
 import BadgeDialog from "@/components/BadgeDialog/index";
 import headImg from "@/assets/avatar.png";
 
-import withLogin from '@/utils/withLogin'
 
 import {
   getResultData_badges,
   getResultData_MyBadge,
   getResultData_sentencesTody,
   getResultData_myDetail,
-  getResultData_tickValid,
-  getResultData_auth,
 } from "@/servers/servers";
 
 import "../../app.less";
 import "./index.less";
+
 @inject("userStore")
 @observer
 class Index extends Component {
@@ -40,6 +38,7 @@ class Index extends Component {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
           Taro.getUserInfo({
             success(data) {
+              console.log('data: ', data);
               userStore.updateInfo(
                 data.userInfo.avatarUrl,
                 data.userInfo.nickName
@@ -59,7 +58,7 @@ class Index extends Component {
     } else if (process.env.TARO_ENV === "h5") {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
-/*     getResultData_sentencesTody().then(res => {
+    getResultData_sentencesTody().then(res => {
       const data = res.data;
       this.setState({ loginDay: data.days, loginText: data.text });
       if (data.badge) {
@@ -70,13 +69,13 @@ class Index extends Component {
       } else {  //登录过了
         this.setState({showDialog: false})
       }
-    }); */
+    });
   }
 
   componentDidShow() {
     const { userStore } = this.props;
 
-/*     getResultData_badges();
+    getResultData_badges();
 
     getResultData_MyBadge();
     getResultData_myDetail().then(json=>{
@@ -85,34 +84,8 @@ class Index extends Component {
        data.days,
        data.duration
      );
-    }) */
-
-
-    getResultData_tickValid().then(json=>{
-      const data = json.data.is_valid 
-      if(!data){
-        Taro.login({
-          success: function (res) {
-            if (res.code) {
-                //发起网络请求
-                getResultData_auth({ code: res.code}).then(val=>{
-                  const result = val.data;
-                  userStore.updateId(
-                    result.user.id,
-                    result.user.profile.days,
-                    result.user.profile.duration
-                );
-                Taro.setStorage({
-                  key: "Ticket",
-                  data: result.ticket
-                });
-              })
-            }
-          }
-      })
-    }
-      console.log('json: ', json);
     })
+
   }
   onScroll(e) {
     console.log(e);

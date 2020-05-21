@@ -14,7 +14,6 @@ import "./index.less";
 class Index extends Component {
   state = {
     id: "A",
-    frequency_type: "",
     seMin: [
       { verbose: "5 Min", id: "5min" },
       { verbose: "10 Min", id: "10min" },
@@ -61,7 +60,7 @@ class Index extends Component {
     });
 
     getResultData_subtype_duration().then(res => {
-      console.log('res: ', res);
+      console.log('resjhshss: ', res);
 
     })
   }

@@ -6,7 +6,7 @@ import upload from "@/utils/upload";
 import dayjs from "@/utils/day";
 import counterStore from "./store/counter";
 import userStore from "./store/user";
-import { getResultData_auth } from '@/servers/servers'
+import { getResultData_auth, getResultData_tickValid } from '@/servers/servers'
 
 import "./app.less";
 
@@ -37,6 +37,31 @@ Component.prototype.onShareAppMessage = function () {
 }
 class App extends Component {
   componentWillMount() {
+    getResultData_tickValid().then(json=>{
+      const data = json.data.is_valid
+      console.log('data: ', data);
+      if(!data){
+        Taro.login({
+          success: function (res) {
+            if (res.code) {
+                //发起网络请求
+                getResultData_auth({ code: res.code}).then(val=>{
+                  const result = val.data;
+                  userStore.updateId(
+                    result.user.id,
+                    result.user.profile.days,
+                    result.user.profile.duration
+                );
+                Taro.setStorage({
+                  key: "Ticket",
+                  data: result.ticket
+                });
+              })
+            }
+          }
+      })
+    }
+    })
     Taro.$backgroundAudioManager = Taro.getBackgroundAudioManager(); 
 
     Taro.$dayjs = dayjs;
@@ -52,7 +77,6 @@ class App extends Component {
       key: "isShow",
       data: true
     });
-
   }
 
   componentDidMount() {
@@ -78,29 +102,7 @@ class App extends Component {
     addGlobalClass: true
   }
   componentDidShow() {
-     Taro.login({
-      success: function (res) {
-        if (res.code) {
-          //发起网络请求
-             getResultData_auth({ code: res.code}).then(json=>{
-               console.log('json2323: ', json);
-               const data = json.data;
-               userStore.updateId(
-                data.user.id,
-                data.user.profile.days,
-                data.user.profile.duration
-              );
-              Taro.setStorage({
-                key: "Ticket",
-                data: data.ticket
-              });
-              console.log('AuthData: ', data.ticket);
-            })
-        } else {
-          console.log('登录失败！' + res.errMsg)
-        }
-      }
-    })
+
   }
 
   componentDidHide() {

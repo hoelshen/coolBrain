@@ -3,10 +3,7 @@ import HTTPREQUEST from "./http"
 
 //验证Ticket是否有效
 export const getResultData_auth = (postData) => {
-  return HTTPREQUEST.post('auth/', postData, '', {
-    lockOthers: true,
-    hasErr: false
-  })
+  return HTTPREQUEST.post('auth/', postData)
 }
 
 //获取徽章接口
@@ -83,10 +80,13 @@ export const getResultData_putPost = (postData)=>{
 }
 //获取tick
 export const getResultData_tickValid = (postData)=>{
-  return HTTPREQUEST.get(`ticket/isvalid/`, postData)
+  return HTTPREQUEST.get(`ticket/isvalid/`, postData, {
+    lockOthers: true,
+    hasErr: false
+  })
 }
 
 // 获取音频时长
 export const getResultData_subtype_duration= (postData)=>{
-  return HTTPREQUEST.get(`/subtype_duration`, postData)
+  return HTTPREQUEST.get(`subtype_duration`, postData)
 }
