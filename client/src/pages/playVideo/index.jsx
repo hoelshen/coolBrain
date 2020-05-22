@@ -15,15 +15,14 @@ class Index extends Component {
   state = {
     id: "A",
     seMin: [
-      { verbose: "5 Min", id: "5min" },
-      { verbose: "10 Min", id: "10min" },
-      { id: "15min", verbose: "15 Min" },
-      { id: "more", verbose: "更多" }
+      { id: "5min", duration: "5 Min",  },
+      { id: "10min", duration: "10 Min",  },
+      { id: "15min", duration: "15 Min" },
     ],
     seMin2:[
-      { verbose: "5 Min", id: "5min" },
-      { verbose: "10 Min", id: "10min" },
-      { id: "15min", verbose: "15 Min" },
+      { id: "5min", duration: "5 Min",  },
+      { id: "10min", duration: "10 Min",  },
+      { id: "15min", duration: "15 Min" },
     ],
     cheMin: "5 Min",
     fileList: [],
@@ -45,7 +44,6 @@ class Index extends Component {
       const data = res.data;
 
       if (JSON.stringify(data) !== '{}' && data.objects.length > 0) {
-        console.log('frequency_type, data',frequency_type, data)
         this.filterList("key", frequency_type, data.objects);
       } else {
         Taro.showToast({
@@ -60,8 +58,30 @@ class Index extends Component {
     });
 
     getResultData_subtype_duration().then(res => {
-      console.log('resjhshss: ', res);
+      console.log('resjhshss: ', res.data);
 
+      console.log('resjhshss: ', frequency_type);
+    
+      const list = res.data;
+      const newList = list.filter(item => { 
+        let obj = {}
+        for(let i in item){
+          if(i == frequency_type){
+            console.log('i: ', item[i]);
+            obj = item[i]
+          }
+        }
+        console.log(obj)
+        return obj
+      })
+
+      console.log('item == frequency_type' , newList)
+
+      if(frequency_type == 'meditation'){
+        this.setState({seMin: newList.duration, seVoice: newList.types})
+      } else {
+        this.setState({seMin: [...newList.duration,{ id: "more", duration: "更多" }], seVoice: newList.types})
+      }
     })
   }
 
@@ -101,7 +121,7 @@ class Index extends Component {
     Taro.$backgroundAudioManager.stop();
     if(id =='A'){
       this.setState({
-        cheMin: this.state.seMin[e.detail.value]["verbose"]
+        cheMin: this.state.seMin[e.detail.value]["duration"]
       });
       if (originList.length > 0) {
         this.cheMinList(
@@ -112,7 +132,7 @@ class Index extends Component {
       }
     } else {
       this.setState({
-        cheMin: this.state.seMin2[e.detail.value]["verbose"]
+        cheMin: this.state.seMin2[e.detail.value]["duration"]
       });
       if (originList.length > 0) {
         this.cheMinList(
@@ -220,7 +240,7 @@ class Index extends Component {
               'A': (<Picker
                 mode='selector'
                 range={this.state.seMin}
-                rangeKey="{{'verbose'}}"
+                rangeKey="{{'duration'}}"
                 onChange={this.onChangeMin.bind(this,'A')}
               >
                 <View className='num'> {this.state.cheMin}</View>
@@ -228,7 +248,7 @@ class Index extends Component {
               'B':  (<Picker
                 mode='selector'
                 range={this.state.seMin2}
-                rangeKey="{{'verbose'}}"
+                rangeKey="{{'duration'}}"
                 onChange={this.onChangeMin.bind(this,'B')}
               >
                 <View className='num'> {this.state.cheMin}</View>
@@ -236,7 +256,7 @@ class Index extends Component {
               'C':  (<Picker
                 mode='selector'
                 range={this.state.seMin2}
-                rangeKey="{{'verbose'}}"
+                rangeKey="{{'duration'}}"
                 onChange={this.onChangeMin.bind(this,'A')}
               >
                 <View className='num'> {this.state.cheMin}</View>

@@ -88,5 +88,5 @@ export const getResultData_tickValid = (postData)=>{
 
 // 获取音频时长
 export const getResultData_subtype_duration= (postData)=>{
-  return HTTPREQUEST.get(`subtype_duration`, postData)
+  return HTTPREQUEST.get(`subtype-duration/`, postData)
 }

@@ -47,7 +47,7 @@ class App extends Component {
                 //发起网络请求
                 getResultData_auth({ code: res.code}).then(val=>{
                   const result = val.data;
-                  userStore.updateId(
+                  store.userStore.updateId(
                     result.user.id,
                     result.user.profile.days,
                     result.user.profile.duration
