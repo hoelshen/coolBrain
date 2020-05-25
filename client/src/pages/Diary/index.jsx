@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import { View, Text  } from "@tarojs/components";
-import { observer, inject } from "@tarojs/mobx";
+import { observer } from "@tarojs/mobx";
 import NavBar from "@/components/Navbar/index";
 import Comment from '@/components/Comment/index';
 import Comment2 from '@/components/Comment2/index';

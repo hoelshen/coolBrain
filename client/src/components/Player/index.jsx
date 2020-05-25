@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useRef, useDidShow } from "@tarojs/taro";
+import Taro, { useState, useEffect, useRef } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import play from "@/assets/play.png";
 import stop from "@/assets/stop.png";
@@ -6,10 +6,6 @@ import "./index.less";
 
 const Play = props => {
   const { videoUrl, fileId } = props;
-  useDidShow(()=>{
-    let isiOS = res.system.indexOf("iOS") > -1;
-    setIsIos(isiOS)
-  })
   if (!videoUrl) return false;
 
   const [isIOS, setIsIos] = useState(true)
@@ -112,7 +108,6 @@ const Play = props => {
           if (curTime == 0 && curTime == durTime) {
             Taro.$backgroundAudioManager.stop();
             clearInterval(interval);
-            processTime();
           }
           setDuration(durTime)
         }, 1000);
@@ -123,6 +118,11 @@ const Play = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playState]);
 
+  useEffect(()=>{
+    let isiOS = res.system.indexOf("iOS") > -1;
+    setIsIos(isiOS)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const rightStyle = {
     transform: `rotate(${rightDeg})`,

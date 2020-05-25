@@ -14,24 +14,12 @@ import "./index.less";
 class Index extends Component {
   state = {
     id: "A",
-    seMin: [
-      { id: "5min", duration: "5 Min",  },
-      { id: "10min", duration: "10 Min",  },
-      { id: "15min", duration: "15 Min" },
-    ],
-    seMin2:[
-      { id: "5min", duration: "5 Min",  },
-      { id: "10min", duration: "10 Min",  },
-      { id: "15min", duration: "15 Min" },
-    ],
+    frequency_type: '',
+    seMin: [],
     cheMin: "5 Min",
-    fileList: [],
-    originList: [],
-    seVoice: [
-      { name: "男声", id: "male_voice" },
-      { name: "女声", id: "female_voice" }
-    ],
+    seVoice: [],
     cheVoice: "男声",
+    fileList: [],
     playState: types.PLAY_START,
     isShowFM: false,
     isShowEx: false
@@ -39,12 +27,41 @@ class Index extends Component {
 
   componentWillMount() {
     let { id, frequency_type } = this.$router.params;
+    this.initList(id, frequency_type);
+  }
 
-    getResultData_frequencies().then(res => {
-      const data = res.data;
+  /**
+   * 
+   * @param {*} id 
+   * @param {*} frequency_type 
+   */
+  async initList(id, frequency_type){
+    const res =  await getResultData_subtype_duration()
+    let obj = {}
+    const data = res.data;
+    Object.keys(data).forEach(item=>{
+      if(item == frequency_type){
+        obj = data[item]
+      }
+    })
 
-      if (JSON.stringify(data) !== '{}' && data.objects.length > 0) {
-        this.filterList("key", frequency_type, data.objects);
+    if(frequency_type == 'meditation'){
+      this.setState({frequency_type, seMin:[...obj.durations,{ id: "more", duration: "更多" }],cheMin: obj.durations[0].duration, seVoice: obj.types, cheVoice: obj.types[0].name})
+    } else {
+      this.setState({frequency_type,seMin: obj.durations ,cheMin: obj.durations[0].duration, seVoice: obj.types, cheVoice: obj.types[0].name})
+    }
+
+    const duration_id = obj.durations[0].id
+    const sub_type_id = obj.types[0].id
+    getResultData_frequencies({frequency_type, duration_id  , sub_type_id }).then(resp => {
+      const datal = resp.data;
+      console.log('datal: ', datal);
+
+      if (JSON.stringify(datal) !== '{}' && datal.objects.length > 0) {
+        //data.objects 初始数据  frequency_type 大类型 
+        this.setState({
+          fileList: datal.objects
+        });
       } else {
         Taro.showToast({
           title: '没有列表数据',
@@ -56,34 +73,9 @@ class Index extends Component {
         id
       });
     });
-
-    getResultData_subtype_duration().then(res => {
-      console.log('resjhshss: ', res.data);
-
-      console.log('resjhshss: ', frequency_type);
-    
-      const list = res.data;
-      const newList = list.filter(item => { 
-        let obj = {}
-        for(let i in item){
-          if(i == frequency_type){
-            console.log('i: ', item[i]);
-            obj = item[i]
-          }
-        }
-        console.log(obj)
-        return obj
-      })
-
-      console.log('item == frequency_type' , newList)
-
-      if(frequency_type == 'meditation'){
-        this.setState({seMin: newList.duration, seVoice: newList.types})
-      } else {
-        this.setState({seMin: [...newList.duration,{ id: "more", duration: "更多" }], seVoice: newList.types})
-      }
-    })
   }
+
+
 
   onShareAppMessage(res) {
     if (res.from === "button") {
@@ -96,52 +88,50 @@ class Index extends Component {
     };
   }
 
+  //选择声音
   onChangeVoice(e) {
-    const { originList } = this.state;
-    console.log("originList: ", originList);
+    const { seVoice, seMin, cheMin, frequency_type   } = this.state
+
     this.setState({
-      cheVoice: this.state.seVoice[e.detail.value]["name"]
+      cheVoice: seVoice[e.detail.value]["name"]
     });
     Taro.$backgroundAudioManager.stop();
-
-    if (originList.length > 0) {
-      this.cheVoiceList(
-        "key",
-        this.state.seMin[e.detail.value]["id"],
-        originList
-      );
+    const sub_type_id = seVoice[e.detail.value].id
+    let duration_id 
+    console.log('seMin', seMin, cheMin)
+    for(let i in seMin){
+      if(seMin[i].duration == cheMin){
+        duration_id  = seMin[i].id
+      }
     }
+    getResultData_frequencies({frequency_type, duration_id , sub_type_id })
   }
 
+  // 选择分钟数
   onChangeMin(id,e) {
+    const { seMin, seVoice,cheVoice, frequency_type   } = this.state
+
     if (e.detail.value == 3) {
       return this.setState({ isShowFM: true });
     }
-    const { originList } = this.state;
     Taro.$backgroundAudioManager.stop();
-    if(id =='A'){
-      this.setState({
-        cheMin: this.state.seMin[e.detail.value]["duration"]
-      });
-      if (originList.length > 0) {
-        this.cheMinList(
-          "key",
-          this.state.seMin[e.detail.value]["id"],
-          originList
-        );
-      }
-    } else {
-      this.setState({
-        cheMin: this.state.seMin2[e.detail.value]["duration"]
-      });
-      if (originList.length > 0) {
-        this.cheMinList(
-          "key",
-          this.state.seMin2[e.detail.value]["id"],
-          originList
-        );
+    this.setState({
+      cheMin: seMin[e.detail.value]["duration"]
+    });
+    const duration_id = seMin[e.detail.value].id
+    let sub_type_id 
+    for(let i in seVoice){
+      if(seVoice[i].name == cheVoice){
+        sub_type_id  = seVoice[i].id
       }
     }
+    getResultData_frequencies({frequency_type, duration_id , sub_type_id })
+  }
+
+  getPropsShowExDialog(value) {
+    this.setState({
+      isShowEx: value
+    });
   }
 
   mind() {
@@ -150,34 +140,6 @@ class Index extends Component {
 
   toHome() {
     Taro.reLaunch({ url: `/pages/index/index` });
-  }
-
-  filterList(key, item, list) {
-    const newlist = list.filter(l => l.frequency_type[key] == item);
-    this.setState({
-      originList: newlist,
-      fileList: newlist
-    });
-  }
-
-  cheMinList(key, item, list) {
-    const newlist = list.filter(l => l.name[key] == item);
-    this.setState({
-      fileList: newlist
-    });
-  }
-
-  cheVoiceList(key, item, list) {
-    const newlist = list.filter(l => l.name[key] == item);
-    this.setState({
-      fileList: newlist
-    });
-  }
-
-  getPropsShowExDialog(value) {
-    this.setState({
-      isShowEx: value
-    });
   }
 
   render() {
@@ -247,7 +209,7 @@ class Index extends Component {
               </Picker>),
               'B':  (<Picker
                 mode='selector'
-                range={this.state.seMin2}
+                range={this.state.seMin}
                 rangeKey="{{'duration'}}"
                 onChange={this.onChangeMin.bind(this,'B')}
               >
@@ -255,18 +217,16 @@ class Index extends Component {
               </Picker>),
               'C':  (<Picker
                 mode='selector'
-                range={this.state.seMin2}
+                range={this.state.seMin}
                 rangeKey="{{'duration'}}"
-                onChange={this.onChangeMin.bind(this,'A')}
+                onChange={this.onChangeMin.bind(this,'C')}
               >
                 <View className='num'> {this.state.cheMin}</View>
               </Picker>),
             }[id]
-
             }
             </View>
-            {id == "A" && (
-              <View className='voice'>
+            <View className='voice' class={`${bColor}`}>
                 <Picker
                   mode='selector'
                   range={this.state.seVoice}
@@ -276,7 +236,6 @@ class Index extends Component {
                   <View className='num'>{this.state.cheVoice}</View>
                 </Picker>
               </View>
-            )}
           </View>
         </View>
         <FM showFMDialog={isShowFM} {...FMModal} />
