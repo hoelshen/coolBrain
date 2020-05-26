@@ -89,7 +89,7 @@ class Index extends Component {
 
   //选择声音
   onChangeVoice(e) {
-    const { seVoice, seMin, cheMin, frequency_type   } = this.state
+    const { seVoice, seMin, cheMin, frequency_type } = this.state
 
     this.setState({
       cheVoice: seVoice[e.detail.value]["name"]
@@ -118,15 +118,12 @@ class Index extends Component {
           duration: 2000
         })
       }
-      this.setState({
-        id
-      });
     });
   }
 
   // 选择分钟数
   onChangeMin(id,e) {
-    const { seMin, seVoice,cheVoice, frequency_type   } = this.state
+    const { seMin, seVoice, cheVoice, frequency_type } = this.state
 
     if (e.detail.value == 3) {
       return this.setState({ isShowFM: true });
@@ -157,9 +154,6 @@ class Index extends Component {
           duration: 2000
         })
       }
-      this.setState({
-        id
-      });
     });
   }
 

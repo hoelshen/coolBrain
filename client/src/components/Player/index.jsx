@@ -18,13 +18,6 @@ const Play = props => {
   const [playState, setPlayState] = useState("PLAY_START");
   const [visible, setVisible] = useState('visible');
   let res = Taro.getSystemInfoSync();
-  // 导航栏总高度 & 占位块高度
-  // {
-  //       'iPhone': 64,
-  //       'iPhoneX': 88,
-  //       'Android': 68,
-  //       'samsung': 72
-  // }
 
   function onPlay() {
     if (playState === "PLAY_START") {
@@ -58,8 +51,10 @@ const Play = props => {
       data: "PLAY_START"
     });
     setIsPlay(false);
-    setLeftDeg('45deg')
-    setRightDeg('45deg')
+    setRightDeg('45deg');
+    setLeftDeg('45deg');
+    setDuration(0);
+    console.log('leftDeg', leftDeg, rightDeg, duration)
   }
 
   Taro.$backgroundAudioManager.onEnded(() => {

@@ -5,11 +5,15 @@ import { getResultData_putPost } from "@/servers/servers";
 import './index.less'
 
 const Comment = (props)=> {
-
+  const state ={
+    showPushKey: 'no'
+  } 
   const onPush = (CommentId)=>{
+    state.showPushKey = 'yes'
     getResultData_putPost({id:CommentId, is_public: 'yes'})
   }
   const { created_at, text, showPush, CommentId  } = props
+  state.showPushKey = showPush && showPush.key
   return (
     <View className='body'>
       <View className='left'>
@@ -23,7 +27,7 @@ const Comment = (props)=> {
         </Text>
       </View> 
       {
-        (showPush.key == 'no') &&
+        (state.showPushKey == 'no') &&
         <View className='btn' onClick={()=>onPush(CommentId)}><Text>发布</Text></View>
       }
   </View>
