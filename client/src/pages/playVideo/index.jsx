@@ -48,12 +48,17 @@ class Index extends Component {
     if(frequency_type == 'meditation'){
       this.setState({frequency_type, seMin:[...obj.durations,{ id: "more", duration: "更多" }],cheMin: obj.durations[0].duration, seVoice: obj.types, cheVoice: obj.types[0].name})
     } else {
-      this.setState({frequency_type,seMin: obj.durations ,cheMin: obj.durations[0].duration, seVoice: obj.types, cheVoice: obj.types[0].name})
+      this.setState({frequency_type , seVoice: obj.types, cheVoice: obj.types[0].name})
     }
 
-    const duration_id = obj.durations[0].id
+    const duration_id = obj.durations.length > 0 ? obj.durations[0].id : ''
     const sub_type_id = obj.types[0].id
-    getResultData_frequencies({frequency_type, duration_id  , sub_type_id }).then(resp => {
+    const option = {
+      frequency_type,
+      duration_id,
+      sub_type_id
+    }
+    getResultData_frequencies(option).then(resp => {
       const datal = resp.data;
       console.log('datal: ', datal);
 
@@ -97,12 +102,16 @@ class Index extends Component {
     Taro.$backgroundAudioManager.stop();
     const sub_type_id = seVoice[e.detail.value].id
     let duration_id 
-    console.log('seMin', seMin, cheMin)
-    for(let i in seMin){
-      if(seMin[i].duration == cheMin){
-        duration_id  = seMin[i].id
+    if(seMin.length > 0){
+      for(let i in seMin){
+        if(seMin[i].duration == cheMin){
+          duration_id  = seMin[i].id
+        }
       }
+    } else {
+      duration_id  = ''
     }
+
     getResultData_frequencies({frequency_type, duration_id , sub_type_id }).then(resp => {
       const datal = resp.data;
       console.log('datal: ', datal);
@@ -172,7 +181,7 @@ class Index extends Component {
   }
 
   render() {
-    const { id, playState, fileList, isShowFM, isShowEx } = this.state;
+    const { id, playState, fileList, isShowFM, isShowEx, seMin } = this.state;
     const vStyle = classNames({
       playing: true,
       "vStyle-a": id === "A",
@@ -226,35 +235,18 @@ class Index extends Component {
             {fileList[0] && <Player videoUrl={fileList[0].file} fileId={fileList[0].id}></Player>}
           </View>
           <View className=''>
+            {seMin.length > 0  &&  
             <View class={`${bColor}`}>
-            { {
-              'A': (<Picker
-                mode='selector'
-                range={this.state.seMin}
-                rangeKey="{{'duration'}}"
-                onChange={this.onChangeMin.bind(this,'A')}
-              >
-                <View className='num'> {this.state.cheMin}</View>
-              </Picker>),
-              'B':  (<Picker
-                mode='selector'
-                range={this.state.seMin}
-                rangeKey="{{'duration'}}"
-                onChange={this.onChangeMin.bind(this,'B')}
-              >
-                <View className='num'> {this.state.cheMin}</View>
-              </Picker>),
-              'C':  (<Picker
-                mode='selector'
-                range={this.state.seMin}
-                rangeKey="{{'duration'}}"
-                onChange={this.onChangeMin.bind(this,'C')}
-              >
-                <View className='num'> {this.state.cheMin}</View>
-              </Picker>),
-            }[id]
-            }
+             <Picker
+               mode='selector'
+               range={this.state.seMin}
+               rangeKey="{{'duration'}}"
+               onChange={this.onChangeMin.bind(this,this.state.id)}
+             >
+              <View className='num'> {this.state.cheMin}</View>
+             </Picker>
             </View>
+            }
             <View className='voice' class={`${bColor}`}>
                 <Picker
                   mode='selector'

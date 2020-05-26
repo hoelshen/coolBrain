@@ -16,11 +16,10 @@ class Modal extends Component {
   };
 
   isClose = () => {
-    ('2222')
     this.props.onCancelCallback();
   };
 
-  onRecored = (param)=>{
+  onRecored = ()=>{
     this.props.onCancelCallback();
   }
   authConfirmClick = e => {
@@ -32,7 +31,7 @@ class Modal extends Component {
     e.stopPropagation();
   };
 
-  onPreviewImage = e =>{
+  onPreviewImage = () =>{
     // const current = e.target.dataset.src
 /*     Taro.saveImageToPhotosAlbum({
       current: current,
@@ -66,7 +65,6 @@ class Modal extends Component {
           </View>
         }
       </View>
-
     );
   }
 }
