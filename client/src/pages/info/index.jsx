@@ -48,7 +48,7 @@ class Index extends Component {
     })
     return (
       <View>
-        <NavBar text='冥想小程序' color='#8CC9BD' type='2' />
+        <NavBar text='酷炫脑冥想' color='#8CC9BD' type='2' />
         <View className='body flex column j-between'>
           <View className='head'>
             <View className='shareDiv' style='background-size: 100% 100%;'>

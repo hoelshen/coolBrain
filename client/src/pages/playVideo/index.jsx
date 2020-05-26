@@ -58,7 +58,6 @@ class Index extends Component {
       console.log('datal: ', datal);
 
       if (JSON.stringify(datal) !== '{}' && datal.objects.length > 0) {
-        //data.objects 初始数据  frequency_type 大类型 
         this.setState({
           fileList: datal.objects
         });
@@ -104,7 +103,25 @@ class Index extends Component {
         duration_id  = seMin[i].id
       }
     }
-    getResultData_frequencies({frequency_type, duration_id , sub_type_id })
+    getResultData_frequencies({frequency_type, duration_id , sub_type_id }).then(resp => {
+      const datal = resp.data;
+      console.log('datal: ', datal);
+
+      if (JSON.stringify(datal) !== '{}' && datal.objects.length > 0) {
+        this.setState({
+          fileList: datal.objects
+        });
+      } else {
+        Taro.showToast({
+          title: '没有列表数据',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+      this.setState({
+        id
+      });
+    });
   }
 
   // 选择分钟数
@@ -125,7 +142,25 @@ class Index extends Component {
         sub_type_id  = seVoice[i].id
       }
     }
-    getResultData_frequencies({frequency_type, duration_id , sub_type_id })
+    getResultData_frequencies({frequency_type, duration_id , sub_type_id }).then(resp => {
+      const datal = resp.data;
+      console.log('datal: ', datal);
+
+      if (JSON.stringify(datal) !== '{}' && datal.objects.length > 0) {
+        this.setState({
+          fileList: datal.objects
+        });
+      } else {
+        Taro.showToast({
+          title: '没有列表数据',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+      this.setState({
+        id
+      });
+    });
   }
 
   getPropsShowExDialog(value) {
