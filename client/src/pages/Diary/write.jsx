@@ -11,7 +11,7 @@ import bottomSign from "@/assets/bottomSign.png";
 import share from "@/assets/fx.png";
 import { getResultData_postsDiary,getResultData_postComment,getResultData_checkMood,getResultData_moodTody } from "@/servers/servers";
 
-import "./success.less";
+import "./write.less";
 
 @inject("userStore")
 @observer
@@ -19,27 +19,15 @@ class Index extends Component {
   constructor() {
     super();
     this.state = {
-      isDuration: '',
       commentText:'',
       showComment: false,
       isShow: false,
-      fileId: ''
     };
   }
   componentWillMount() {}
 
   async componentDidMount() {
-    const  {  duration, fileId   } = this.$router.params;
-    this.setState({
-      isDuration: parseInt(Number(duration) / 60),
-      fileId
-    });
-    const value = await getResultData_checkMood()
-    if(value.data.is_clock){
-      this.setState({isShow: false})
-    } else {
-      this.setState({isShow: true})
-    }
+
   }
 
   static options = {
@@ -47,8 +35,7 @@ class Index extends Component {
   };
 
   onPostDiary(){
-    const { showComment, commentText, isDuration } =  this.state
-    getResultData_moodTody({duration:isDuration})
+    const { showComment, commentText } =  this.state
 
     if(showComment){
       commentText && getResultData_postsDiary({'text': commentText, location:'public'})
@@ -58,9 +45,7 @@ class Index extends Component {
     }
     Taro.navigateTo({ url: `/pages/index/index` });
   }
-  onClose(){
-    Taro.reLaunch({ url: `/pages/index/index` });
-  }
+
   handleChange(e){
     this.setState({commentText: e.detail.value});
   }
@@ -71,28 +56,15 @@ class Index extends Component {
   componentDidHide() {}
 
   render() {
-    const {isDuration, showComment,commentText , isShow} = this.state;
-    const ModalComProps = {
-      isShow: this.state.isShow,
-      onCancelCallback: ()=>{     
-        this.setState({isShow: false})
-      }
-    }
+    const { showComment,commentText , isShow} = this.state;
+
     return (
       <View>
-        <NavBar text='' color='#8CC9BD' type='' />
+        <NavBar text='' color='white' type='' />
         <View class='modal_content'>
           <View class='modal_btn'>
             <View className='played'>
-              <View className='head ' style='background-size: 100% 100%;'>
-                <View className='top' onClick={this.onClose}>
-                  <Image src={Group6} className='Group6Img' />
-                </View>
-                <View className='body'>
-                  <View>本次冥想分钟数</View>
-                  <View className='num'>{isDuration}</View>
-                </View>
-              </View>
+              <span>写日记</span>
               <Image className='iconImg topSign' src={topSign} />
               <View className='AreaDiv'>
               {
@@ -115,7 +87,6 @@ class Index extends Component {
             </View>
           </View>
         </View>
-        <Mood  isShow={isShow} isDuration={isDuration} {...ModalComProps} />
       </View>
     );
   }
