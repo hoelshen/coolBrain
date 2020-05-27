@@ -35,6 +35,11 @@ class Index extends Component {
     addGlobalClass: true
   };
 
+
+  onPostDiary(){
+    Taro.navigateTo({ url: `/pages/Diary/write` });
+  }
+  
   onMail() {
     Taro.navigateTo({ url: `/pages/Mail/index` });
   }
@@ -79,12 +84,15 @@ class Index extends Component {
     return (
       <View>
         <NavBar text="" color="#fff" type="2" />
-        <View className="head">我的冥想日记</View>
-        {diaryList.length > 0 ? (
-          CommentList
-        ) : (
-          <p style="margin: 20px">暂无数据</p>
-        )}
+        <View className="head">
+          <span>我的冥想日记</span>
+          <span onClick={this.onPostDiary}>写日记</span>
+        </View>
+          {diaryList.length > 0 ? (
+            CommentList
+          ) : (
+            <p style="margin: 20px">暂无数据</p>
+          )}
         <View className="foot">
           <Text class="text1">评论区</Text>
           <Text class="text2" onClick={this.onMail}>
