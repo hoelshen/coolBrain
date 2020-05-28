@@ -73,7 +73,7 @@ class Index extends Component {
           comment.time = time[0];
           return (
             <Comment
-              taroKey={String(comment.id)}
+              key={String(comment.id)}
               created_at={comment.time}
               text={comment.text}
             />
@@ -83,25 +83,25 @@ class Index extends Component {
 
     return (
       <View>
-        <NavBar text="" color="#fff" type="2" />
-        <View className="head">
-          <span>我的冥想日记</span>
-          <span onClick={this.onPostDiary}>写日记</span>
+        <NavBar text='' color='#fff' type='2' />
+        <View className='head'>
+          <View>我的冥想日记</View>
+          <View onClick={this.onPostDiary} className='postDiary'>写日记</View>
         </View>
           {diaryList.length > 0 ? (
             CommentList
           ) : (
-            <p style="margin: 20px">暂无数据</p>
+            <View style='margin: 20px'>暂无数据</View>
           )}
-        <View className="foot">
-          <Text class="text1">评论区</Text>
-          <Text class="text2" onClick={this.onMail}>
+        <View className='foot'>
+          <Text class='text1'>评论区</Text>
+          <Text class='text2' onClick={this.onMail}>
             查看全部
           </Text>
           {commentList.length > 0 ? (
             CommentList2
           ) : (
-            <p style="margin:20px 0">暂无数据</p>
+            <View style='margin:20px 0'>暂无数据</View>
           )}
         </View>
       </View>

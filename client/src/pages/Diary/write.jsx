@@ -2,14 +2,11 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Image, Textarea,Text, Button } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import NavBar from "@/components/Navbar/index";
-import Group6 from "@/assets/Group6.png";
 import topSign from "@/assets/topSign.png";
-import Mood from "@/components/Mood/index";
-import userStore from "@/store/user";
 
 import bottomSign from "@/assets/bottomSign.png";
 import share from "@/assets/fx.png";
-import { getResultData_postsDiary,getResultData_postComment,getResultData_checkMood,getResultData_moodTody } from "@/servers/servers";
+import { getResultData_postsDiary } from "@/servers/servers";
 
 import "./write.less";
 
@@ -63,8 +60,8 @@ class Index extends Component {
         <NavBar text='' color='white' type='' />
         <View class='modal_content'>
           <View class='modal_btn'>
+            <View style='float: left;margin-left:10px'>写日记</View>
             <View className='played'>
-              <span>写日记</span>
               <Image className='iconImg topSign' src={topSign} />
               <View className='AreaDiv'>
               {
@@ -78,11 +75,8 @@ class Index extends Component {
               <Image className='iconImg bottomSign' src={bottomSign} />
               <View className='foot'>
                 <View  className='record' onClick={this.onPostDiary}>
-                  记录
+                  保存
                 </View>
-                <Button className='shareBtn'>
-                  <Image className='shareImg' src={share} />
-                </Button>
               </View>
             </View>
           </View>

@@ -154,7 +154,7 @@ class Index extends Component {
       onCancelCallback: () => {
         this.setState({ showBadgeDialog: false });
         Taro.navigateTo({
-          url: `/pages/Info/index`
+          url: `/pages/info/index`
         });
       }
     };
