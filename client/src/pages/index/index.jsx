@@ -186,14 +186,14 @@ class Index extends Component {
             nextMargin='15px'
           >
             <SwiperItem >
-            <View
-              className='vStyleA'
-              style='background-size: 100% 100%;'
-              onClick={this.toPlay.bind(this, {
+              <View
+                className='vStyleA'
+                style='background-size: 100% 100%;'
+                onClick={this.toPlay.bind(this, {
                 id: "A",
                 frequency_type: 'meditation'
               })}
-            >
+              >
               <View className='mindName'>正念冥想</View>
                 <View className='clear'></View>
               <View className='mindInfo'>
@@ -209,14 +209,14 @@ class Index extends Component {
             </View>
             </SwiperItem>
             <SwiperItem>
-            <View
-              className='vStyleB'
-              style='background-size: 100% 100%;'
-              onClick={this.toPlay.bind(this, {
+              <View
+                className='vStyleB'
+                style='background-size: 100% 100%;'
+                onClick={this.toPlay.bind(this, {
                 id: "B",
                 frequency_type: 'white'
               })}
-            >
+              >
               <View className='mindName'>白噪音</View>
                 <View className='clear'></View>
               <View className='mindInfo'>
@@ -233,14 +233,14 @@ class Index extends Component {
             </View>
             </SwiperItem>
             <SwiperItem>
-            <View
-              className='vStyleC'
-              style='background-size: 100% 100%;'
-              onClick={this.toPlay.bind(this, {
+              <View
+                className='vStyleC'
+                style='background-size: 100% 100%;'
+                onClick={this.toPlay.bind(this, {
                 id: "C",
                 frequency_type: 'general'
               })}
-            >
+              >
               <View className='mindName'>自然声音</View>
                 <View className='clear'></View>
               <View className='mindInfo'>
@@ -255,7 +255,7 @@ class Index extends Component {
               </View>
             </View>
             </SwiperItem>
-            </Swiper>
+          </Swiper>
         </View>
         <View />
         <MDialog {...ModalComProps} />

@@ -21,7 +21,7 @@ class Modal extends Component {
     this.props.onCancelCallback();
   };
 
-  onRecored = (param)=>{
+  onRecored = ()=>{
     this.props.onCancelCallback();
     this.props.onShowBadgeCallback(true);
   }
@@ -35,7 +35,7 @@ class Modal extends Component {
   };
 
   render() {
-    const { loginDay, showDialog, loginText, showBadge, badge } = this.props;
+    const { loginDay, showDialog, loginText, showBadge } = this.props;
     
     return (
       <View>

@@ -36,7 +36,6 @@ class Index extends Component {
 
     if(showComment){
       commentText && getResultData_postsDiary({'text': commentText, location:'public'})
-      commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
     } else {
       commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
     }

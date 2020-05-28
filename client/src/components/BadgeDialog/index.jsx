@@ -1,10 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Button, Image, Text } from "@tarojs/components";
-import topSign from "@/assets/topSign.png";
-import bottomSign from "@/assets/bottomSign.png";
-import share from "@/assets/fx.png";
-import Group6 from "@/assets/Group6.png";
-import Group3 from "@/assets/Group3.png";
+import { View,  Image  } from "@tarojs/components";
+import Group7 from "@/assets/Group7.png";
 
 import "./index.less";
 
@@ -53,7 +49,7 @@ class Modal extends Component {
               <View className='foot'>
                 <Image
                   className='Group7'
-                  src={Group3}
+                  src={Group7}
                   onClick={this.onInfo}
                 ></Image>
               </View>

@@ -5,11 +5,10 @@ import NavBar from "@/components/Navbar/index";
 import Group6 from "@/assets/Group6.png";
 import topSign from "@/assets/topSign.png";
 import Mood from "@/components/Mood/index";
-import userStore from "@/store/user";
 
 import bottomSign from "@/assets/bottomSign.png";
 import share from "@/assets/fx.png";
-import { getResultData_postsDiary,getResultData_postComment,getResultData_checkMood,getResultData_moodTody } from "@/servers/servers";
+import { getResultData_postsDiary, getResultData_checkMood, getResultData_moodTody } from "@/servers/servers";
 
 import "./success.less";
 
@@ -23,16 +22,13 @@ class Index extends Component {
       commentText:'',
       showComment: false,
       isShow: false,
-      fileId: ''
     };
   }
-  componentWillMount() {}
 
   async componentDidMount() {
-    const  {  duration, fileId   } = this.$router.params;
+    const  {  duration } = this.$router.params;
     this.setState({
       isDuration: parseInt(Number(duration) / 60),
-      fileId
     });
     const value = await getResultData_checkMood()
     if(value.data.is_clock){
@@ -51,8 +47,7 @@ class Index extends Component {
     getResultData_moodTody({duration:isDuration})
 
     if(showComment){
-      commentText && getResultData_postsDiary({'text': commentText, location:'public'})
-      commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
+      commentText && getResultData_postsDiary({'text': commentText, location:"public"})
     } else {
       commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
     }
