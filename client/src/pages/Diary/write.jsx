@@ -56,10 +56,10 @@ class Index extends Component {
 
     return (
       <View>
-        <NavBar text='' color='white' type='' />
+        <NavBar text='' color='white' type='2' />
         <View class='modal_content'>
           <View class='modal_btn'>
-            <View style='float: left;margin-left:10px'>写日记</View>
+            <View style='write'>写日记</View>
             <View className='played'>
               <Image className='iconImg topSign' src={topSign} />
               <View className='AreaDiv'>

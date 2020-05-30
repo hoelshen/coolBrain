@@ -51,11 +51,11 @@ class App extends Component {
                     result.user.id,
                     result.user.profile.days,
                     result.user.profile.duration
-                );
-                Taro.setStorage({
-                  key: "Ticket",
-                  data: result.ticket
-                });
+                  );
+                  Taro.setStorage({
+                    key: "Ticket",
+                    data: result.ticket
+                  });
               })
             }
           }

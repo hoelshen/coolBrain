@@ -30,29 +30,6 @@ function formatName() {
   return value;
 }
 
-function formatEnName() {
-  const val = Taro.$dayjs().hour();
-  let value;
-  if (6 <= val && val <= 11) {
-    value = "Good morning";
-  }
-  if (11 < val && val <= 13) {
-    value = "Good afternoon";
-  }
-  if (13 < val && val <= 17) {
-    value = "Good afternoon";
-  }
-  if (17 < val && val < 19) {
-    value = "Good evening";
-  }
-  if (19 <= val && val <= 23) {
-    value = "Good evening";
-  }
-  if (0 <= val && val <= 5) {
-    value = "Good night";
-  }
-  return value;
-}
 
 const MDAY = (props) => {
   const [text, setNameText] = useState("");

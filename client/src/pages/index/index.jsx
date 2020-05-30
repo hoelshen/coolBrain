@@ -27,7 +27,7 @@ class Index extends Component {
     loginText: "",
     showDialog: false,
     showBadgeDialog: false,
-    showBadge: {}
+    showBadge: false
   };
   componentWillMount() {
     const { userStore } = this.props;
@@ -38,7 +38,6 @@ class Index extends Component {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
           Taro.getUserInfo({
             success(data) {
-              console.log('data: ', data);
               userStore.updateInfo(
                 data.userInfo.avatarUrl,
                 data.userInfo.nickName
@@ -60,7 +59,7 @@ class Index extends Component {
     }
     getResultData_sentencesTody().then(res => {
       const data = res.data;
-      this.setState({ loginDay: data.days, loginText: data.text });
+      data && this.setState({ loginDay: data.clock.count, loginText: data.text });
       if (data.badge) {
         this.setState({ badge: data.badge, showBadge: true });
       }

@@ -90,3 +90,9 @@ export const getResultData_tickValid = (postData)=>{
 export const getResultData_subtype_duration= (postData)=>{
   return HTTPREQUEST.get(`subtype-duration/`, postData)
 }
+
+// 重置日期
+export const getResultData_reset_punch= (postData)=>{
+  return HTTPREQUEST.get(`debug/reset-punch/`, postData)
+}
+
