@@ -1,4 +1,4 @@
-import Taro, { useDidShow,  } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { getResultData_putPost } from "@/servers/servers";
 

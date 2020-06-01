@@ -52,7 +52,7 @@ export const getResultData_getDiary = (postData) => {
 
 //获取我的个人信息
 export const getResultData_profiles = (postData) => {
-  return HTTPREQUEST.post('profiles/my/', postData)
+  return HTTPREQUEST.put('profiles/my/', postData)
 }
 
 //获取每日登录弹窗内容

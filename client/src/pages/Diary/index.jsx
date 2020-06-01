@@ -54,7 +54,7 @@ class Index extends Component {
         diary.time = time[0];
         return (
           <Comment2
-            taroKey={String(diary.id)}
+            key={String(diary.id)}
             created_at={diary.time}
             text={diary.text}
             showPush={diary.is_public}
@@ -74,6 +74,8 @@ class Index extends Component {
           return (
             <Comment
               key={String(comment.id)}
+              avatarUrl={comment.owner.avatar}
+              nickName={comment.owner.name}
               created_at={comment.time}
               text={comment.text}
             />

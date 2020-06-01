@@ -14,6 +14,7 @@ import {
   getResultData_MyBadge,
   getResultData_sentencesTody,
   getResultData_myDetail,
+  getResultData_profiles
 } from "@/servers/servers";
 
 import "../../app.less";
@@ -44,10 +45,10 @@ class Index extends Component {
               );
             }
           });
-        } else {
         }
       }.bind(this)
     });
+
   }
   componentDidMount() {
     // 如果 ref 的是小程序原生组件，那只有在 didMount 生命周期之后才能通过
@@ -59,14 +60,16 @@ class Index extends Component {
     }
     getResultData_sentencesTody().then(res => {
       const data = res && res.data;
-      data && this.setState({ loginDay: data.clock.count, loginText: data.text });
-      if (data.badge) {
-        this.setState({ badge: data.badge, showBadge: true });
-      }
-      if(data.clock.is_first_login){ //首次登录
-        this.setState({showDialog: true})
-      } else {  //登录过了
-        this.setState({showDialog: false})
+      if(data){
+        this.setState({ loginDay: data.clock && data.clock.count, loginText: data.text });
+        if (data.badge) {
+          this.setState({ badge: data.badge, showBadge: true });
+        }
+        if(data.clock && data.clock.is_first_login){ //首次登录
+          this.setState({showDialog: true})
+        } else {  //登录过了
+          this.setState({showDialog: false})
+        }
       }
     });
   }
@@ -79,12 +82,13 @@ class Index extends Component {
     getResultData_MyBadge();
     getResultData_myDetail().then(json=>{
       const data = json && json.data;
-      userStore.update(
-       data.days,
-       data.duration
-     );
+      if(data){
+        userStore.update(
+          data.days,
+          data.duration
+        );
+      }
     })
-
   }
   onScroll(e) {
     console.log(e);
@@ -112,6 +116,14 @@ class Index extends Component {
       e.detail.userInfo.avatarUrl,
       e.detail.userInfo.nickName
     );
+    const options = {
+      gender: 2,
+      avatar: userStore.avatarUrl,
+      nick_name: userStore.nickName
+    }
+    getResultData_profiles(options).then(res=>{
+      console.log(res)
+    })
   }
   static config = {
     disableScroll: true
