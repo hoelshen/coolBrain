@@ -58,7 +58,7 @@ class Index extends Component {
       // 这里 this.refs.input 访问到的是 `@tarojs/components` 的 `Input` 组件实例
     }
     getResultData_sentencesTody().then(res => {
-      const data = res.data;
+      const data = res && res.data;
       data && this.setState({ loginDay: data.clock.count, loginText: data.text });
       if (data.badge) {
         this.setState({ badge: data.badge, showBadge: true });
@@ -78,7 +78,7 @@ class Index extends Component {
 
     getResultData_MyBadge();
     getResultData_myDetail().then(json=>{
-      const data = json.data;
+      const data = json && json.data;
       userStore.update(
        data.days,
        data.duration

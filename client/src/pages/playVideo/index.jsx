@@ -38,7 +38,7 @@ class Index extends Component {
   async initList(id, frequency_type){
     const res =  await getResultData_subtype_duration()
     let obj = {}
-    const data = res.data;
+    const data = res && res.data;
     Object.keys(data).forEach(item=>{
       if(item == frequency_type){
         obj = data[item]
