@@ -51,7 +51,11 @@ class Index extends Component {
         const time = (comment.created_at).split(' ');
         comment.time = time[0]
           return(
-            <Comment taroKey={String(comment.id)} created_at={comment.time} text={comment.text} />
+            <Comment 
+            taroKey={String(comment.id)} 
+            avatarUrl={comment.owner.avatar}
+            nickName={comment.owner.name}
+            created_at={comment.time} text={comment.text} />
           )
       })
     }
