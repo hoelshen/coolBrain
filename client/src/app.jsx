@@ -39,7 +39,6 @@ class App extends Component {
   componentWillMount() {
     getResultData_tickValid().then(json=>{
       const data = json.data.is_valid
-      console.log('data: ', data);
       if(!data){
         Taro.login({
           success: function (res) {
@@ -102,7 +101,19 @@ class App extends Component {
     addGlobalClass: true
   }
   componentDidShow() {
+    Taro.onAppRoute((route) => {
 
+      const protectedRoutes = [/* 
+        'pages/protected/1',
+        'pages/protected/2',
+        'pages/protected/3'
+      ]
+      if (!store.userLoggedIn() && protectedRoutes.find(r => route.path.includes(r))) {
+        wx.redirectTo({
+          url:'/pages/register/register'
+        })
+      } */
+   })
   }
 
   componentDidHide() {

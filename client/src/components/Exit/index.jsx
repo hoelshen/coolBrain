@@ -54,7 +54,7 @@ class Modal extends Component {
                       <Image src={Group6} className='Group6Img' />
                     </View>
                     <View className='body'>
-                      <View className='text'>退出后, 冥想进度不会保存 是否确认退出？</View>
+                      <View className='text'>退出后,进度不会保存 是否确认退出？</View>
                     </View>
                   </View>
                   <Image src={ContinueBtn} className='qrcode' onClick={this.onContine}></Image>  

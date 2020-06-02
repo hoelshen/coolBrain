@@ -66,7 +66,6 @@ const Play = (props) => {
     setLeftDeg("45deg");
     setRightDeg("45deg");
     setDuration(0);
-    isFirstRender.current = true;
   }
 
   Taro.$backgroundAudioManager.onEnded(() => {
