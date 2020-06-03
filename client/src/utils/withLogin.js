@@ -21,9 +21,6 @@ function withLogin(lifecycle = 'willMount') {
     
   return function withLoginComponent(Component) {
     // 避免H5兼容异常
-    if (tool.isH5()) {
-      return Component;
-    }
       
     // 这里还可以通过redux来获取本地用户信息，在用户一次登录之后，其他需要鉴权的页面可以用判断跳过流程
     // @connect(({ user }) => ({
@@ -68,28 +65,6 @@ function withLogin(lifecycle = 'willMount') {
       }
     }
       
-    $_autoLogin = () => {
-      // ...这里是登录逻辑
-      Taro.login({
-        success: function (res) {
-          if (res.code) {
-              //发起网络请求
-              getResultData_auth({ code: res.code}).then(val=>{
-                const result = val.data;
-                userStore.updateId(
-                  result.user.id,
-                  result.user.profile.days,
-                  result.user.profile.duration
-              );
-              Taro.setStorage({
-                key: "Ticket",
-                data: result.ticket
-              });
-            })
-          }
-        }
-    })
-    }
   }
 }
 

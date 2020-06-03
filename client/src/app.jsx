@@ -101,19 +101,14 @@ class App extends Component {
     addGlobalClass: true
   }
   componentDidShow() {
-    Taro.onAppRoute((route) => {
-
-      const protectedRoutes = [/* 
-        'pages/protected/1',
-        'pages/protected/2',
-        'pages/protected/3'
-      ]
-      if (!store.userLoggedIn() && protectedRoutes.find(r => route.path.includes(r))) {
-        wx.redirectTo({
-          url:'/pages/register/register'
-        })
-      } */
-   })
+    wx.onAppRoute(res => {
+      console.log('res: ', res);
+      if (res.path.includes('pages/index/index')) {
+        console.log('res.path.: ', res.path);
+        Taro.$backgroundAudioManager.stop()
+       
+      }
+    })
   }
 
   componentDidHide() {
