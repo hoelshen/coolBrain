@@ -140,7 +140,7 @@ class Index extends Component {
   onChangeMin(id,e) {
     const { seMin, seVoice, cheVoice, frequency_type } = this.state
 
-    if (e.detail.value == 3) {
+    if (seMin[e.detail.value]['id'] == 'more' ) {
       return this.setState({ isShowFM: true });
     }
     Taro.$backgroundAudioManager.stop();
