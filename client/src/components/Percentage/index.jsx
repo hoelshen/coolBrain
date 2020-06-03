@@ -78,8 +78,8 @@ class Percentage extends Component {
     }
     const boxList = list.map((item, index) => {
       let boxStyle = {
-        left: Math.cos((ahd*(index -2)))*radius + 80 + 'px',
-        top: Math.sin((ahd*(index -2)))*radius + 80+ 'px'
+        left: Math.cos((ahd*(index - 2)))*radius + 80 + 'px',
+        top: Math.sin((ahd*(index - 2)))*radius + 80+ 'px'
       }
       return (
         <View className={classNames('box', item.isActived ? 'actived' : '')}  style={boxStyle} key={item}  onClick={(ind) => this.clickHandle(ind, index)}>{index+1}</View>

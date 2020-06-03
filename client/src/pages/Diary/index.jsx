@@ -30,7 +30,11 @@ class Index extends Component {
       this.setState({ commentList: comment.data.objects });
     }
   }
-
+  
+  // mobx数据改变进行渲染函数（）
+  componentWillReact () {
+    console.log('该更新数据了')
+  }
   static options = {
     addGlobalClass: true
   };

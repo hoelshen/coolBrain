@@ -1,4 +1,4 @@
-import Taro, { useState, useEffect, useRef } from "@tarojs/taro";
+import Taro, { useState, useEffect, useRef, useCallback } from "@tarojs/taro";
 import { View, Image } from "@tarojs/components";
 import play from "@/assets/play.png";
 import stop from "@/assets/stop.png";
@@ -11,7 +11,7 @@ const Play = (props) => {
 
   const [isIOS, setIsIos] = useState(true);
   const isFirstRender = useRef(true);
-  const isInter = useRef({});
+  const isInter = useRef();
   const [isPlay, setIsPlay] = useState(false);
   const [showRight, setShowRight] = useState("display");
   const [duration, setDuration] = useState(0);
@@ -20,7 +20,7 @@ const Play = (props) => {
   const [playState, setPlayState] = useState("PLAY_START");
   const [visible, setVisible] = useState("visible");
   let res = Taro.getSystemInfoSync();
-  function onPlay() {
+  const onPlay = useCallback( ()=> {
     console.log("play", playState);
     if (playState === "PLAY_START") {
       setPlayState("PLAY_LOAD");
@@ -51,22 +51,22 @@ const Play = (props) => {
       });
       setIsPlay(false);
     }
-  }
+  })
 
-  function initialization() {
-    setPlayState("PLAY_START");
+  const initialization = useCallback( ()=> {
+      setPlayState("PLAY_START");
+      clearInterval(isInter.current);
+      Taro.setStorage({
+        key: "playState",
+        data: "PLAY_START",
+      });
+      setIsPlay(false);
+      setLeftDeg("45deg");
+      setRightDeg("45deg");
+      setDuration(0);
+    }
+  ) 
 
-    clearInterval(isInter.current);
-
-    Taro.setStorage({
-      key: "playState",
-      data: "PLAY_START",
-    });
-    setIsPlay(false);
-    setLeftDeg("45deg");
-    setRightDeg("45deg");
-    setDuration(0);
-  }
 
   Taro.$backgroundAudioManager.onError((res) => {
     console.log('onError.res: ', res);

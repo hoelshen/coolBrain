@@ -1,19 +1,22 @@
-import Taro from "@tarojs/taro";
+import Taro, { useState } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { getResultData_putPost } from "@/servers/servers";
 
 import './index.less'
 
 const Comment = (props)=> {
-  const state ={
-    showPushKey: 'no'
-  } 
+  const [ pushState, setPushState ] = useState('no');
   const onPush = (CommentId)=>{
-    state.showPushKey = 'yes'
+    setPushState('yes');
+    Taro.showToast({
+      title: '发布成功',
+      icon: 'none',
+      duration: 2000
+    })
     getResultData_putPost({id:CommentId, is_public: 'yes'})
   }
   const { created_at, text, showPush, CommentId  } = props
-  state.showPushKey = showPush && showPush.key
+  showPush && setShowPush(showPush.key)
   return (
     <View className='body'>
       <View className='left'>
@@ -27,7 +30,7 @@ const Comment = (props)=> {
         </Text>
       </View> 
       {
-        (state.showPushKey == 'no') &&
+        (pushState == 'no') &&
         <View className='btn' onClick={()=>onPush(CommentId)}><Text>发布</Text></View>
       }
   </View>
