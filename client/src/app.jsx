@@ -106,7 +106,6 @@ class App extends Component {
       if (res.path.includes('pages/index/index')) {
         console.log('res.path.: ', res.path);
         Taro.$backgroundAudioManager.stop()
-       
       }
     })
   }

@@ -21,7 +21,7 @@ const Play = (props) => {
   const [visible, setVisible] = useState("visible");
   let res = Taro.getSystemInfoSync();
   function onPlay() {
-    console.log("plas", playState);
+    console.log("play", playState);
     if (playState === "PLAY_START") {
       setPlayState("PLAY_LOAD");
       Taro.setStorage({
@@ -68,6 +68,22 @@ const Play = (props) => {
     setDuration(0);
   }
 
+  Taro.$backgroundAudioManager.onError((res) => {
+    console.log('onError.res: ', res);
+  });
+
+  Taro.$backgroundAudioManager.onCanplay((res) => {
+    console.log('onCanplay.res: ', res);
+  });
+
+  Taro.$backgroundAudioManager.onPlay((res) => {
+    console.log('onPlay.res: ', res);
+  });
+
+  Taro.$backgroundAudioManager.onWaiting((res) => {
+    console.log('onWaiting.res: ', res);
+  });
+  
   Taro.$backgroundAudioManager.onEnded(() => {
     Taro.navigateTo({
       url: `/pages/playVideo/success?duration=${duration}&fileId=${fileId}`,

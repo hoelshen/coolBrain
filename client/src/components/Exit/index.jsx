@@ -10,6 +10,9 @@ import "./index.less";
 class Modal extends Component {
   constructor() {
     super(...arguments);
+    this.state = {
+      type: ''
+    }
   }
 
   confirmClick = () => {
@@ -30,6 +33,10 @@ class Modal extends Component {
     e.stopPropagation();
   };
 
+  componentDidMount(){
+    const type = Taro.getStorageSync('type');
+    this.setState({type})
+  }
   onContine = e =>{
     this.props.onCancelCallback();
   }
@@ -40,7 +47,10 @@ class Modal extends Component {
   }
   render() {
     const {  showExDialog  } = this.props;
-    
+    const { type } = this.state;
+    console.log('type: ', type);
+
+
     return (
       <View>
         {
@@ -57,7 +67,12 @@ class Modal extends Component {
                       <View className='text'>退出后,进度不会保存 是否确认退出？</View>
                     </View>
                   </View>
-                  <Image src={ContinueBtn} className='qrcode' onClick={this.onContine}></Image>  
+                  { type === 'meditation' ?
+                    <Image src={ContinueBtn} className='qrcode' onClick={this.onContine}></Image>  
+                    :<View  className='qrcode2' onClick={this.onContine}>
+                      继续播放
+                    </View>
+                  }
                   <Image src={Group9} className='qrcode' onClick={this.onExit}></Image>  
                 </View>
               </View>

@@ -27,6 +27,12 @@ class Index extends Component {
 
   componentWillMount() {
     let { id, frequency_type } = this.$router.params;
+    if(frequency_type){
+      Taro.setStorage({
+        key: "type",
+        data: frequency_type
+      });
+    }
     this.initList(id, frequency_type);
   }
 
