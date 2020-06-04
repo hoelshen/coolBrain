@@ -129,10 +129,6 @@ class Index extends Component {
     disableScroll: true
   };
 
-  config = {
-    disableScroll: true
-  };
-
   render() {
     const {
       userStore: { avatarUrl, nickName }

@@ -67,7 +67,7 @@ class Index extends Component {
             </View>
             <View className='border column'>
               <Text className='name'>{nickName}</Text>
-              <View className='badgeDiv' onClick={this.onMyBadge}>
+              <View className='badgeDiv' onClick={this.onMyBadge}>
                 {ImageList}
               </View>
             </View>

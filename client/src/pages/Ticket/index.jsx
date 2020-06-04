@@ -1,8 +1,7 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Image, Text, Button } from "@tarojs/components";
+import { View, Image} from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
-import share from "@/assets/share.png";
-import Icon from '@/assets/mingleft.png'
+import classNames from "classnames";
 import NavBar from "@/components/Navbar/index";
 import { getResultData_MyBadge } from "@/servers/servers";
 
@@ -38,20 +37,34 @@ class Index extends Component {
   }
   render() {
     const { badgeList } = this.state;
-    const ImageList = badgeList.map(element=>{
+    const needLength = 9 - badgeList.length;
+    const needList = Array.from({length: needLength}, (_, i) => ({
+      id: `${i+1}`,
+      picture: `@/assets/badges${i}.png`
+    }))
+    const list = [badgeList, needList];
+    const ImageList =list.map((element, index)=>{
+      const badgeImg = classNames({
+        badge: true,
+        centerStyle: index === 0,
+        leftStyle: index !== 0 && index%2 === 0,
+        rightStyle: index !== 0 && index%2 !== 0,
+      })
+
       return (
-        <Image TaroKey={element.picture} src={element.picture} className='badgeImg'></Image>
+        <Image key={element.picture} src={`'@/assets/badges${index}.png'`} className={badgeImg}></Image>
       )
     })
+
     return (
-      <View>
-        <NavBar text='酷炫脑冥想' color='#8CC9BD' type='2' />
+      <>
+        <NavBar text='徽章' color='#8CC9BD' type='2' />
         <View className='body flex column j-between'>
         <View className='badgeDiv'>
           {ImageList}
         </View>
         </View>
-      </View>
+      </>
     );
   }
 }
