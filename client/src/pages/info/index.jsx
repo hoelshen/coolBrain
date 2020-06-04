@@ -36,6 +36,10 @@ class Index extends Component {
     e.stopPropagation()
     Taro.navigateTo({ url: `/pages/Diary/index` });
   }
+  onMyBadge(e){
+    e.stopPropagation()
+    Taro.navigateTo({ url: `/pages/Ticket/index` });
+  }
   render() {
     const {
       userStore: { nickName, avatarUrl,  days, duration  }
@@ -63,7 +67,7 @@ class Index extends Component {
             </View>
             <View className='border column'>
               <Text className='name'>{nickName}</Text>
-              <View className='badgeDiv'>
+              <View className='badgeDiv' onClick={this.onMyBadge}>
                 {ImageList}
               </View>
             </View>
