@@ -1,27 +1,98 @@
 @images: "../../assets";
 
-body{
-  width:331px;
-  height:483px;
+.body{
+  height: 100vh;
+}
+.ImgDiv{
+  margin-top: 20px
+}
+
+.badgeDiv{
+  width:375px;
+  height:603px;
   display: inline-block;
-  background: url('@{images}/badge.png') no-repeat;;
+  background: url('@{images}/badges9.png') no-repeat;;
+}
+.centerStyle{
+  text-align: center;
 }
 
 .leftStyle{
-  float: left;
-  left: 0px;
-  top: 0px;
+  margin-right: 100px;
+  margin-top: -64px;
+
 }
 .rightStyle{
-  float: right;
-  left: 0px;
-  top: 0px;
+  margin-left: 100px;
+  margin-top: 4px;
 }
 .badge{
-  width: 45px;
-  height: 45px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   background-size: 100% 100%;
   background-size: cover;
   display: inline-block;
+}
+
+
+.flex {
+  display: flex;
+
+  &.j-center {
+      justify-content: center;
+  }
+
+  &.j-between {
+      justify-content: space-between;
+  }
+
+  &.j-around {
+      justify-content: space-around;
+  }
+
+  &.j-start {
+      justify-content: flex-start;
+  }
+
+  &.j-end {
+      justify-content: flex-end;
+  }
+
+  &.a-start {
+      align-items: flex-start;
+  }
+
+  &.a-center {
+      align-items: center;
+  }
+
+  &.a-end {
+      align-items: flex-end;
+  }
+
+  &.center {
+      align-items: center;
+      justify-content: center;
+  }
+
+  &.s-around {
+      align-items: space-around;
+  }
+
+  &.s-between {
+      align-items: space-between;
+  }
+
+  &.column {
+      flex-direction: column;
+  }
+
+  &.row {
+      flex-direction: row;
+  }
+
+  &.wrap {
+      flex-wrap: wrap;
+  }
 }

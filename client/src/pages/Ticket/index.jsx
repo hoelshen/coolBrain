@@ -15,13 +15,17 @@ class Index extends Component {
   state ={
     badgeList:[]
   }
+
+  
   componentWillMount() {}
 
   componentDidMount() {
   }
 
   componentWillUnmount() {}
-
+  static config = {
+    disableScroll: true
+  };
   async componentDidShow() {
     const data = await getResultData_MyBadge();
     this.setState({badgeList: data.data})
@@ -37,13 +41,9 @@ class Index extends Component {
   }
   render() {
     const { badgeList } = this.state;
-    const needLength = 9 - badgeList.length;
-    const needList = Array.from({length: needLength}, (_, i) => ({
-      id: `${i+1}`,
-      picture: `@/assets/badges${i}.png`
-    }))
-    const list = [badgeList, needList];
-    const ImageList =list.map((element, index)=>{
+    const len = badgeList.length - 1;
+    const ImageList = badgeList.map((element, index)=>{
+      console.log('index: ', index);
       const badgeImg = classNames({
         badge: true,
         centerStyle: index === 0,
@@ -52,19 +52,39 @@ class Index extends Component {
       })
 
       return (
-        <Image key={element.picture} src={`'@/assets/badges${index}.png'`} className={badgeImg}></Image>
+        <View className='ImgDiv flex center'>
+          <Image key={element.picture} src={element.picture} className={badgeImg}></Image>
+        </View>  
+      )
+    })
+
+    const badgeArr = [1, 2, 3, 4, 5, 6, 7, 8].slice(-(8-len), 8)
+    const needBadge = badgeArr.map((item, index)=>{
+      console.log('index: ', index);
+      const badgeImg = classNames({
+        badge: true,
+        leftStyle:  index%2 !== 0,
+        rightStyle: index%2 === 0,
+      })
+      return (
+        <View className='flex center'>
+        <Image key={item} src={require(`@/assets/badges${item}.png`)} className={badgeImg}></Image>
+      </View> 
       )
     })
 
     return (
-      <>
-        <NavBar text='徽章' color='#8CC9BD' type='2' />
-        <View className='body flex column j-between'>
-        <View className='badgeDiv'>
+      <View>
+        <NavBar text='我的徽章' color='#fff' type='2' />
+        <View className='body'>
+        <View className='badgeDiv flex column j-start'
+          style='background-size: 100% 100%;'
+        >
           {ImageList}
+          {needBadge}
         </View>
         </View>
-      </>
+      </View>
     );
   }
 }

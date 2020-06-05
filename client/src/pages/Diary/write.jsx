@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Image, Textarea,Text, Button } from "@tarojs/components";
+import { View, Image, Textarea,Text } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import NavBar from "@/components/Navbar/index";
 import topSign from "@/assets/topSign.png";
@@ -60,7 +60,7 @@ class Index extends Component {
         <NavBar text='' color='white' type='2' />
         <View class='modal_content'>
           <View class='modal_btn'>
-            <View style='write'>写日记</View>
+            <View className='write'>写日记</View>
             <View className='played'>
               <Image className='iconImg topSign' src={topSign} />
               <View className='AreaDiv'>

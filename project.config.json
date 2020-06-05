@@ -90,9 +90,9 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "测试",
-					"pathName": "pages/test/index",
+					"id": 5,
+					"name": "我的徽章",
+					"pathName": "pages/ticket/index",
 					"query": "",
 					"scene": null
 				}

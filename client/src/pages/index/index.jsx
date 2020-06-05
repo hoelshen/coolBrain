@@ -61,7 +61,7 @@ class Index extends Component {
     getResultData_sentencesTody().then(res => {
       const data = res && res.data;
       if(data){
-        this.setState({ loginDay: data.clock && data.clock.count, loginText: data.text });
+        this.setState({ loginDay: data && data.days, loginText: data.text });
         if (data.badge) {
           this.setState({ badge: data.badge, showBadge: true });
         }

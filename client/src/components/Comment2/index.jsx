@@ -1,4 +1,4 @@
-import Taro, { useState } from "@tarojs/taro";
+import Taro, { useState, useEffect } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { getResultData_putPost } from "@/servers/servers";
 
@@ -16,7 +16,11 @@ const Comment = (props)=> {
     getResultData_putPost({id:CommentId, is_public: 'yes'})
   }
   const { created_at, text, showPush, CommentId  } = props
-  showPush && setShowPush(showPush.key)
+  
+  useEffect(()=>{
+    setPushState(showPush.key)
+  }, [showPush])
+  
   return (
     <View className='body'>
       <View className='left'>
