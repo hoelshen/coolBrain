@@ -96,7 +96,20 @@ const config = {
         }
       }
     }
-  }
+  },
+  copy: {
+    patterns: [
+      { from: 'src/assets/', to: 'dist/assets/', ignore: '*.js' }, // 指定需要 copy 的目录
+      { from: 'src/assets/badges1.png', to: 'dist/assets/badge1.png' }, // 指定需要 copy 的文件
+      { from: 'src/assets/badges2.png', to: 'dist/assets/badge2.png' }, // 指定需要 copy 的文件
+      { from: 'src/assets/badges3.png', to: 'dist/assets/badge3.png' }, // 指定需要 copy 的文件
+      { from: 'src/assets/badges4.png', to: 'dist/assets/badge4.png' }, // 指定需要 copy 的文件
+      { from: 'src/assets/badges5.png', to: 'dist/assets/badge5.png' }, // 指定需要 copy 的文件
+      { from: 'src/assets/badges6.png', to: 'dist/assets/badge6.png' }, // 指定需要 copy 的文件
+      { from: 'src/assets/badges7.png', to: 'dist/assets/badge7.png' }, // 指定需要 copy 的文件
+      { from: 'src/assets/badges8.png', to: 'dist/assets/badge8.png' }, // 指定需要 copy 的文件
+    ]
+  },
 }
 
 module.exports = function (merge) {
