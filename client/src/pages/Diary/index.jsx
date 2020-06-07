@@ -91,7 +91,7 @@ class Index extends Component {
       <View>
         <NavBar text='' color='#fff' type='2' />
         <View className='head'>
-          <View>我的冥想日记</View>
+          <View className='text1'>我的冥想日记</View>
           <View onClick={this.onPostDiary} className='postDiary'>写日记</View>
         </View>
           {diaryList.length > 0 ? (
@@ -100,8 +100,8 @@ class Index extends Component {
             <View style='margin: 20px'>暂无数据</View>
           )}
         <View className='foot'>
-          <Text class='text1'>评论区</Text>
-          <Text class='text2' onClick={this.onMail}>
+          <Text className='text1'>评论区</Text>
+          <Text className='text2' onClick={this.onMail}>
             查看全部
           </Text>
           {commentList.length > 0 ? (

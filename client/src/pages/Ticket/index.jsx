@@ -13,7 +13,10 @@ import "./index.less";
 @observer
 class Index extends Component {
   state ={
-    badgeList:[]
+    badgeList:[],
+    isShow: false,
+    img: '',
+    type: 'local'
   }
 
   
@@ -39,8 +42,16 @@ class Index extends Component {
     e.stopPropagation()
     Taro.navigateTo({ url: `/pages/Diary/index` });
   }
+
+  onEnlarge(e, type){
+    console.log('e: ', e, this);
+    this.setState({isShow: true, img: e, type})
+  }
+  onCloseEnable(){
+    this.setState({isShow: false, img: ''})
+  }
   render() {
-    const { badgeList } = this.state;
+    const { badgeList, isShow,img, type } = this.state;
     const len = badgeList.length - 1;
     const ImageList = badgeList.map((element, index)=>{
       console.log('index: ', index);
@@ -53,7 +64,7 @@ class Index extends Component {
 
       return (
         <View className='ImgDiv flex center'>
-          <Image key={element.picture} src={element.picture} className={badgeImg}></Image>
+          <Image key={element.picture} src={element.picture} className={badgeImg} onClick={this.onEnlarge.bind(this, element.picture, 'online')}></Image>
         </View>  
       )
     })
@@ -68,7 +79,7 @@ class Index extends Component {
       })
       return (
         <View className='flex center'>
-        <Image key={item} src={require(`@/assets/badges${item}.png`)} className={badgeImg}></Image>
+        <Image key={item} src={require(`@/assets/badges${item}.png`)} className={badgeImg} onClick={this.onEnlarge.bind(this, item, 'local')}></Image>
       </View> 
       )
     })
@@ -77,13 +88,26 @@ class Index extends Component {
       <View>
         <NavBar text='我的徽章' color='#fff' type='2' />
         <View className='body'>
-        <View className='badgeDiv flex column j-start'
-          style='background-size: 100% 100%;'
-        >
-          {ImageList}
-          {needBadge}
+          <View className='badgeDiv flex column j-start'
+            style='background-size: 100% 100%;'
+          >
+            {ImageList}
+            {needBadge}
+          </View>
         </View>
-        </View>
+        {
+          isShow && 
+          <View class='toplife_modal' onTouchMove={this.preventTouchMove}>
+            <View class='toplife_modal_content'>
+                {
+                  type =='local' ?
+                  <Image src={require(`@/assets/badges${img}.png`)} className='badge' onClick={this.onCloseEnable}></Image>
+                   :
+                  <Image src={img} className='badge' onClick={this.onCloseEnable}></Image>
+                }
+            </View>
+          </View>
+        }
       </View>
     );
   }

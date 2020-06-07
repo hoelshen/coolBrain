@@ -6,10 +6,9 @@ import Group6 from "@/assets/Group6.png";
 import topSign from "@/assets/topSign.png";
 import Mood from "@/components/Mood/index";
 
-import FastScanner from fastscan;
 
 import bottomSign from "@/assets/bottomSign.png";
-import share from "@/assets/fx.png";
+import share from "@/assets/btn_share.png";
 import { getResultData_postsDiary, getResultData_checkMood, getResultData_moodTody } from "@/servers/servers";
 
 import "./success.less";
@@ -47,8 +46,6 @@ class Index extends Component {
   onPostDiary(){
     const { showComment, commentText, isDuration } =  this.state
     getResultData_moodTody({duration:isDuration})
-    const scanner = new FastScanner(commentText);
-    console.log('scanner: ', scanner);
     if(showComment){
       commentText && getResultData_postsDiary({'text': commentText, location:"public"})
     } else {

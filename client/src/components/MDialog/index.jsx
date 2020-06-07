@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import { View, Button, Image, Text } from "@tarojs/components";
 import topSign from "@/assets/topSign.png";
 import bottomSign from "@/assets/bottomSign.png";
-import share from "@/assets/fx.png";
+import share from "@/assets/btn_share.png";
 import Group6 from "@/assets/Group6.png";
 import Group3 from "@/assets/Group3.png";
 

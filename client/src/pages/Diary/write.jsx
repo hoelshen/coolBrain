@@ -3,7 +3,6 @@ import { View, Image, Textarea,Text } from "@tarojs/components";
 import { observer, inject } from "@tarojs/mobx";
 import NavBar from "@/components/Navbar/index";
 import topSign from "@/assets/topSign.png";
-import FastScanner from fastscan;
 import bottomSign from "@/assets/bottomSign.png";
 import { getResultData_postsDiary } from "@/servers/servers";
 
@@ -32,13 +31,10 @@ class Index extends Component {
 
   onPostDiary(){
     const { showComment, commentText } =  this.state
-    const scanner = new FastScanner(commentText);
-    console.log('scanner: ', scanner);
-
     if(showComment){
-      scanner && getResultData_postsDiary({'text': commentText, location:'public'})
+      commentText && getResultData_postsDiary({'text': commentText, location:'public'})
     } else {
-      scanner && getResultData_postsDiary({'text': commentText, location: 'private'})
+      commentText && getResultData_postsDiary({'text': commentText, location: 'private'})
     }
     Taro.navigateTo({ url: `/pages/index/index` });
   }
