@@ -20,7 +20,8 @@ const Play = (props) => {
   const [playState, setPlayState] = useState("PLAY_START");
   const [visible, setVisible] = useState("visible");
   let res = Taro.getSystemInfoSync();
-  const onPlay = useCallback( ()=> {
+  
+  function onPlay() {
     console.log("play", playState);
     if (playState === "PLAY_START") {
       setPlayState("PLAY_LOAD");
@@ -51,21 +52,20 @@ const Play = (props) => {
       });
       setIsPlay(false);
     }
-  })
+  }
 
-  const initialization = useCallback( ()=> {
-      setPlayState("PLAY_START");
-      clearInterval(isInter.current);
-      Taro.setStorage({
-        key: "playState",
-        data: "PLAY_START",
-      });
-      setIsPlay(false);
-      setLeftDeg("45deg");
-      setRightDeg("45deg");
-      setDuration(0);
-    }
-  ) 
+  function initialization(){
+    setPlayState("PLAY_START");
+    clearInterval(isInter.current);
+    Taro.setStorage({
+      key: "playState",
+      data: "PLAY_START",
+    });
+    setIsPlay(false);
+    setLeftDeg("45deg");
+    setRightDeg("45deg");
+    setDuration(0);
+  }
 
 
   Taro.$backgroundAudioManager.onError((res) => {
