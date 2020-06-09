@@ -54,7 +54,6 @@ class Index extends Component {
     const { badgeList, isShow,img, type } = this.state;
     const len = badgeList.length - 1;
     const ImageList = badgeList.map((element, index)=>{
-      console.log('index: ', index);
       const badgeImg = classNames({
         badge: true,
         centerStyle: index === 0,
@@ -70,17 +69,17 @@ class Index extends Component {
     })
 
     const badgeArr = [1, 2, 3, 4, 5, 6, 7, 8].slice(-(8-len), 8)
-    const needBadge = badgeArr.map((item, index)=>{
-      console.log('index: ', index);
+    const needBadge = badgeArr.map((item)=>{
       const badgeImg = classNames({
         badge: true,
-        leftStyle:  index%2 !== 0,
-        rightStyle: index%2 === 0,
+        centerStyle: item === 0,
+        leftStyle:  item !== 0 &&item%2 === 0,
+        rightStyle: item !== 0 &&item%2 !== 0,
       })
       return (
         <View className='flex center'>
-        <Image key={item} src={require(`@/assets/badges${item}.png`)} className={badgeImg} onClick={this.onEnlarge.bind(this, item, 'local')}></Image>
-      </View> 
+          <Image key={item} src={require(`@/assets/badges${item}.png`)} className={badgeImg} onClick={this.onEnlarge.bind(this, item, 'local')}></Image>
+        </View> 
       )
     })
 
