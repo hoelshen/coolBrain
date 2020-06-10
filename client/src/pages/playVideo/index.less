@@ -55,7 +55,7 @@
     .voice,
     .min{
       margin-top: 17px;
-      width:141px;
+      min-width:141px;
       height:61px;
       background:rgba(140,201,189,1);
       border-radius:12px;
@@ -70,7 +70,7 @@
         line-height:61px;
         position: relative;
         padding-right: 15px;
-        &::before {
+        &::after {
           content: "";
           width: 0px;
           height: 0px;
@@ -79,7 +79,7 @@
           border-right: 7px solid transparent;
           position: absolute;
           top: 26px;
-          left: 110px;
+          right: 20px;
         }
       }
       .text{

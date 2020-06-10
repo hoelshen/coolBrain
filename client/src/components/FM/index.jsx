@@ -1,5 +1,5 @@
 import Taro, { Component } from "@tarojs/taro";
-import { View, Button, Image, Text } from "@tarojs/components";
+import { View, Image } from "@tarojs/components";
 import Group6 from "@/assets/Group6.png";
 import Group8 from "@/assets/Group8.png";
 import Qrcode from '@/assets/qrcode.png';
@@ -54,7 +54,8 @@ class Modal extends Component {
                       <Image src={Group6} className='Group6Img' />
                     </View>
                     <View className='body'>
-                      <View className='text'>去荔枝微课 跟主创学习如何冥想吧</View>
+                      <View className='text'>去荔枝微课</View>
+                      <View className='text'>跟主创学习如何冥想吧</View>  
                       <Image src={Group8} className='btn'  onClick={this.onPreviewImage}></Image>  
                     </View>
                   </View>
