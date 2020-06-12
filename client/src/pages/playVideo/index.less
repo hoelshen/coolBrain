@@ -63,45 +63,25 @@
       text-align: center;
       line-height: 61px;
       .num{
-        height:61px;
-        font-size:20px;
-        font-family:SourceHanSansCN-Medium,SourceHanSansCN;
-        font-weight:500;
-        line-height:61px;
-        position: relative;
-        padding-right: 15px;
-        &::after {
-          content: "";
-          width: 0px;
-          height: 0px;
-          border-top: 7px solid rgba(255,255,255,1);
-          border-left: 7px solid transparent;
-          border-right: 7px solid transparent;
-          position: absolute;
-          top: 26px;
-          right: 20px;
-        }
-      }
-      .text{
-        height:61px;
-        font-size:20px;
-        font-family:SourceHanSansCN-Medium,SourceHanSansCN;
-        font-weight:500;
-        padding-right: 15px;
-        color:rgba(255,255,255,1);
-        line-height:61px;
-        position: relative;
-        display: block;
-        &::before {
-          content: "";
-          width: 0px;
-          height: 0px;
-          border-top: 7px solid rgba(255,255,255,1);
-          border-left: 7px solid transparent;
-          border-right: 7px solid transparent;
-          position: absolute;
-          top: 26px;
-          left: 105px;
+        .text{
+          height:61px;
+          font-size:20px;
+          font-family:SourceHanSansCN-Medium,SourceHanSansCN;
+          font-weight:500;
+          line-height:61px;
+          position: relative;
+          padding: 0 15px;
+          &::after {
+            content: "";
+            width: 0px;
+            height: 0px;
+            border-top: 7px solid rgba(255,255,255,1);
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            position: absolute;
+            top: 26px;
+            right: 10px;
+          }
         }
       }
     }

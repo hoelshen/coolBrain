@@ -1,6 +1,6 @@
 import Taro, { Component } from "@tarojs/taro";
 import classNames from "classnames";
-import { View, Picker } from "@tarojs/components";
+import { View, Picker, Text } from "@tarojs/components";
 import NavBar from "@/components/Navbar/index";
 import Player from "@/components/Player/index";
 import FM from "@/components/FM/index";
@@ -249,7 +249,11 @@ class Index extends Component {
                rangeKey="{{'duration'}}"
                onChange={this.onChangeMin.bind(this,this.state.id)}
              >
-              <View className='num'> {this.state.cheMin}</View>
+              <View className='num'>
+                <View className='text'>
+                    {this.state.cheMin}
+                </View>
+              </View>
              </Picker>
             </View>
             }
@@ -260,7 +264,11 @@ class Index extends Component {
                   rangeKey="{{'name'}}"
                   onChange={this.onChangeVoice}
                 >
-                  <View className='num'>{this.state.cheVoice}</View>
+                  <View className='num'>
+                    <View className='text'>
+                      {this.state.cheVoice}
+                    </View>
+                  </View>
                 </Picker>
               </View>
           </View>

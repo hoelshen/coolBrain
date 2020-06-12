@@ -35,7 +35,7 @@ const Comment = (props)=> {
       </View> 
       {
         (pushState == 'no') &&
-        <View className='btn' onClick={()=>onPush(CommentId)}><Text>发布</Text></View>
+        <View className='btn' onClick={()=>onPush(CommentId)}>发布</View>
       }
   </View>
   );
