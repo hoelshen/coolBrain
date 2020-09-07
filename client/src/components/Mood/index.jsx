@@ -4,7 +4,6 @@ import {
   getResultData_moodTody
 } from "@/servers/servers";
 import Percentage from '../Percentage';
-import Process from "../Process/index";
 
 import "./index.less";
 

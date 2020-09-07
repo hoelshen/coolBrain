@@ -15,6 +15,12 @@ class Modal extends Component {
     }
   }
 
+
+  componentDidMount(){
+    const type = Taro.getStorageSync('type');
+    this.setState({type})
+  }
+  
   confirmClick = () => {
     this.props.onConfirmCallback();
   };
@@ -33,14 +39,10 @@ class Modal extends Component {
     e.stopPropagation();
   };
 
-  componentDidMount(){
-    const type = Taro.getStorageSync('type');
-    this.setState({type})
-  }
-  onContine = e =>{
+  onContine = () =>{
     this.props.onCancelCallback();
   }
-  onExit = e =>{
+  onExit = () =>{
     this.props.onCancelCallback();
     Taro.$backgroundAudioManager.stop()
     Taro.reLaunch({ url: `/pages/index/index` });
